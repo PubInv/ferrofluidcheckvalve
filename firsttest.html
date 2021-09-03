@@ -1,0 +1,374 @@
+<!DOCTYPE html>
+<html>
+
+  <script src="js/matter.js"></script>
+  <script src="js/matter-wrap.js"></script>
+<body>
+
+<h1>Attempting to build a Ferrofluid Simulation</h1>
+
+</body>
+</html>
+
+  <script>
+
+/**
+ * An ferrofluid plugin for matter.js.
+ * An attempt to make a plugin that handles force induced
+ * by a magnetic field computed against the whole world.
+ * @module MagneticFieldForce
+ *
+ * Because this is meant to model a thin sheet of ferrofluid
+ * affected by an external magnet, it makes a number of simplifying
+ * assumptions. It is probably very inaccurate, but the purpose
+ * is simple: to be realistic enough to explore creating a ferrofluid
+ * check valve.
+ *
+ * To this end, I remove polarity by treating only "attraction".
+ * One might imagine this is similar to gravity, but it is more complicated
+ * than that because ferrofluid is higly paramagnentic; that is, it
+ * becomes magnetic (or "attractive") in proportion to the strength
+ * of the field it is in (I suppose.)
+ *
+ * The basic approach here is to separate the external field from
+ * the induced field. The external field is created by a map of
+ * the magnitude of the external applied field (no polarity) at each
+ * point. A cylindrical magnet would thus give radial symmettry,
+ * Falling off quite strongly outside the circle.
+ *
+ * This field S(x,y) can be precumputed, as it is not expected to change
+ * within an experiment.
+ *
+ * From this scalar field, we could compute a vector field, with the
+ * vectors pointing in the direction of attraction. This is:
+ * V(x,y) = Integral over all points a,b: d^-Q * ( <x,y> - <a,b>) * S(<a,b>) * F,
+ * where F is an adjustable fudge factor, Q is probably 3 (or possibly 2 or 2.5),
+ * d is the distance between <x,y> and <a,b> . This field is also constant.
+ *
+ * Then, we dynamically compute for each object at <a,b>:
+ * I(a,b) = intgrll over all O at (x,y): d(<a,b>,<x,y>)^-Q * (<x,y>-<a,b) *V(a,b) * G
+ *
+ * The total field at any point x,y is I(<x,y>) + V(<x,y>).
+ *
+ * This is a vector that points in the direction of the force on the object.
+ *
+ */
+
+const WIDTH = 200;
+const HEIGHT = 200;
+var MagneticFieldForce = {
+  // plugin meta
+  name: 'magnetic-field-force', // PLUGIN_NAME
+  version: '0.1.1', // PLUGIN_VERSION
+  for: 'matter-js@^0.12.0',
+
+  S: [], // The static magnitude of external magnetism
+  V:[],  // The static field attraction vector
+  D_2:[],// The distance squared (L1 norm)
+  F: 1.0e+1,// The fudge factor for the static attraction
+  G: 1.0,// the fudge factor for the dynamic atrraction
+  distance: function distance(a,b,x,y) {
+    return Math.sqrt((a - x)**2 + (b - y)**2);
+  },
+  d_squared: function d_squared(a,b,x,y) {
+    return Math.abs((a - x)**2 + (b - y)**2);
+  },
+
+  getAttractionVector: function getAttractionVector(w,h,x,y) {
+    var vx = 0, vy = 0;
+    for(var i = 0; i < w; i++) {
+      for(var j = 0; j < h; j++) {
+        const d = MagneticFieldForce.d_squared(x,y,i,j);
+        if (d > 0 && d < (5**2)) {
+ //         console.log(d);
+ //         console.log(d**(-3/2));
+          const s = MagneticFieldForce.S[i][j]*
+                MagneticFieldForce.F*(d**(-3/2));
+          if (isNaN(s)) {
+            console.log("problem with s!");
+            debugger;
+          }
+          vx += s * (i - x);
+          vy += s * (i - y);
+        }
+      }
+    }
+    return Matter.Vector.create(vx, vy);
+  },
+  initialize: function initialize() {
+    var w = render.bounds.max.x - render.bounds.min.x;
+    var h = render.bounds.max.y - render.bounds.min.y;
+    // This will be for a circle in the middle.
+    // I can't really predict this, but I'm going to call it 1.0
+    // in the center of the circle and have it drop off as the
+    // cube of distance.
+    // I'll use a 1/2" inch magnet, and map that 25 pixels.
+    const PIXELS_PER_MM = 2.5;
+    for(var i = 0; i < w; i++) {
+        MagneticFieldForce.S[i] = [];
+      for(var j = 0; j < h; j++) {
+        const d_p = MagneticFieldForce.distance(i,j,w/2,h/2);
+        var v;
+        if (d_p <= (25.0/4) * PIXELS_PER_MM) {
+          v = 1.0;
+        } else {
+          v =  (1.0 + (d_p - (25.0/4) * PIXELS_PER_MM))**-3;
+        }
+        MagneticFieldForce.S[i][j] = v;
+      }
+    }
+    console.time('computeAttraction');
+    for(var i = 0; i < w; i++) {
+      MagneticFieldForce.V[i] = [];
+      for(var j = 0; j < h; j++) {
+        var v = MagneticFieldForce.getAttractionVector(w,h,i,j);
+        MagneticFieldForce.V[i][j] = v;
+//        console.log(v);
+      }
+    }
+    console.timeEnd('computeAttraction');
+  },
+
+  // installs the plugin where `base` is `Matter`
+  // you should not need to call this directly.
+  install: function install(base) {
+    base.after('Body.create', function () {
+      MagneticFieldForce.Body.init(this);
+    });
+
+    base.before('Engine.update', function (engine) {
+      MagneticFieldForce.Engine.update(engine);
+    });
+  },
+
+  Body: {
+    /**
+     * Initialises the `body` to support magneticFieldForce
+     * by having a magVector, defining the strength and
+     * direction of the magnetism defined as a (2D) vector
+     * This is called automatically by the plugin.
+     * @function MagneticFieldForce.Body.init
+     * @param {Matter.Body} body The body to init.
+     * @returns {void} No return value.
+     */
+    init: function init(body) {
+      body.plugin.magVector = null;
+    }
+  },
+
+  Engine: {
+    /**
+     * Applies all attractors for all bodies in the `engine`.
+     * This is called automatically by the plugin.
+     * @function MagneticFieldForce.Engine.update
+     * @param {Matter.Engine} engine The engine to update.
+     * @returns {void} No return value.
+     */
+
+    update: function update(engine) {
+      var world = engine.world,
+          bodies = Matter.Composite.allBodies(world);
+      // This is a local function, with access to bodies...
+      // I'm skating on thin ice here.
+      var w = render.bounds.max.x - render.bounds.min.x;
+      var h = render.bounds.max.y - render.bounds.min.y;
+      function computeMagField(position) {
+        // Our actual goal here it implement a simulation across
+        // the whole field as if a magnet were placed out of plane
+        // and asserting a force every where. Addtionally,
+        // to simulate ferrofluid we need to simulate the
+        // paramagnetism of each object, that is, the fact that
+        // each object becomse magnetic in proportion to the strength
+        // of the magnetic field it is in, but thereby changes the total field.
+
+        // This will be a simulation of a point magnet in the middle,
+        // (which could be accomplished with a cone magnet).
+
+        // not sure where the render will get in here..
+        // These should NOT be computed on updates!!
+
+        var c = Matter.Vector.create(w, h);
+        var mag_dir = Matter.Vector.sub(position, c);
+
+        // now we have a magnetic direction, but actually we want
+        // to scale to the 1/d^2, where d is.
+        var m = Matter.Vector.magnitude(mag_dir);
+        var scale = - 1/(m*m);
+        Matter.Vector.mult(scale);
+
+        return Matter.Vector.create(1.0e-2, 1.0e-2);
+      }
+      for (var i = 0; i < bodies.length; i += 1) {
+        var bodyA = bodies[i],
+            magVector = bodyA.plugin.magVector;
+
+        if (magVector) {
+          // The forceVector is a function of the field at this point
+          // Until I can calculate I will put a dummy value in here...
+          var magFieldHere = computeMagField(bodyA.position);
+          // What is the operation I want here?
+          var resultant = Matter.Vector.mult(magFieldHere,
+                                             -Matter.Vector.dot(magVector, magFieldHere)
+                                            );
+          const x = Math.floor(Math.max(0,Math.min(WIDTH-1,bodyA.position.x)));
+          const y = Math.floor(Math.max(0,Math.min(HEIGHT-1,bodyA.position.y)));
+          var resultant2 = (magVector.x < 0) ? Matter.Vector.mult(MagneticFieldForce.V[x][y],-1) : MagneticFieldForce.V[x][y];
+//          console.log(resultant,resultant2);
+          if (resultant2) {
+            Matter.Body.applyForce(bodyA, bodyA.position, resultant2);
+//            console.log(resultant);
+          }
+        }
+      }
+    }
+  }
+};
+
+Matter.Plugin.register(MagneticFieldForce);
+
+
+Matter.use('magnetic-field-force');
+// END PLUGIN!!!!!
+
+
+    try {
+        if (typeof MatterWrap !== 'undefined') {
+            // either use by name from plugin registry (Browser global)
+            Matter.use('matter-wrap');
+        } else {
+            // or require and use the plugin directly (Node.js, Webpack etc.)
+            Matter.use(require('matter-wrap'));
+        }
+    } catch (e) {
+      // could not require the plugin or install needed
+      console.log(e);
+    }
+// module aliases
+var Engine = Matter.Engine,
+    Render = Matter.Render,
+    Runner = Matter.Runner,
+    Bodies = Matter.Bodies,
+    Body = Matter.Body,
+    Common = Matter.Common,
+    MouseConstraint = Matter.MouseConstraint,
+    Mouse = Matter.Mouse,
+    Composites = Matter.Composites,
+    Composite = Matter.Composite;
+
+// create an engine
+var engine = Engine.create();
+
+// create a renderer
+var render = Render.create({
+    element: document.body,
+  engine: engine,
+  options: {
+    width: WIDTH,
+    height: HEIGHT,
+    showAngleIndicator: true,
+       wireframes: false,
+        showAngleIndicator: false,
+        background: 'transparent',
+  }
+});
+
+
+MagneticFieldForce.initialize(render);
+
+
+// create two boxes and a ground
+//var boxA = Bodies.rectangle(400, 200, 80, 80);
+//var boxB = Bodies.rectangle(450, 50, 80, 80);
+
+if (false) {
+     Composite.add(engine.world, [
+         Bodies.rectangle(200, 150, WIDTH, 20, { isStatic: true, angle: Math.PI * 0.06, render: { fillStyle: '#060a19' } }),
+         Bodies.rectangle(500, 350, WIDTH, 20, { isStatic: true, angle: -Math.PI * 0.06, render: { fillStyle: '#060a19' } }),
+       Bodies.rectangle(340, 580, WIDTH, 20, { isStatic: true, angle: Math.PI * 0.04, render: { fillStyle: '#FF0a19' , strokeStyle: 'red', } })
+     ]);
+} else {
+//     Composite.add(engine.world, [
+//       Bodies.rectangle(340, 580, 200, 20, { isStatic: true, angle: Math.PI * 0.0 , render: { fillStyle: '#FF0a19' , strokeStyle: 'red', } })
+//     ]);
+var ground = Bodies.rectangle(400, 60, 810, 60, { isStatic: true });
+// add all of the bodies to the world
+Composite.add(engine.world, [ground]);
+
+}
+    // add mouse control
+    var mouse = Mouse.create(render.canvas),
+        mouseConstraint = MouseConstraint.create(engine, {
+            mouse: mouse,
+            constraint: {
+                stiffness: 0.2,
+                render: {
+                    visible: false
+                }
+            }
+        });
+
+    Composite.add(engine.world, mouseConstraint);
+
+    // keep the mouse in sync with rendering
+    render.mouse = mouse;
+
+    // fit the render viewport to the scene
+    Render.lookAt(render, Composite.allBodies(engine.world));
+
+    // add bodies
+ var stackRed = Composites.stack(20, 20, 1, 1, 0, 0, function(x, y) {
+   return Bodies.circle(x, y, Common.random(20, 20),
+                        { friction: 0.00001, restitution: 0.5, density: 0.001,
+                           render: {
+       fillStyle: 'red',
+       strokeStyle: 'red',
+       lineWidth: 2
+                           }
+                        });
+ });
+
+ var stackBlue = Composites.stack(20, 20, 1, 1, 0, 0, function(x, y) {
+   return Bodies.circle(x, y, Common.random(20, 20),
+                        { friction: 0.00001, restitution: 0.5, density: 0.001,
+                           render: {
+       fillStyle: 'blue',
+       strokeStyle: 'blue',
+       lineWidth: 2
+                           }
+                        });
+ });
+
+Composite.add(engine.world, stackRed);
+Composite.add(engine.world, stackBlue);
+
+
+      // wrapping using matter-wrap plugin
+  for (var i = 0; i < stackRed.bodies.length; i += 1) {
+    stackRed.bodies[i].plugin.wrap = {
+      min: { x: render.bounds.min.x, y: render.bounds.min.y },
+      max: { x: render.bounds.max.x, y: render.bounds.max.y }
+    }
+
+    stackRed.bodies[i].plugin.magVector =
+      Matter.Vector.create(1.0, 1.0);
+  }
+
+  for (var i = 0; i < stackBlue.bodies.length; i += 1) {
+    stackBlue.bodies[i].plugin.wrap = {
+      min: { x: render.bounds.min.x, y: render.bounds.min.y },
+      max: { x: render.bounds.max.x, y: render.bounds.max.y }
+    }
+
+    stackBlue.bodies[i].plugin.magVector =
+      Matter.Vector.create(-1.0, -1.0);
+  }
+
+// run the renderer
+Render.run(render);
+
+// create runner
+var runner = Runner.create();
+
+// run the engine
+Runner.run(runner, engine);
+</script>
