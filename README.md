@@ -12,6 +12,11 @@ This was inspired by a Public Invention volunteer who did the
 initial CAD design of my previous thoughs, causing me to
 realize I had not thought deeply enough about the problem.
 
+# Current Idea
+
+![Ferrofluid Check Valve Idea #2](https://user-images.githubusercontent.com/5296671/132899305-987c92eb-7473-424c-9d72-bdc92220f689.png)
+
+
 
 # Previously (2019)
 An attempt to build a ferrofluidcheckvalve
