@@ -73,14 +73,16 @@
 \begin{abstract}
 
 Small pumps and valves enable flow management in microfluidic systems.
- This
-paper presents a novel passive ferrofluid check valve, without
-utilizing mechanical or electrical input, implemented through only a
+This paper presents a novel passive ferrofluid check valve.
+The valve consists of only a
 unique channel-and-chamber geometry, ferrofluid, and a stationary
-magnetic field.  The proposed design, open to improvements through
-various parameters, can be used for microfluid handling and lab-on-a-chip
-applications. The prototype valve and experimental setup are explained
+magnetic field.
+The flow is determined only by the inlet and output pressure,
+and the magnetic field is completely static.
+The prototype valve and experimental setup are explained
 and performance of the valves cracking and collapse pressure reported.
+This initial design can be used for microfluid handling and lab-on-a-chip
+applications.
 \end{abstract}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -89,22 +91,29 @@ and performance of the valves cracking and collapse pressure reported.
 Ferrofluid can be manipulated by electronically controlled magnetic
 fields to exert force on fluids\cite{torres2014recent,kole2021engineering,ozbey2015modeling}.
 This makes it possible to build pneumatic or hydraulic
-devices, perhaps on very small scales such as a single chip\cite{yamahata2003ferrofluid,hatch2001ferrofluidic}, to
-miniaturize fluid handling, often for biomedical purposes\cite{michelson2019novel},
-although
-this paper reports only on experiments
-done with air. This could be used to make a “lab on a chip” (LOC) or
-even to heat or cool different areas. A fundamental component of such
-devices is the check or one-way valve. A perfect check-valve opens or
-{\em cracks} with minimal pressure on the inlet side and sustains maximal
-pressure on the outlet side before {\em collapse}, allowing fluid to flow in only one
-direction. Following\cite{hartshorne2004ferrofluid} we call the maximum pressure
-differential the valve can resist in the direction it is intended to
-check (from outlet to inlet) the {\em sustainable} or {\em collapse} pressure. Two check
+devices, perhaps on very small scales,
+such as a single chip\cite{yamahata2003ferrofluid,hatch2001ferrofluidic}, to
+miniaturize fluid handling.
+This has been proposed for biomedical purposes\cite{michelson2019novel}
+that would use water or body fluids,
+although this paper reports only on experiments done with air.
+Miniature pumps and valves could be used to make a “lab on a chip” (LOC) or
+even to heat or cool different areas.
+A fundamental component of such
+devices is the check or one-way valve.
+Two check
 valves on either side of a chamber whose volume can vary creates a
 positive displacement pump.
-This paper presents an initial, preliminary design of a
-functioning passive ferrofluid check valve (PFCV) that has no moving
+A perfect check valve opens or
+{\em cracks} with minimal pressure on the inlet side and sustains maximal
+pressure on the outlet side before {\em collapse},
+allowing fluid to flow in only one
+direction. Following\cite{hartshorne2004ferrofluid} we call the maximum pressure
+differential the valve can resist in the direction it is intended to
+check (from outlet to inlet) the {\em sustainable} or {\em collapse} pressure.
+
+This article is a brief report on an initial but functioning design of a
+passive ferrofluid check valve (PFCV) that has no moving
 parts except for the ferrofluid bolus itself, which is stationary
 in normal operation.
 By passive, the authors
@@ -118,9 +127,10 @@ outlet port pressure.
 for example \cite{hartshorne2004ferrofluid} uses the
 term {\em active} to simply mean a valve that is not a permanent seal.)
 To our knowledge, no passive
-ferrofluid check valve has been reported before, despite being an
-active area of research, and despite such a valve having
-significant advantages for fabrication over valves with moving parts.
+ferrofluid check valve has been previously reported, despite being an
+active area of research and despite such a valve having
+significant advantages for operation but especially
+fabrication over valves with moving parts.
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \section{Related Research}
@@ -129,21 +139,27 @@ A number of papers report on ferrofluid pumps, focusing in particular
 on micropump and lab-on-a-chip applications\cite{ozbey2015modeling,hsu2018biocompatible}.
 Many of these papers use
 a version of mechanical valve not based on passive
-ferrofluid.
+ferrofluid, even though they move a ferrofluid bolus
+with a magnetic field.
 For example,
 a corrugated silicone micro valve\cite{yamahata2003ferrofluid,yamahata2005plastic}
 has been reported.
-Other researchers use active valves, which require syncronization with
+Other researchers use active valves, which require synchronization with
 the ferrofluid plug to form a pump,
-such as \cite{menz2000fluidic}, which describes an active T-Valve with a moving ferrofluid plug, and
-\cite{ando2009ferrofluidic} describes a complete fluid pump with valves that use
-active control of a ferrofluid bolus, which is possible because the
-action of the plunger may be synchronized with the opening and closing
-of the valves. Nonetheless a passive valve would be simpler and less
+such as \cite{menz2000fluidic}, which
+describes an active T-Valve with a moving ferrofluid plug, and
+\cite{ando2009ferrofluidic} describes a complete fluid pump with valves
+that use
+active control of a ferrofluid bolus.
+Active control is possible because the
+action of the plunger or bolus may be synchronized with the opening and closing
+of the valves.
+Nonetheless a passive valve would be simpler and less
 expensive, and would not require knowledge of the timing of the
 plunger.
-\cite{hartshorne2004ferrofluid} similarly describe two kinds
-of active valves, a {\em well valve} and Y valve.
+At least two additional kinds of active valves, a {\em well valve} and Y valve, have
+been described\cite{hartshorne2004ferrofluid}.
+
 A passive ferrofluid two-way valve with tunable
 opening and closing pressure based on magnetic
 field strength\cite{paschalis2013novel} has been tested,
@@ -151,14 +167,14 @@ but could not be passively used to make a pump.
 
 This paper has not studied the closing pressure of the PFCV, but reports on
 the opening (or cracking) pressure (for flow from inlet to outlet) and
-sustainable (or collapse) pressure when the outlet pressure is higher than the inlet
-side.
+sustainable (or collapse) pressure
+when the outlet pressure is higher than the inlet side.
 An interesting functional micropump in which the
 moving ferrofluid bolus merges with a fixed ferrofluid valve and then
 separates on each pumping cycle has been described\cite{hatch2001ferrofluidic},
 but is not a one-way valve.
 
-\section{Pasive Ferrofluid Check Valve (PFCV) Design}
+\section{Passive Ferrofluid Check Valve (PFCV) Design}
 %%%%%%%%%%%%%%%% begin figure %%%%%%%%%%%%%%%%%%%
 %%% 3.34in is the maximum width you can have for a figure
 \begin{figure}
@@ -172,8 +188,8 @@ The PFCV depicted in Figure~\ref{fig_components} is a simple asymmetric volume
 centered in a magnetic field
 which holds a ferrofluid bolus in place.
 In the center of a radially symmetric magnetic field
-a narrow channel meets are large open chamber.
-The ferrofulid bolus is large enough that at rest in the field it
+a narrow channel meets a larger open chamber at a right angle.
+The ferrofluid bolus is large enough that at rest in the field it
 forms a semi-circle in the open chamber. The narrow channel is
 longer than the radius of the bolus at rest.
 The broad chamber is the outlet side of the valve.
@@ -183,8 +199,8 @@ This design allows the bolus to be recovered from the recovery
 chamber when the pressure is equalized if the outlet pressure is
 raised above the collapse pressure, driving the bolus away
 from the magnetic field.
-The PFCV does not perform as well in absolute terms as a
-large valve
+The PFCV does not resist pressure as well  as a
+valve of the same size
 made out of moving, solid parts.
 That is, the sustainable
 pressure it can resist on the outlet side before failing is relatively
@@ -204,13 +220,16 @@ The valve depicted Figure~\ref{fig_components}
 was designed using Solidworks 2016.
 The model consists of a 15mm long, 2mm wide and 2mm high channel,
 two female luers, a magnet holder ring and two legs to provide room
-for the magnet.  Viewed from the top, one end opens up to a recovery
+for the magnet.  All volumes are 2mm high.
+The 3D shape
+of the chambers can be thought as a 2mm extrusion of a 2D shape.
+Viewed from the top, one end opens up to a recovery
 chamber of circular profile 30mm in diameter and the other
-an outlet chamber with a flat wall.  A magnet holder ring half
-an inch in diameter was created centered on the channel-chamber
-junction, where the bolus is placed, to hold a permanent magnet in place
-at the center of the valve. When two magnets are used, the magent on
-top naturally stays in the same position due to attraction to the magent below.
+an outlet chamber with a flat wall.
+A magnet holder ring 12.7mm inner diameter (1/2'') was created centered on the channel-chamber
+junction, below where the bolus is placed, to hold a permanent magnet in place
+at the center of the valve. When two magnets are used, the magnet on
+top naturally stays in the same position due to attraction to the magnet below.
 On the inlet side the channel
 opens into a recovery chamber shaped to allow the ferrofluid to be
 passively drawn back into the channel by the magnetic field after a
@@ -238,22 +257,27 @@ UT) is connected to the model via a two-way stopcock (Qosina,
 Ronkonkoma, NY), tubing (Natvar, City of Industry, CA), and male
 (Injectech, Fort Collins, CO) and female luer (Qosina, Ronkonkoma,
 NY), allowing integration of a manometer (General Tools, Secaucus, NJ)
-to measure pressure. A 1/2” x 1” cylindrical neodymium magnet (Apex
-Magnets, Petersburg, WV) was placed inside the magnet channel by means
+to measure pressure. A 12.7mm x 25.4mm (1/2” x 1”)
+cylindrical neodymium magnet (Apex
+Magnets, Petersburg, WV) with a pull force of 14.6 kg (32.24 pounds)
+was placed inside the magnet channel by means
 of a tight fit and 0.4 mL of ferrofluid (Apex Magnets, Petersburg, WV)
 was injected into the model using a 3mL syringe (BH Supplies, Jackson,
 NJ).
 
 To obtain values, pressure was applied through the pressurizing
-syringe. Pressure applied from the outlet side of the model, in which
-fluid flowed through the channel, will be referred to as the
-sustainable pressure. Pressure applied from the inlet needed to
-initiate flow will be referred to as the cracking pressure.
+syringe. Pressure was first applied from the outlet side of the model.
+The maximum pressure difference from the outlet side the
+valve can withstand before collapsing, will be referred to as the
+sustainable pressure or {\em collapse} pressure.
+Pressure applied from the inlet needed to
+initiate flow will be referred to as the {\em cracking} pressure.
 
 The cracking pressure was first measured by increasing the pressure
 difference on the inlet side until flow is initiated (at which point
-pushing the syringe plunger faster simply increases flow.) Then the
-sustainable pressure was measured by increasing the pressure
+pushing the syringe plunger faster simply increases flow without
+increasing the pressure.) Then the
+collapse pressure was measured by increasing the pressure
 difference on the outlet side. At pressures below the sustainable
 pressure, the valve holds pressure well with no observable leaks of
 air in the short time (a few minutes) of our experiment. When the
@@ -261,7 +285,6 @@ sustainable pressure is exceeded, the bolus explodes violently into
 the recovery chamber. When the pressure difference is equalized, the
 bolus may passively recover into the central position, or it may need
 to be actively “combed” with a magnet back into the central position.
-
 
 The procedure was performed first with one magnet, named the “Single
 Magnet” configuration, placed below the channel-chamber connection.
@@ -308,20 +331,28 @@ Dual &
 
 
 The ferrofluid had observable differences in behavior between the two
-configurations.  With two magnets, when recollecting the ferrofluid to
-the center of the model (following a collapse of the bolus due to
-exceeding the sustainable pressure), fluid further from the bolus
+configurations.  After the pressure equalized
+following a collapse of the bolus due to
+exceeding the sustainable pressure, the single magnet
+configuration often repaired itself by drawing the fluid back
+into a centered bolus passively.
+After a collapse with two magnets, fluid further from the bolus
 remained stationary while the fluid closer was pulled back to the
 center. Following the removal of the top magnet, the stationary fluid
 then began to return to the bolus. This is consistent with the
 localization of the magnetic field between two magnets, and the
 weakening of the magnetic field further from the channel-chamber
-juncture.
+juncture in the dual magnet configuration.
 
-Thus, although the trial with two magnets demonstrated a larger
-pressure difference due to magnet strength, the single magnet trial
-granted a larger ratio via expanded field lines.
-
+Although the dual magnet configuration demonstrated a larger absolute
+pressure difference due to magnet strength between the
+cracking and the collapse pressure, the single magnet configuration
+granted a larger ratio of collapse pressure to cracking
+pressure due to the much lower cracking pressure.
+The authors conjecture that the low cracking pressure may have
+been not only to the weaker magnetic field, but the weakening at the
+top of the 2mm high channel, which was further away from the magnet
+in the single magnet configuration.
 
 \section{Conclusions}
 
@@ -330,7 +361,8 @@ valve or check valve (PFCV). This valve is completely passive in that
 it depends entirely on the pressure at the inlet port and the outlet
 port. The valve has no moving parts (except for the ferrofluid, which
 is almost stationary), and a remarkably simple design, consisting of
-nothing but a channel, a chamber, and a bolus of ferrofluid in a
+nothing but a channel, an inlet chamber, and outlet chamber,
+and a bolus of ferrofluid in a
 static magnetic field.
 
 Although no effort has been made to optimize the design, the pressure
@@ -342,14 +374,15 @@ observed.  Obvious future research possibilities are:
 \begin{enumerate}
 \item  To improve the
 performance by varying the geometry of the passive design or shape and
-strength of the magnets.
+strength of the magnetic field.
 \item Utilizing this design to make a micro-pump
 similar to earlier micro-pumps but with this simpler check valve
 design.
 \item To provide an explanatory and predictive theory of operation,
 for example based on magnetic field strength as per \cite{ando2009ferrofluidic}.
-\item Studying the ability of the valve to recover after a
-  collapse when high outlet pressure is reduced.
+\item Studying the ability of the valve to recover after
+  a collapse automatically when high outlet pressure is removed,
+  which would increase robustness in some applications.
 \end{enumerate}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
