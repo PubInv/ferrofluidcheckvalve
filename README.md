@@ -1,4 +1,4 @@
-# A Passive Ferrofluid Check Valve
+# A Passive Ferrofluid Check Valve (PFCV)
 This repo describes a *passive* ferrofluid one-way valve.
 This invention is apparently novel and should be quite important for making it 
 easier to fabricate lab-on-a-chip applications, because it has no moving parts,
@@ -38,6 +38,15 @@ Veronica Stuckey made a [nice video](https://www.youtube.com/watch?v=IGzz6LX1n6A
 NOTE: as mentioned before, this idea is wrong, but usefully wrong---the valve works in the opposite direction to what is suggested.
 
 ![Ferrofluid Check Valve Idea #2](https://user-images.githubusercontent.com/5296671/132899305-987c92eb-7473-424c-9d72-bdc92220f689.png)
+
+# Future Steps
+
+As always, Public Invention invites you take this idea and run with it! Some potential fun things to do next would be:
+1. Can the performance of the valve be improved by shaping the chamber and/or the magnetic field better?
+2. How do the pressures change if you scale it down?
+3. How far can it be scaled down with a 3D printer before some sort of lithographic or etching technique is required?
+4. Can you make a positive-displacement pump on a single unit by making a 3D printed pump consiting of a 2 PFCVS, a piston made out of a ferrofluid bolus, and an external electomagnet to move the piston (possibly on a PCB)?
+5. This design is essentially a 2D shape slightly extrudede to be a 3D volume. Is there a fully 3D design that is similar but would have better performance?
 
 
 
