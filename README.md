@@ -29,11 +29,11 @@ The gist of the fundamental invention can be understood from the this diagram:
 
 Veronica Stuckey made a [nice video](https://www.youtube.com/watch?v=IGzz6LX1n6A) of her work that explains it well.
 
+![Screen Shot 2021-11-24 at 11 06 02 AM](https://user-images.githubusercontent.com/5296671/143283489-8d207dbe-410a-497d-abb8-928db957d92e.png)
 
 
 
-
-# Initial Sketch Idea
+# Initial (Wrong Polarity) Sketch Idea
 
 NOTE: as mentioned before, this idea is wrong, but usefully wrong---the valve works in the opposite direction to what is suggested.
 
@@ -47,6 +47,8 @@ An attempt to build a ferrofluidcheckvalve
 This project is now considered a failure; I've attempted to write up what was learned, which is [published](https://medium.com/@RobertLeeRead/failed-experiments-with-ferrofluid-742fa13b0ae1) at Medium
 
 # References
+
+Note: The academic paper herein contains a better list of references!
 
 [Micromachines | Free Full-Text | Magnetically Induced Flow Focusing of Non-Magnetic Microparticles in Ferrofluids under Inclined Magnetic Fields | HTML (mdpi.com)](https://www.mdpi.com/2072-666X/10/1/56/htm)
 
