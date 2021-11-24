@@ -24,11 +24,18 @@ with no moving parts!
 The current valve is describe in [the paper](https://github.com/PubInv/ferrofluidcheckvalve/blob/master/doc/journal-1.2/asme2ej.pdf) in this repo that we will
 submit to an open access journal soon. Like all Public Invention inventions, we do not seek patents, and you are free to use this design under the CERN Strong Reciprocal License [(CERN-OHL-S-2.0)](https://ohwr.org/cern_ohl_s_v2.txt). 
 
+The gist of the fundamental invention can be understood from the this diagram:
+![TopViewFerrofluidModelLabelled](https://user-images.githubusercontent.com/5296671/143282739-8558cb70-b031-4ace-9674-54a213ffebf4.png)
+
+Veronica Stuckey made a [nice video](https://www.youtube.com/watch?v=IGzz6LX1n6A) of her work that explains it well.
+
 
 
 
 
 # Initial Sketch Idea
+
+NOTE: as mentioned before, this idea is wrong, but usefully wrong---the valve works in the opposite direction to what is suggested.
 
 ![Ferrofluid Check Valve Idea #2](https://user-images.githubusercontent.com/5296671/132899305-987c92eb-7473-424c-9d72-bdc92220f689.png)
 
