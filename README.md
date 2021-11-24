@@ -21,7 +21,7 @@ with no moving parts!
 
 # The Successful Valve
 
-The current valve is describe in [the paper](https://github.com/PubInv/ferrofluidcheckvalve/blob/master/doc/journal-1.2/asme2ej.pdf) in this repo that we will
+The current valve is described in [the paper](https://github.com/PubInv/ferrofluidcheckvalve/blob/master/doc/journal-1.2/asme2ej.pdf) in this repo that we will
 submit to an open access journal soon. Like all Public Invention inventions, we do not seek patents, and you are free to use this design under the CERN Strong Reciprocal License [(CERN-OHL-S-2.0)](https://ohwr.org/cern_ohl_s_v2.txt). 
 
 The gist of the fundamental invention can be understood from the this diagram:
