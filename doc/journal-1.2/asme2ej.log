@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.141592653-2.6-1.40.22 (TeX Live 2021) (preloaded format=pdflatex 2021.7.26)  24 NOV 2021 10:47
+This is pdfTeX, Version 3.141592653-2.6-1.40.22 (TeX Live 2021) (preloaded format=pdflatex 2021.7.26)  24 NOV 2021 13:25
 entering extended mode
  restricted \write18 enabled.
  file:line:error style messages enabled.
@@ -312,91 +312,96 @@ Underfull \hbox (badness 10000) detected at line 71
 
 
 ]
-Underfull \hbox (badness 10000) in paragraph at lines 177--177
+Underfull \hbox (badness 10000) in paragraph at lines 175--175
 []\OT1/ptm/b/n/10 PASSIVE FER-ROFLUID CHECK VALVE
  []
 
-<figure/TopViewFerrofluidModelLabelled.png, id=66, 498.1812pt x 166.7028pt>
+<figure/TopViewFerrofluidModelLabelled.png, id=65, 498.1812pt x 166.7028pt>
 File: figure/TopViewFerrofluidModelLabelled.png Graphic file (type png)
 <use figure/TopViewFerrofluidModelLabelled.png>
 Package pdftex.def Info: figure/TopViewFerrofluidModelLabelled.png  used on inp
-ut line 181.
+ut line 179.
 (pdftex.def)             Requested size: 241.38153pt x 80.7719pt.
-
-Underfull \vbox (badness 10000) has occurred while \output is active []
-
-<figure/equipment.jpeg, id=72, 513.92pt x 289.08pt>
+<figure/equipment.jpeg, id=71, 513.92pt x 289.08pt>
 File: figure/equipment.jpeg Graphic file (type jpg)
 <use figure/equipment.jpeg>
-Package pdftex.def Info: figure/equipment.jpeg  used on input line 249.
+Package pdftex.def Info: figure/equipment.jpeg  used on input line 247.
 (pdftex.def)             Requested size: 241.38153pt x 135.77939pt.
+
+Underfull \hbox (badness 1946) in paragraph at lines 253--266
+[]\OT1/ptm/m/n/10 As shown in Fig. [][]2[][] and in our demon-stra-tion
+ []
+
+
+Underfull \vbox (badness 1024) has occurred while \output is active []
+
  [2 <./figure/TopViewFerrofluidModelLabelled.png> <./figure/equipment.jpeg>]
 LaTeX Font Info:    External font `cmex10' loaded for size
-(Font)              <8> on input line 309.
+(Font)              <8> on input line 307.
 LaTeX Font Info:    External font `cmex10' loaded for size
-(Font)              <6> on input line 309.
+(Font)              <6> on input line 307.
 
-Overfull \hbox (2.75854pt too wide) in paragraph at lines 311--311
+Overfull \hbox (2.75854pt too wide) in paragraph at lines 309--309
 []\OT1/ptm/m/n/8 Magnet
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 311--311
+Underfull \hbox (badness 10000) in paragraph at lines 309--309
 \OT1/ptm/m/n/8 con-
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 311--311
+Underfull \hbox (badness 10000) in paragraph at lines 309--309
 \OT1/ptm/m/n/8 fig-u-ra-
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 312--312
+Underfull \hbox (badness 10000) in paragraph at lines 310--310
 \OT1/ptm/m/n/8 Pres-sure
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 312--312
+Underfull \hbox (badness 10000) in paragraph at lines 310--310
 \OT1/ptm/m/n/8 kPa
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 313--313
+Underfull \hbox (badness 10000) in paragraph at lines 311--311
 []\OT1/ptm/m/n/8 Collapse
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 313--313
+Underfull \hbox (badness 10000) in paragraph at lines 311--311
 \OT1/ptm/m/n/8 Pres-
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 313--313
+Underfull \hbox (badness 10000) in paragraph at lines 311--311
 \OT1/ptm/m/n/8 sure kPa
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 314--314
+Underfull \hbox (badness 10000) in paragraph at lines 312--312
 []\OT1/ptm/m/n/8 Pressure
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 314--314
+Underfull \hbox (badness 10000) in paragraph at lines 312--312
 \OT1/ptm/m/n/8 Dif-fer-
  []
 
 
-Underfull \hbox (badness 3657) in paragraph at lines 314--314
+Underfull \hbox (badness 3657) in paragraph at lines 312--312
 \OT1/ptm/m/n/8 ence kPa
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 315--316
+Underfull \hbox (badness 10000) in paragraph at lines 313--314
 \OT1/ptm/m/n/8 to Col-lapse
  []
 
 
-Underfull \hbox (badness 1297) in paragraph at lines 349--358
+Underfull \hbox (badness 1297) in paragraph at lines 347--356
 []\OT1/ptm/m/n/10 Although the dual mag-net con-fig-u-ra-tion demon-
  []
 
@@ -483,7 +488,7 @@ Package rerunfilecheck Info: File `asme2ej.out' has not changed.
 Here is how much of TeX's memory you used:
  8505 strings out of 478994
  125818 string characters out of 5858184
- 436043 words of memory out of 5000000
+ 437043 words of memory out of 5000000
  25842 multiletter control sequences out of 15000+600000
  425135 words of font info for 61 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
@@ -495,10 +500,10 @@ mf-dist/fonts/type1/urw/helvetic/uhvr8a.pfb></usr/local/texlive/2021/texmf-dist
 /fonts/type1/urw/times/utmb8a.pfb></usr/local/texlive/2021/texmf-dist/fonts/typ
 e1/urw/times/utmr8a.pfb></usr/local/texlive/2021/texmf-dist/fonts/type1/urw/tim
 es/utmri8a.pfb>
-Output written on asme2ej.pdf (4 pages, 176037 bytes).
+Output written on asme2ej.pdf (4 pages, 175864 bytes).
 PDF statistics:
- 140 PDF objects out of 1000 (max. 8388607)
- 123 compressed objects within 2 object streams
+ 139 PDF objects out of 1000 (max. 8388607)
+ 122 compressed objects within 2 object streams
  33 named destinations out of 1000 (max. 500000)
  59 words of extra memory for PDF output out of 10000 (max. 10000000)
 

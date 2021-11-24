@@ -100,7 +100,7 @@ although this paper reports only on experiments done with air.
 Miniature pumps and valves could be used to make a “lab on a chip” (LOC) or
 even to heat or cool different areas.
 A fundamental component of such
-devices is the check or one-way valve.
+devices is the {\em check} or one-way valve.
 Two check
 valves on either side of a chamber whose volume can vary creates a
 positive displacement pump.
@@ -123,13 +123,10 @@ permanent magnet or an electromagnet.
 That is, the flow is determined
 purely by the difference between the inlet port pressure and the
 outlet port pressure.
-(This terminology is not completely standardized,
-for example \cite{hartshorne2004ferrofluid} uses the
-term {\em active} to simply mean a valve that is not a permanent seal.)
 To our knowledge, no passive
 ferrofluid check valve has been previously reported, despite being an
 active area of research and despite such a valve having
-significant advantages for operation but especially
+significant advantages for operation and especially
 fabrication over valves with moving parts.
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -151,14 +148,19 @@ describes an active T-Valve with a moving ferrofluid plug, and
 \cite{ando2009ferrofluidic} describes a complete fluid pump with valves
 that use
 active control of a ferrofluid bolus.
+At least two additional kinds of active valves, a {\em well valve} and Y valve, have
+been described\cite{hartshorne2004ferrofluid}.
 Active control is possible because the
 action of the plunger or bolus may be synchronized with the opening and closing
 of the valves.
 Nonetheless a passive valve would be simpler and less
 expensive, and would not require knowledge of the timing of the
 plunger.
-At least two additional kinds of active valves, a {\em well valve} and Y valve, have
-been described\cite{hartshorne2004ferrofluid}.
+
+An interesting functional micropump in which the
+moving ferrofluid bolus merges with a fixed ferrofluid valve and then
+separates on each pumping cycle has been described\cite{hatch2001ferrofluidic},
+but is not a one-way valve.
 
 A passive ferrofluid two-way valve with tunable
 opening and closing pressure based on magnetic
@@ -169,10 +171,6 @@ This paper has not studied the closing pressure of the PFCV, but reports on
 the opening (or cracking) pressure (for flow from inlet to outlet) and
 sustainable (or collapse) pressure
 when the outlet pressure is higher than the inlet side.
-An interesting functional micropump in which the
-moving ferrofluid bolus merges with a fixed ferrofluid valve and then
-separates on each pumping cycle has been described\cite{hatch2001ferrofluidic},
-but is not a one-way valve.
 
 \section{Passive Ferrofluid Check Valve (PFCV) Design}
 %%%%%%%%%%%%%%%% begin figure %%%%%%%%%%%%%%%%%%%
@@ -184,7 +182,7 @@ but is not a one-way valve.
 \end{figure}
 %%%%%%%%%%%%%%%% end figure %%%%%%%%%%%%%%%%%%%
 
-The PFCV depicted in Figure~\ref{fig_components} is a simple asymmetric volume
+The PFCV depicted in Fig.~\ref{fig_components} is a simple asymmetric volume
 centered in a magnetic field
 which holds a ferrofluid bolus in place.
 In the center of a radially symmetric magnetic field
@@ -216,7 +214,7 @@ existence of the PFCV exciting enough to report on it immediately.
 
 \section{Method}
 
-The valve depicted Figure~\ref{fig_components}
+The valve depicted Fig.~\ref{fig_components}
 was designed using Solidworks 2016.
 It is freely licensed via the CERN OHL Strong Reciprocal License\cite{stuckey2021,stuckey2021stl}.
 The model consists of a 15mm long, 2mm wide and 2mm high channel,
@@ -231,7 +229,7 @@ A magnet holder ring 12.7mm inner diameter (1/2'') was created centered on the c
 junction, below where the bolus is placed, to hold a permanent magnet in place
 at the center of the valve. When two magnets are used, the magnet on
 top naturally stays in the same position due to attraction to the magnet below.
-On the inlet side the channel
+On the inlet side of the channel
 opens into a recovery chamber shaped to allow the ferrofluid to be
 passively drawn back into the channel by the magnetic field after a
 collapse of the bolus.
@@ -252,7 +250,7 @@ remove residuals.
 \end{figure}
 %%%%%%%%%%%%%%%% end figure %%%%%%%%%%%%%%%%%%%
 
-As shown in Figure~\ref{fig_equipment} and in our demonstration video\cite{stuckey2021video},
+As shown in Fig.~\ref{fig_equipment} and in our demonstration video\cite{stuckey2021video},
 a basixCOMPAK 30atm pressurizing syringe (Merit Medical, South Jordan,
 UT) is connected to the model via a two-way stopcock (Qosina,
 Ronkonkoma, NY), tubing (Natvar, City of Industry, CA), and male
@@ -269,7 +267,7 @@ NJ).
 To obtain values, pressure was applied through the pressurizing
 syringe, as demonstrated in a video \cite{stuckey2021video}.
 Pressure was first applied from the outlet side of the model.
-The maximum pressure difference from the outlet side the
+The maximum pressure difference from the outlet side that the
 valve can withstand before collapsing, will be referred to as the
 sustainable pressure or {\em collapse} pressure.
 Pressure applied from the inlet needed to
@@ -292,7 +290,7 @@ The procedure was performed first with one magnet, named the “Single
 Magnet” configuration, placed below the channel-chamber connection.
 The “Dual Magnet” configuration was performed with the magnet in the
 same position as the Single Magnet case in the same position, but with
-a second magnet of equal one placed vertically on top of the model,
+a second magnet of the same kind placed vertically on top of the model,
 arranged to be strongly attracted to the lower magnet.
 
 \section{Results}
@@ -347,7 +345,7 @@ weakening of the magnetic field further from the channel-chamber
 juncture in the dual magnet configuration.
 
 Although the dual magnet configuration demonstrated a larger absolute
-pressure difference due to magnet strength between the
+pressure difference due to magnetic field strength between the
 cracking and the collapse pressure, the single magnet configuration
 granted a larger ratio of collapse pressure to cracking
 pressure due to the much lower cracking pressure.
