@@ -1,18 +1,34 @@
-# ferrofluidcheckvalve
+# A Passive Ferrofluid Check Valve
+This repo describes a *passive* ferrofluid one-way valve.
+This invention is apparently novel and should be quite important for making it 
+easier to fabricate lab-on-a-chip applications, because it has no moving parts,
+and is completely passive.
 
-This is an attempt to build a *passive* ferrofluid one-way valve.
-If this could be accomplished, it would be much easier to make
-a pump-on-a-chip.
-My previous attempts to do this were deeply flawed (see below).
+# A Humorous History
+Our previous attempts to do this were deeply flawed (see below).
 
-I am now attempting to build a (very simple) physics simulation
-of planar ferrofluid to test out some additional ideas
-before 3D printing.
-This was inspired by a Public Invention volunteer who did the
-initial CAD design of my previous thoughs, causing me to
-realize I had not thought deeply enough about the problem.
+When public invention volunteer Veronica Stuckey agreed to work on this project, 
+she invigorated the design effort. I wrote a quick (3-day) simulation using particles
+in a magnetic field, which gave me some rough guidance. This allowed
+me to design an asymmetric chamber which I thought might work. 
+Veronica immediately tested it, and it worked---but in the opposite direction from the
+way that I thought it would work!
+That is, my theory of why the inlet would have low cracking pressure and the outlet 
+sustain high pressure was completely and perfectly backwards. However, this meant
+that despite this error, we had succeeded in creating a functional ferrofluid valve
+with no moving parts!
+-- Robert L. Read
 
-# Current Idea
+# The Successful Valve
+
+The current valve is describe in [the paper](https://github.com/PubInv/ferrofluidcheckvalve/blob/master/doc/journal-1.2/asme2ej.pdf) in this repo that we will
+submit to an open access journal soon. Like all Public Invention inventions, we do not seek patents, and you are free to use this design under the CERN Strong Reciprocal License [(CERN-OHL-S-2.0)](https://ohwr.org/cern_ohl_s_v2.txt). 
+
+
+
+
+
+# Initial Sketch Idea
 
 ![Ferrofluid Check Valve Idea #2](https://user-images.githubusercontent.com/5296671/132899305-987c92eb-7473-424c-9d72-bdc92220f689.png)
 
