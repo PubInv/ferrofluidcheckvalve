@@ -1,20 +1,52 @@
-# ferrofluidcheckvalve
+# A Passive Ferrofluid Check Valve (PFCV)
+This repo describes a *passive* ferrofluid one-way valve.
+This invention is apparently novel and should be quite important for making it 
+easier to fabricate lab-on-a-chip applications, because it has no moving parts,
+and is completely passive.
 
-This is an attempt to build a *passive* ferrofluid one-way valve.
-If this could be accomplished, it would be much easier to make
-a pump-on-a-chip.
-My previous attempts to do this were deeply flawed (see below).
+# A Humorous History
+Our previous attempts to do this were deeply flawed (see below).
 
-I am now attempting to build a (very simple) physics simulation
-of planar ferrofluid to test out some additional ideas
-before 3D printing.
-This was inspired by a Public Invention volunteer who did the
-initial CAD design of my previous thoughs, causing me to
-realize I had not thought deeply enough about the problem.
+When public invention volunteer Veronica Stuckey agreed to work on this project, 
+she invigorated the design effort. I wrote a quick (3-day) simulation using particles
+in a magnetic field, which gave me some rough guidance. This allowed
+me to design an asymmetric chamber which I thought might work. 
+Veronica immediately tested it, and it worked---but in the opposite direction from the
+way that I thought it would work!
+That is, my theory of why the inlet would have low cracking pressure and the outlet 
+sustain high pressure was completely and perfectly backwards. However, this meant
+that despite this error, we had succeeded in creating a functional ferrofluid valve
+with no moving parts!
+-- Robert L. Read
 
-# Current Idea
+# The Successful Valve
+
+The current valve is described in [the paper](https://github.com/PubInv/ferrofluidcheckvalve/blob/master/doc/journal-1.2/asme2ej.pdf) in this repo that we will
+submit to an open access journal soon. Like all Public Invention inventions, we do not seek patents, and you are free to use this design under the CERN Strong Reciprocal License [(CERN-OHL-S-2.0)](https://ohwr.org/cern_ohl_s_v2.txt). 
+
+The gist of the fundamental invention can be understood from the this diagram:
+![TopViewFerrofluidModelLabelled](https://user-images.githubusercontent.com/5296671/143282739-8558cb70-b031-4ace-9674-54a213ffebf4.png)
+
+Veronica Stuckey made a [nice video](https://www.youtube.com/watch?v=IGzz6LX1n6A) of her work that explains it well.
+
+![Screen Shot 2021-11-24 at 11 06 02 AM](https://user-images.githubusercontent.com/5296671/143283489-8d207dbe-410a-497d-abb8-928db957d92e.png)
+
+
+
+# Initial (Wrong Polarity) Sketch Idea
+
+NOTE: as mentioned before, this idea is wrong, but usefully wrong---the valve works in the opposite direction to what is suggested.
 
 ![Ferrofluid Check Valve Idea #2](https://user-images.githubusercontent.com/5296671/132899305-987c92eb-7473-424c-9d72-bdc92220f689.png)
+
+# Future Steps
+
+As always, Public Invention invites you take this idea and run with it! Some potential fun things to do next would be:
+1. Can the performance of the valve be improved by shaping the chamber and/or the magnetic field better?
+2. How do the pressures change if you scale it down?
+3. How far can it be scaled down with a 3D printer before some sort of lithographic or etching technique is required?
+4. Can you make a positive-displacement pump on a single unit by making a 3D printed pump consiting of a 2 PFCVS, a piston made out of a ferrofluid bolus, and an external electomagnet to move the piston (possibly on a PCB)?
+5. This design is essentially a 2D shape slightly extrudede to be a 3D volume. Is there a fully 3D design that is similar but would have better performance?
 
 
 
@@ -24,6 +56,8 @@ An attempt to build a ferrofluidcheckvalve
 This project is now considered a failure; I've attempted to write up what was learned, which is [published](https://medium.com/@RobertLeeRead/failed-experiments-with-ferrofluid-742fa13b0ae1) at Medium
 
 # References
+
+Note: The academic paper herein contains a better list of references!
 
 [Micromachines | Free Full-Text | Magnetically Induced Flow Focusing of Non-Magnetic Microparticles in Ferrofluids under Inclined Magnetic Fields | HTML (mdpi.com)](https://www.mdpi.com/2072-666X/10/1/56/htm)
 
