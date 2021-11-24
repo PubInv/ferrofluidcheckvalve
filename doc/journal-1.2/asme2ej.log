@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.141592653-2.6-1.40.22 (TeX Live 2021) (preloaded format=pdflatex 2021.7.26)  23 NOV 2021 09:56
+This is pdfTeX, Version 3.141592653-2.6-1.40.22 (TeX Live 2021) (preloaded format=pdflatex 2021.7.26)  24 NOV 2021 10:47
 entering extended mode
  restricted \write18 enabled.
  file:line:error style messages enabled.
@@ -323,22 +323,14 @@ Package pdftex.def Info: figure/TopViewFerrofluidModelLabelled.png  used on inp
 ut line 181.
 (pdftex.def)             Requested size: 241.38153pt x 80.7719pt.
 
-Package natbib Warning: Citation `stuckey2021' on page 2 undefined on input lin
-e 221.
-
-
 Underfull \vbox (badness 10000) has occurred while \output is active []
 
-<figure/equipment.jpeg, id=70, 513.92pt x 289.08pt>
+<figure/equipment.jpeg, id=72, 513.92pt x 289.08pt>
 File: figure/equipment.jpeg Graphic file (type jpg)
 <use figure/equipment.jpeg>
 Package pdftex.def Info: figure/equipment.jpeg  used on input line 249.
 (pdftex.def)             Requested size: 241.38153pt x 135.77939pt.
  [2 <./figure/TopViewFerrofluidModelLabelled.png> <./figure/equipment.jpeg>]
-
-Package natbib Warning: Citation `stuckey2021video' on page 3 undefined on inpu
-t line 270.
-
 LaTeX Font Info:    External font `cmex10' loaded for size
 (Font)              <8> on input line 309.
 LaTeX Font Info:    External font `cmex10' loaded for size
@@ -448,32 +440,65 @@ Underfull \hbox (badness 1199) in paragraph at lines 73--77
 []\OT1/ptm/m/n/10 Paschalis, E. I., Cho-dosh, J., Sper-ling, R. A.,
  []
 
+LaTeX Font Info:    Trying to load font information for OT1+pcr on input line 8
+2.
+(/usr/local/texlive/2021/texmf-dist/tex/latex/psnfss/ot1pcr.fd
+File: ot1pcr.fd 2001/06/04 font definitions for OT1/pcr.
 )
+Underfull \hbox (badness 2293) in paragraph at lines 79--84
+[]\OT1/ptm/m/n/10 Stuckey, V., 2021,  Pfcv solid model (solid
+ []
 
-Package natbib Warning: There were undefined citations.
 
-[4] (./asme2ej.aux)
+Underfull \hbox (badness 7012) in paragraph at lines 79--84
+\OT1/ptm/m/n/10 works)  [][]$\OT1/pcr/m/n/10 https : / / github . com / PubInv 
+/
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 79--84
+\OT1/pcr/m/n/10 ferrofluidcheckvalve / blob / master /
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 86--91
+[]\OT1/ptm/m/n/10 Stuckey, V., 2021,  Pfcv solid model
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 86--91
+\OT1/ptm/m/n/10 (stl)  [][]$\OT1/pcr/m/n/10 https : / / github . com / PubInv /
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 86--91
+\OT1/pcr/m/n/10 ferrofluidcheckvalve / blob / master /
+ []
+
+) [4] (./asme2ej.aux)
 Package rerunfilecheck Info: File `asme2ej.out' has not changed.
 (rerunfilecheck)             Checksum: E13AF83218E55D25F82119EE3EA77722;762.
  ) 
 Here is how much of TeX's memory you used:
- 8457 strings out of 478994
- 125049 string characters out of 5858184
- 436995 words of memory out of 5000000
- 25802 multiletter control sequences out of 15000+600000
- 424620 words of font info for 59 fonts, out of 8000000 for 9000
+ 8505 strings out of 478994
+ 125818 string characters out of 5858184
+ 436043 words of memory out of 5000000
+ 25842 multiletter control sequences out of 15000+600000
+ 425135 words of font info for 61 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
- 71i,11n,74p,326b,396s stack positions out of 5000i,500n,10000p,200000b,80000s
+ 71i,11n,74p,326b,394s stack positions out of 5000i,500n,10000p,200000b,80000s
 {/usr/local/texlive/2021/texmf-dist/fonts/enc/dvips/base/8r.enc}</usr/local/t
-exlive/2021/texmf-dist/fonts/type1/urw/helvetic/uhvb8a.pfb></usr/local/texlive/
-2021/texmf-dist/fonts/type1/urw/helvetic/uhvr8a.pfb></usr/local/texlive/2021/te
-xmf-dist/fonts/type1/urw/times/utmb8a.pfb></usr/local/texlive/2021/texmf-dist/f
-onts/type1/urw/times/utmr8a.pfb></usr/local/texlive/2021/texmf-dist/fonts/type1
-/urw/times/utmri8a.pfb>
-Output written on asme2ej.pdf (4 pages, 163119 bytes).
+exlive/2021/texmf-dist/fonts/type1/urw/courier/ucrr8a.pfb></usr/local/texlive/2
+021/texmf-dist/fonts/type1/urw/helvetic/uhvb8a.pfb></usr/local/texlive/2021/tex
+mf-dist/fonts/type1/urw/helvetic/uhvr8a.pfb></usr/local/texlive/2021/texmf-dist
+/fonts/type1/urw/times/utmb8a.pfb></usr/local/texlive/2021/texmf-dist/fonts/typ
+e1/urw/times/utmr8a.pfb></usr/local/texlive/2021/texmf-dist/fonts/type1/urw/tim
+es/utmri8a.pfb>
+Output written on asme2ej.pdf (4 pages, 176037 bytes).
 PDF statistics:
- 121 PDF objects out of 1000 (max. 8388607)
- 105 compressed objects within 2 object streams
- 30 named destinations out of 1000 (max. 500000)
+ 140 PDF objects out of 1000 (max. 8388607)
+ 123 compressed objects within 2 object streams
+ 33 named destinations out of 1000 (max. 500000)
  59 words of extra memory for PDF output out of 10000 (max. 10000000)
 
