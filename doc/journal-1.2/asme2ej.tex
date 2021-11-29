@@ -73,7 +73,7 @@
 \begin{abstract}
 
 Small pumps and valves enable flow management in microfluidic systems.
-This paper presents a novel passive ferrofluid check valve.
+A novel passive ferrofluid check valve is presented.
 The valve consists of only a
 unique channel-and-chamber geometry, ferrofluid, and a stationary
 magnetic field.
@@ -98,7 +98,8 @@ This has been proposed for biomedical purposes\cite{michelson2019novel}
 that would use water or body fluids,
 although this paper reports only on experiments done with air.
 Miniature pumps and valves could be used to make a “lab on a chip” (LOC) or
-even to heat or cool different areas.
+even to heat or cool different chip areas.
+
 A fundamental component of such
 devices is the {\em check} or one-way valve.
 Two check
@@ -110,7 +111,7 @@ pressure on the outlet side before {\em collapse},
 allowing fluid to flow in only one
 direction. Following\cite{hartshorne2004ferrofluid} we call the maximum pressure
 differential the valve can resist in the direction it is intended to
-check (from outlet to inlet) the {\em sustainable} or {\em collapse} pressure.
+check or block (from outlet to inlet) the {\em sustainable} or {\em collapse} pressure.
 
 This article is a brief report on an initial but functioning design of a
 passive ferrofluid check valve (PFCV) that has no moving
@@ -144,11 +145,12 @@ has been reported.
 Other researchers use active valves, which require synchronization with
 the ferrofluid plug to form a pump,
 such as \cite{menz2000fluidic}, which
-describes an active T-Valve with a moving ferrofluid plug, and
+describes an active {\em T-Valve} with a moving ferrofluid plug, and
 \cite{ando2009ferrofluidic} describes a complete fluid pump with valves
 that use
 active control of a ferrofluid bolus.
-At least two additional kinds of active valves, a {\em well valve} and Y valve, have
+At least two additional kinds of active valves, a {\em well valve} and
+{\em Y-valve}, have
 been described\cite{hartshorne2004ferrofluid}.
 Active control is possible because the
 action of the plunger or bolus may be synchronized with the opening and closing
@@ -176,7 +178,7 @@ when the outlet pressure is higher than the inlet side.
 %%%%%%%%%%%%%%%% begin figure %%%%%%%%%%%%%%%%%%%
 %%% 3.34in is the maximum width you can have for a figure
 \begin{figure}
-\centerline{\includegraphics[width=3.34in]{figure/TopViewFerrofluidModelLabelled.png}}
+\centerline{\includegraphics[width=3.34in]{figure/Figure1.png}}
 \caption{The passive ferrofluid check valve components}
 \label{fig_components}
 \end{figure}
@@ -210,18 +212,19 @@ pump-on-a-chip.
 Furthermore, the PFCV reported here is a preliminary design which
 can probably be significantly improved.
 The authors found the
-existence of the PFCV exciting enough to report on it immediately.
+existence of the PFCV worth sharing immediately.
 
 \section{Method}
 
 The valve depicted Fig.~\ref{fig_components}
 was designed using Solidworks 2016.
 It is freely licensed via the CERN OHL Strong Reciprocal License\cite{stuckey2021,stuckey2021stl}.
-The model consists of a 15mm long, 2mm wide and 2mm high channel,
+The model consists of a 15mm long, 2mm wide channel, a large outlet
+chamber, a recovery chamber,
 two female luers, a magnet holder ring and two legs to provide room
 for the magnet.  All volumes are 2mm high.
 The 3D shape
-of the chambers can be thought as a 2mm extrusion of a 2D shape.
+of the chambers can be thought as a 2mm high extrusion of a 2D shape.
 Viewed from the top, one end opens up to a recovery
 chamber of circular profile 30mm in diameter and the other
 an outlet chamber with a flat wall.
@@ -244,7 +247,7 @@ remove residuals.
 %%%%%%%%%%%%%%%% begin figure %%%%%%%%%%%%%%%%%%%
 %%% 3.34in is the maximum width you can have for a figure
 \begin{figure}
-\centerline{\includegraphics[width=3.34in]{figure/equipment.jpeg}}
+\centerline{\includegraphics[width=3.34in]{figure/Figure2.jpeg}}
 \caption{Equipment set up}
 \label{fig_equipment}
 \end{figure}
@@ -275,6 +278,7 @@ initiate flow will be referred to as the {\em cracking} pressure.
 
 The cracking pressure was first measured by increasing the pressure
 difference on the inlet side until flow is initiated (at which point
+the valve is ``open'' and
 pushing the syringe plunger faster simply increases flow without
 increasing the pressure.) Then the
 collapse pressure was measured by increasing the pressure
