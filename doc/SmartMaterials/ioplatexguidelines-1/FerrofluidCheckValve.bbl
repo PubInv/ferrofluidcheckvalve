@@ -1,0 +1,97 @@
+\begin{thebibliography}{10}
+
+\bibitem{torres2014recent}
+I~Torres-D{\'\i}az and C~Rinaldi.
+\newblock Recent progress in ferrofluids research: novel applications of
+  magnetically controllable and tunable fluids.
+\newblock {\em Soft matter}, 10(43):8584--8602, 2014.
+
+\bibitem{kole2021engineering}
+Madhusree Kole and Sameer Khandekar.
+\newblock Engineering applications of ferrofluids: A review.
+\newblock {\em Journal of Magnetism and Magnetic Materials}, page 168222, 2021.
+
+\bibitem{ozbey2015modeling}
+Arzu {\"O}zbey, Mehrdad Karimzadehkhouei, Sinan~Eren Yal{\c{c}}{\i}n, Devrim
+  Gozuacik, and Ali Ko{\c{s}}ar.
+\newblock Modeling of ferrofluid magnetic actuation with dynamic magnetic
+  fields in small channels.
+\newblock {\em Microfluidics and Nanofluidics}, 18(3):447--460, 2015.
+
+\bibitem{yamahata2003ferrofluid}
+Christophe Yamahata, Mathieu Chastellain, Heinrich Hofmann, and Martin~AM Gijs.
+\newblock A ferrofluid micropump for lab-on-a-chip applications.
+\newblock In {\em Techn. Digest Eurosensors XVII, The 17th Europ. Conf. On
+  Solid State Transducers}, number CONF, 2003.
+
+\bibitem{hatch2001ferrofluidic}
+Anson Hatch, Andrew~Evan Kamholz, Gary Holman, Paul Yager, and Karl~F
+  Bohringer.
+\newblock A ferrofluidic magnetic micropump.
+\newblock {\em Journal of Microelectromechanical systems}, 10(2):215--221,
+  2001.
+
+\bibitem{michelson2019novel}
+Trevor Michelson, Joshua Rudnick, Joshua Baxter, and Reza Rashidi.
+\newblock A novel ferrofluid-based valve-less pump.
+\newblock In {\em ASME International Mechanical Engineering Congress and
+  Exposition}, volume 59445, page V007T08A009. American Society of Mechanical
+  Engineers, 2019.
+
+\bibitem{hartshorne2004ferrofluid}
+Herb Hartshorne, Christopher~J Backhouse, and William~E Lee.
+\newblock Ferrofluid-based microchip pump and valve.
+\newblock {\em Sensors and Actuators B: Chemical}, 99(2-3):592--600, 2004.
+
+\bibitem{hsu2018biocompatible}
+Meng-Chun Hsu, Ahmed Alfadhel, Farzad Forouzandeh, and David~A Borkholder.
+\newblock Biocompatible magnetic nanocomposite microcapsules as microfluidic
+  one-way diffusion blocking valves with ultra-low opening pressure.
+\newblock {\em Materials \& design}, 150:86--93, 2018.
+
+\bibitem{yamahata2005plastic}
+Christophe Yamahata, Mathieu Chastellain, Virendra~K Parashar, Alke Petri,
+  Heinrich Hofmann, and Martin~AM Gijs.
+\newblock Plastic micropump with ferrofluidic actuation.
+\newblock {\em Journal of microelectromechanical systems}, 14(1):96--102, 2005.
+
+\bibitem{menz2000fluidic}
+A~Menz, W~Benecke, R~Perez-Castillejos, JA~Plasza, J~Esteve, N~Garcia,
+  J~Higuero, and T~Diez-Caballero.
+\newblock Fluidic components based on ferrofluids.
+\newblock In {\em 1st Annual International IEEE-EMBS Special Topic Conference
+  on Microtechnologies in Medicine and Biology. Proceedings (Cat. No.
+  00EX451)}, pages 302--306. IEEE, 2000.
+
+\bibitem{ando2009ferrofluidic}
+Bruno Ando, Alberto Ascia, Salvatore Baglio, and Nicola Pitrone.
+\newblock Ferrofluidic pumps: a valuable implementation without moving parts.
+\newblock {\em IEEE Transactions on Instrumentation and Measurement},
+  58(9):3232--3237, 2009.
+
+\bibitem{paschalis2013novel}
+Eleftherios~I Paschalis, James Chodosh, Ralph~A Sperling, Borja Salvador-Culla,
+  and Claes Dohlman.
+\newblock A novel implantable glaucoma valve using ferrofluid.
+\newblock {\em PloS one}, 8(6):e67404, 2013.
+
+\bibitem{stuckey2021}
+Veronica Stuckey.
+\newblock Pfcv solid model (solid works).
+\newblock
+  \url{https://github.com/PubInv/ferrofluidcheckvalve/blob/master/model/FerrofluidModel.SLDPRT},
+  Nov. 2021.
+
+\bibitem{stuckey2021stl}
+Veronica Stuckey.
+\newblock Pfcv solid model (stl).
+\newblock
+  \url{https://github.com/PubInv/ferrofluidcheckvalve/blob/master/model/FerrofluidModel.STL},
+  Nov. 2021.
+
+\bibitem{stuckey2021video}
+Veronica Stuckey.
+\newblock A passive ferrofluid check valve (video).
+\newblock \url{https://youtu.be/IGzz6LX1n6A}, 2021.
+
+\end{thebibliography}

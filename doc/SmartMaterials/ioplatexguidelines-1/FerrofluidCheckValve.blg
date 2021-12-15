@@ -1,0 +1,48 @@
+This is BibTeX, Version 0.99d (TeX Live 2021)
+Capacity: max_strings=200000, hash_size=200000, hash_prime=170003
+The top-level auxiliary file: FerrofluidCheckValve.aux
+The style file: unsrt.bst
+Database file #1: ffcv.bib
+Warning--there's a number but no series in yamahata2003ferrofluid
+You've used 15 entries,
+            1791 wiz_defined-function locations,
+            546 strings with 6767 characters,
+and the built_in function-call counts, 3980 in all, are:
+= -- 359
+> -- 192
+< -- 5
++ -- 70
+- -- 55
+* -- 272
+:= -- 605
+add.period$ -- 47
+call.type$ -- 15
+change.case$ -- 15
+chr.to.int$ -- 0
+cite$ -- 16
+duplicate$ -- 177
+empty$ -- 369
+format.name$ -- 55
+if$ -- 902
+int.to.chr$ -- 0
+int.to.str$ -- 15
+missing$ -- 12
+newline$ -- 78
+num.names$ -- 15
+pop$ -- 47
+preamble$ -- 1
+purify$ -- 0
+quote$ -- 0
+skip$ -- 106
+stack$ -- 0
+substring$ -- 262
+swap$ -- 65
+text.length$ -- 5
+text.prefix$ -- 0
+top$ -- 0
+type$ -- 0
+warning$ -- 1
+while$ -- 35
+width$ -- 17
+write$ -- 167
+(There was 1 warning)
