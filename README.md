@@ -24,7 +24,7 @@ with no moving parts!
 The current valve is described in [the paper](https://github.com/PubInv/ferrofluidcheckvalve/blob/master/doc/journal-1.2/asme2ej.pdf) in this repo that we will
 submit to an open access journal soon. Like all Public Invention inventions, we do not seek patents, and you are free to use this design under the CERN Strong Reciprocal License [(CERN-OHL-S-2.0)](https://ohwr.org/cern_ohl_s_v2.txt). 
 
-The gist of the fundamental invention can be understood from the this diagram:
+The gist of the fundamental invention can be understood from this diagram:
 ![TopViewFerrofluidModelLabelled](https://user-images.githubusercontent.com/5296671/143282739-8558cb70-b031-4ace-9674-54a213ffebf4.png)
 
 Veronica Stuckey made a [nice video](https://www.youtube.com/watch?v=IGzz6LX1n6A) of her work that explains it well.
@@ -45,8 +45,8 @@ As always, Public Invention invites you take this idea and run with it! Some pot
 1. Can the performance of the valve be improved by shaping the chamber and/or the magnetic field better?
 2. How do the pressures change if you scale it down?
 3. How far can it be scaled down with a 3D printer before some sort of lithographic or etching technique is required?
-4. Can you make a positive-displacement pump on a single unit by making a 3D printed pump consiting of a 2 PFCVS, a piston made out of a ferrofluid bolus, and an external electomagnet to move the piston (possibly on a PCB)?
-5. This design is essentially a 2D shape slightly extrudede to be a 3D volume. Is there a fully 3D design that is similar but would have better performance?
+4. Can you make a positive-displacement pump on a single unit by making a 3D printed pump consisting of a 2 PFCVS, a piston made out of a ferrofluid bolus, and an external electromagnet to move the piston (possibly on a PCB)?
+5. This design is essentially a 2D shape slightly extruded to be a 3D volume. Is there a fully 3D design that is similar but would have better performance?
 
 
 
