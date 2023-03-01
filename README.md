@@ -31,6 +31,16 @@ Veronica Stuckey made a [nice video](https://www.youtube.com/watch?v=IGzz6LX1n6A
 
 ![Screen Shot 2021-11-24 at 11 06 02 AM](https://user-images.githubusercontent.com/5296671/143283489-8d207dbe-410a-497d-abb8-928db957d92e.png)
 
+# Design For a Piston to Make a Pump
+
+One of the most interesting things to do with these valves are to use them to make a pump. A pump simply requires a change in volume in the 
+pumped fluid between two valves allowing flow in the same direction. We demonstrate this with our existing appratus via a hand-pumped syringe.
+However, we could also use a ferrofluid piston, in which case we would have a pump with no moving parts except for ferrfoluid itself.
+
+A piston may be made by moving a blob of ferrofluid in channel (this has been done by many researchers already.) Based on some initial
+experiments, here is our design for an electronic ferrofluid piston:
+
+![Pump Improvements](https://user-images.githubusercontent.com/5296671/222033199-69d51536-0f8e-49c7-8b1f-76b9fa031a20.png)
 
 
 # Initial (Wrong Polarity) Sketch Idea
