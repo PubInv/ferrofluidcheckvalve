@@ -8,7 +8,8 @@
 
 // The simplest thing is to have a single "on" period for each magnet
 // and then oscillate through the magnets
-const long DURATION_ON_MS = 800;
+const long DURATION_ON_MS = 400;
+const int OVERLAP = 200;
 
 
 const int NUM_MAGNETS = 4;
@@ -53,15 +54,18 @@ void setup() {
 
 // At first I'm just going to turn the magnet on with a duty cycle
 // to see if I can jiggle the ferrofluid and keep the coils cool
-
-void set_mag_as_radio_button(int mag) {
+// overlap is the time to leave both magnets on.
+void set_mag_as_radio_button(int mag,int overlap) {
   for(int i = 0; i < NUM_MAGNETS; i++) {
-    int val = (i == mag) ? HIGH : LOW;
-    Serial.print(i);
-    Serial.print(" : ");
-    Serial.println(val);
-    Serial.println(MAGNET_PIN[i]);
-     digitalWrite(MAGNET_PIN[i],(i == mag) ? HIGH : LOW);
+    if (mag == i) {
+     digitalWrite(MAGNET_PIN[i],HIGH);
+    }
+  }
+  delay(overlap);
+  for(int i = 0; i < NUM_MAGNETS; i++) {
+     if (mag != i) {
+      digitalWrite(MAGNET_PIN[i],LOW);
+     }
   }
 }
 
@@ -84,5 +88,5 @@ void loop() {
   }
   Serial.print("magnet on:");
   Serial.println(magnet_order);
-  set_mag_as_radio_button(magnet_order);
+  set_mag_as_radio_button(magnet_order,OVERLAP);
 }
