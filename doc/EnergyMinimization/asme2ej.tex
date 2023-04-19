@@ -450,14 +450,19 @@ at our diagram (where the channel meets the chamber.)
 Call the region to the left A and the region to the right B, and assume
 the orgin is at the center of the diagram.
 
+Note: I believe using a magnetic force that falls off with the square of distance may
+not allow for a stable solution. I am not sure how to model this in a way
+which is realistic and convenient. Using the fourth power will probably work and
+may be realistic given of action is perpendicular to the magnet. I think I will try it.
+
 Let us assume once again a magnetic field centered on the origin of strength
 \[
-B(r) = \frac{1}{1 + r^2}
+B(r) = \frac{1}{1 + r^4}
 \]
 where $r$ is the distance from the orgin. A given point
 feels a force:
 \[
-B(r,\theta) = k \frac{1}{1 + r^2}
+B(r,\theta) = k \frac{1}{1 + r^4}
 \]
 in the direction $-\theta$.
 
@@ -470,19 +475,30 @@ S = d \cdot a + \frac{1}{2} \pi b^2
 \]
 when $a > 0$ and $b > 0$, so that the areas of $A$ and $B$ are both positive.
 This can be solved for $a$:
-\[
-a = -\frac{\pi b^2 - 2 S}{2d}
-\]
+\begin{align}
+  a = -\frac{\pi b^2 - 2 S}{2d}
+  \label{eqn:afromS}
+\end{align}
 
 We seek the force on the total bolus $F$, which is:
 \[
 F = F_A + F_B
 \]
 
+Note: The 4th power is hard to integrate:
+\url{https://math.stackexchange.com/questions/333611/evaluating-int-frac1x41-dx}
+
+
 The force on the part of the bolus in the area $A$ is:
 \begin{align}
-  F_A = & \int_{0}^{a} d \frac{1}{1 + x^2} \\
-  F_A = & d \arctan{a}
+\end{align}
+
+\begin{align}
+  F_A = & \int_{0}^{a} d \frac{1}{1 + x^4} dx \\
+  F_A = &\frac{\sqrt{2} \left(- \log{\left(a^{2} - \sqrt{2} a + 1 \right)} +
+    \log{\left(a^{2} + \sqrt{2} a + 1 \right)} +
+    2 \operatorname{atan}{\left(\sqrt{2} a - 1 \right)} +
+    2 \operatorname{atan}{\left(\sqrt{2} a + 1 \right)}\right)}{8} \\
 \end{align}
 
 The force in $B$ region is the integration over a semicircle.
@@ -490,17 +506,14 @@ It has no dependence on the angle, but only the distance,
 so it is convenient to intgrate over semi-circles at distance $r$,
 each of which has a distance of $\pi r$:
 \begin{align}
-  F_B = & - \int_{0}^{b} \pi \frac{r}{1 + r^2} \\
-  F_B = & - \pi \int_{0}^{b} \frac{r}{1 + r^2} \\
-  F_B = & - \frac{\pi\ln{(1 + b^2)}}{2}
+  F_B = & - \int_{0}^{b} \pi \frac{r}{1 + r^4} \\
+  F_B = & - \pi \int_{0}^{b} \frac{r}{1 + r^4} \\
+  F_B = & - \frac{\arctan{b^2}}{2}
 \end{align}
 
-We can now revisit our total force and eliminate $a$:
-
-\begin{align}
-  F = & F_A + F_B \\
-  F = & d \arctan{a} + - \frac{\pi\ln{(1 + b^2)}}{2}
-  \end{align}
+Our goal now is to sum $F = F_A + F_B$ and use Equation~\ref{eqn:afromS},
+possibly with other assumptions about $S$ and $d$, to see if the force is
+reasonable.
 
 \subsection{Idea}
 
@@ -891,3 +904,7 @@ ASME bibliography stype file \verb+asmems4.bst+.
 \entry{A}{You may include nomenclature here.}
 \entry{$\alpha$}{There are two arguments for each entry of the nomemclature environment, the symbol and the definition.}
 \end{nomenclature}
+
+%%%%%%%%%%%%%%%%%
+
+Here I attempt to write some wolframscript commands
