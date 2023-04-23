@@ -488,6 +488,8 @@ We seek the force on the total bolus $F$, which is:
 F = F_A + F_B
 \]
 
+\subsection{I am now dubious of this subsection}
+
 Note: The 4th power is hard to integrate:
 \url{https://math.stackexchange.com/questions/333611/evaluating-int-frac1x41-dx}
 
@@ -529,19 +531,16 @@ valve.
 Assume that a blob in this section means an ideal 2-dimensional blob,
 approximated by a blob constrained into a very thin plane.
 
-\begin{conjecture}[Magnetostatic Blob Force]
+\begin{conjecture}[Magnetostatic Blob Minimization]
   \label{conj:mbf}
-  The magnetostaic force on a blob depends
-  is the integral over the surface length in the magnetic gradient
-  at every point on the surface.
+  The magnetostaic force on a 2-dimensional blob
+  tends to minimize the potential energy in the blob
+  and this occurs when its surfaces are in equal strength fields.
+  Equivalently, every surface of a blob at rest with no outside
+  forces is a line of equal field strength and all surfaces are equal.
 \end{conjecture}
 
-\begin{corollary}[Equigradient Blob Surface Principle]
-  Conjecture~\ref{conj:mbf} implies that a Blob at rest acted on by
-  no other forces has every surface at an equivalent magnetic gradient.
-  (This corrollary depends on the reasonable assumption that the
-  gradients are smooth and continuous.)
-\end{corollary}
+\subsection{This section may be wrong; it is written in terms of gradient, not force!}
 
 Now imagine that a we have a monotone decreasing field centered
 on the origin which which is not necessarily circular, with
