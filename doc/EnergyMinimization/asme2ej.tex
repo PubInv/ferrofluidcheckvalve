@@ -31,6 +31,9 @@
 }
 \usepackage[square,numbers]{natbib}
 
+\newtheorem{conjecture}{Conjecture}
+\newtheorem{corollary}{Corollay}
+
 %% The class has several options
 %  onecolumn/twocolumn - format for one or two columns per page
 %  10pt/11pt/12pt - use 10, 11, or 12 point font
@@ -410,9 +413,9 @@ F(y) = k B'(y)
 so as as $y$ is inside the bolus. Integrating the entire bolus
 to find the force on it:
 \begin{align}
-  F = & \int_{x-1}^{x+1} k B'(x) dx \\
-  F = & k \int_{x-1}^{x+1} \frac{2x}{(1 + x^2)^2} \\
-  F = & k \frac{4x}{4 + x^2}
+  F(x) = & \int_{x-1}^{x+1} k B'(x) dx \\
+  F(x) = & k \int_{x-1}^{x+1} \frac{2x}{(1 + x^2)^2} \\
+  F(x) = & k \frac{4x}{4 + x^2}
 \end{align}
 Plotting this function of $x$, we immediately find it matches
 our experience. If you put a bolus in a thing straw subject
@@ -423,7 +426,7 @@ is displaced to a point that the magnetic force on it goes
 down, and the bolus explodes violently away from your breath,
 generally spattering and making a mess.
 
-The extrema of this force $F$ occur at
+The extrema of this force $F(x)$ occur at
 $(-\frac{2}{\sqrt[4]{3}},\frac{2}{\sqrt[4]{3}})$, or $(-1.0746,1.0746)$, which
 again accords with physical experience of how much a bolus can be displaced
 before it explodes. It must be remembered, however, that these
@@ -520,6 +523,66 @@ reasonable.
 We can protect the valve from explosive collapse by using a separate
 valve that cracks before the collapse pressure, acting as a ``pop-off''
 valve.
+
+\subsection{Some Design Thoughts}
+
+Assume that a blob in this section means an ideal 2-dimensional blob,
+approximated by a blob constrained into a very thin plane.
+
+\begin{conjecture}[Magnetostatic Blob Force]
+  \label{conj:mbf}
+  The magnetostaic force on a blob depends
+  is the integral over the surface length in the magnetic gradient
+  at every point on the surface.
+\end{conjecture}
+
+\begin{corollary}[Equigradient Blob Surface Principle]
+  Conjecture~\ref{conj:mbf} implies that a Blob at rest acted on by
+  no other forces has every surface at an equivalent magnetic gradient.
+  (This corrollary depends on the reasonable assumption that the
+  gradients are smooth and continuous.)
+\end{corollary}
+
+Now imagine that a we have a monotone decreasing field centered
+on the origin which which is not necessarily circular, with
+the A region containg a thin tube, and the B region containing
+a wide open region. Imagine that the field in B is radially
+symmettric, but monotonically decreasing with distrance from
+the origin (but not necessarily the same in the region A.)
+A force resisting flow from the outlet to the inlet (from B to A)
+is equal to the gradient at a point multiplied by the surface
+length.
+In this scenario, the air pressure on the blob is a function
+of the length of the surface, but the magnetostatic force is
+also a function length, so the length cancels out and becomes
+irrelevant.
+The collapse pressure is therefore the maximum gradient
+gradient at any point between the rest position and the origin
+(this gradient is by construction equal on a semi-circular arc.)
+The collapse pressure also depends on the gradient
+at the point of the surface in A, but this surface has small length,
+and therefore contributes little to the sum of the force.
+
+Conversely, the cracking pressure will be minimized by
+making the gradient in the region B as shallow as possible
+at the point when the ferrfofuid has been entirely driven into
+region A by air pressure from the inlet.
+
+Understanding this, we can deign a profile of the ideal
+magnetic field to maximize the ratio of collapse pressure
+to cracking pressure as shown in the figure below.
+
+
+\begin{figure}
+\centerline{\includegraphics[width=4in]{figure/IdealFieldProfile.png}}
+\caption{Ideal Field Profile}
+\label{fig:IdealFieldProfile}
+\end{figure}
+
+
+
+
+
 
 \subsection{Other Thoughs}
 
