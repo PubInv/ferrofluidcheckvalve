@@ -369,7 +369,49 @@ been not only to the weaker magnetic field, but the weakening at the
 top of the 2mm high channel, which was further away from the magnet
 in the single magnet configuration.
 
-\section{Theory of Operation}
+\section{Theory of Operation (Best as of Apr. 24)}
+
+Assume that a blob in this section means an ideal 2-dimensional blob,
+approximated by a blob constrained into a very thin plane.
+
+\begin{conjecture}[Magnetostatic Blob Minimization]
+  \label{conj:mbf}
+  The magnetostaic force on a 2-dimensional blob
+  tends to minimize the potential energy in the blob
+  and this occurs when its surfaces are in equal strength fields.
+  Equivalently, every surface of a blob at rest with no outside
+  forces is a line of equal field strength and all surfaces are equal.
+\end{conjecture}
+
+Now imagine that a we have a monotone decreasing field centered
+on the origin which which is not necessarily circular, with
+the A region containg a thin tube, and the B region containing
+a wide open region. Imagine that the field in B is radially
+symmettric, but monotonically decreasing with distrance from
+the origin (but not necessarily the same in the region A.)
+A force resisting flow from the outlet to the inlet (from B to A)
+is equal to the field strength at a point multiplied by the surface
+length.
+In this scenario, the air pressure on the blob is a function
+of the length of the surface, but the magnetostatic force is
+also a function of length, so the length cancels out and becomes
+irrelevant.
+The collapse pressure is therefore the maximum force at any point between the rest position and the origin
+(this field is by construction equal on a semi-circular arc.)
+The collapse pressure also depends on the field strength
+at the point of the surface in A, but this surface has small length,
+and therefore contributes little to the sum of the force.
+
+Conversely, the cracking pressure will be minimized by
+making the field strength in the region B as low as possible
+at the point when the ferrfofuid has been entirely driven into
+region A by air pressure from the inlet.
+
+Understanding this, we can deign a profile of the ideal
+magnetic field to maximize the ratio of collapse pressure
+to cracking pressure as shown in the figure below.
+
+
 
 \subsection{Warmup: A Bolus in A Channel}
 
@@ -384,7 +426,6 @@ Imagine that it has an external magnet that produces a field
 centered on the origin with a strength:
 \begin{align}
   B(x) = & \frac{1}{1 + x^2} \\
-  B'(x) = & \frac{2x}{(1 + x^2)^2}
 \end{align}
 This field might be hard to produce with actual magnets but
 is good enough for our analysis; a more complex field can
@@ -399,24 +440,28 @@ qualitative result.
 
 Now imagine that bolus has a length of 2, and let $x$ be
 the midpoint of the bolus.  The force on the ferrfoluid
-in this bolus at any point $y$ is in the positive $X$ direction
-of the gradient of $B(y)$, $B'(y)$, is increasing, and
-in the negative $X$ direction if it is decreasing (that is,
-if $y > 0$. Qualitatively, the ferrofluid is pulled toward
-the origin.
-Let $k$ be a constant of proportionality that represents the
-the absolute strength of the field and permeability\footnote{Is this the correct term?}
-of the ferrofluid.
+is purely a function of the position of the two surfaces,
+which are by construction at $x - 1$ and $x + 1$.
+Ignore constants based on units for the time being.
+For a surface at $y$,
 \[
-F(y) = k B'(y)
-\]
-so as as $y$ is inside the bolus. Integrating the entire bolus
-to find the force on it:
+F(y) =
+    \begin{cases}
+            d B(y), &         \text{if y $<$ 0} \\
+            -d B(y), &         \text{if y $\geq$ 0}
+    \end{cases}
+    \]
+
+    The total force on the bolus is:
 \begin{align}
-  F(x) = & \int_{x-1}^{x+1} k B'(x) dx \\
-  F(x) = & k \int_{x-1}^{x+1} \frac{2x}{(1 + x^2)^2} \\
-  F(x) = & k \frac{4x}{4 + x^2}
+  F(x) = & F_A(x-1) + F_B(x+1) \\
+  F(x) = & d B(x-1) + -d B(x+1) \\
+  F(x) = & d(1/(1 + (x-1)^2) + - 1/(1 + (x +1)^2)) \\
+  F(x) = & \frac{4x}{x^4+4}
 \end{align}
+
+
+
 Plotting this function of $x$, we immediately find it matches
 our experience. If you put a bolus in a thing straw subject
 to a magnetic field and blow on it, it will be displaced a bit,
@@ -427,7 +472,7 @@ down, and the bolus explodes violently away from your breath,
 generally spattering and making a mess.
 
 The extrema of this force $F(x)$ occur at
-$(-\frac{2}{\sqrt[4]{3}},\frac{2}{\sqrt[4]{3}})$, or $(-1.0746,1.0746)$, which
+$(-\frac{\sqrt{2}}{\sqrt[4]{3}},\frac{\sqrt{2}}{\sqrt[4]{3}})$, or $(-1.0746,1.0746)$, which
 again accords with physical experience of how much a bolus can be displaced
 before it explodes. It must be remembered, however, that these
 calculations will change if the intensity of the magnetic field is
@@ -439,12 +484,12 @@ to allow direct design of bolus ferrofluid system.
 
 Our goal, however, is to analyze a somewhat more complicated geometry.
 In particular, we are interested in a channel-leading-to-a-chamber,
-as depicted in Fig.~\ref{fig-ChannelToChamber}.
+as depicted in Fig.~\ref{fig:ChannelToChamber}.
 
 \begin{figure}
 \centerline{\includegraphics[width=4in]{figure/ChannelToChamber.png}}
 \caption{Channel To Chamber Geometry}
-\label{fig_ChannelToChamber}
+\label{fig:ChannelToChamber}
 \end{figure}
 
 We would ideally like to treat this as a one-dimensional problem as well.
@@ -460,14 +505,9 @@ may be realistic given of action is perpendicular to the magnet. I think I will 
 
 Let us assume once again a magnetic field centered on the origin of strength
 \[
-B(r) = \frac{1}{1 + r^4}
+B(r) = \frac{1}{1 + r^2}
 \]
-where $r$ is the distance from the orgin. A given point
-feels a force:
-\[
-B(r,\theta) = k \frac{1}{1 + r^4}
-\]
-in the direction $-\theta$.
+where $r$ is the distance from the orgin.
 
 If we assume as previously argued the principle that a bolus
 can be treated as a single object (The One Dimensional Bolus Theorem),
@@ -477,48 +517,47 @@ via the total area of the bolus $S$ by:
 S = d \cdot a + \frac{1}{2} \pi b^2
 \]
 when $a > 0$ and $b > 0$, so that the areas of $A$ and $B$ are both positive.
+It is most convenient to measure our position of the bolus, which is
+changing shape in this case, as the coordinat $b$, so we we express
+$a$ in terms of $b$.
 This can be solved for $a$:
 \begin{align}
   a = -\frac{\pi b^2 - 2 S}{2d}
   \label{eqn:afromS}
 \end{align}
 
-We seek the force on the total bolus $F$, which is:
-\[
-F = F_A + F_B
-\]
-
-\subsection{I am now dubious of this subsection}
-
-Note: The 4th power is hard to integrate:
-\url{https://math.stackexchange.com/questions/333611/evaluating-int-frac1x41-dx}
 
 
-The force on the part of the bolus in the area $A$ is:
-\begin{align}
-\end{align}
+Utilizing our priniciple that only the position of the surfaces
+matter,
+we seek the force on the total bolus $F$.
+The length of the surface in the B region is $\pi b$, since it
+is a semicircle. The length of the surface in the A region is just $d$.
 
 \begin{align}
-  F_A = & \int_{0}^{a} d \frac{1}{1 + x^4} dx \\
-  F_A = &\frac{\sqrt{2} \left(- \log{\left(a^{2} - \sqrt{2} a + 1 \right)} +
-    \log{\left(a^{2} + \sqrt{2} a + 1 \right)} +
-    2 \operatorname{atan}{\left(\sqrt{2} a - 1 \right)} +
-    2 \operatorname{atan}{\left(\sqrt{2} a + 1 \right)}\right)}{8} \\
+  F(b) = & F_A(b) + F_B(b) \\
+  F_A(b) = & d B(a) \\
+  F_B(b) = & - \pi b B(b) \\
+  F(b) = & d B(a) + - \pi b B(b) \\
+  F(b) = & \frac{d}{1 + a^2} + -\frac{\pi b}{1+b^2}
 \end{align}
 
-The force in $B$ region is the integration over a semicircle.
-It has no dependence on the angle, but only the distance,
-so it is convenient to intgrate over semi-circles at distance $r$,
-each of which has a distance of $\pi r$:
-\begin{align}
-  F_B = & - \int_{0}^{b} \pi \frac{r}{1 + r^4} \\
-  F_B = & - \pi \int_{0}^{b} \frac{r}{1 + r^4} \\
-  F_B = & - \frac{\arctan{b^2}}{2}
-\end{align}
+which does not appear to be simplifiable.
 
-Our goal now is to sum $F = F_A + F_B$ and use Equation~\ref{eqn:afromS},
-possibly with other assumptions about $S$ and $d$, to see if the force is
-reasonable.
+But investigating further we can choose reasonable values and
+at least check that shape of the function is reasonable.
+Let us choose a size of the bolus that has a radius of
+approximate 1, so let $S = \pi$. Let $d$ be thin compared to
+this, so let $d = 1/10$. Then Wolfram alpha give us a plot:
+
+\begin{figure}
+\centerline{\includegraphics[width=6in]{figure/PlotOfIntermediateFunction.png}}
+\caption{Plot of Force as a function of $b$}
+\label{fig_plot}
+\end{figure}
+
+
+
 
 \subsection{Idea}
 
@@ -526,64 +565,9 @@ We can protect the valve from explosive collapse by using a separate
 valve that cracks before the collapse pressure, acting as a ``pop-off''
 valve.
 
-\subsection{Some Design Thoughts}
-
-Assume that a blob in this section means an ideal 2-dimensional blob,
-approximated by a blob constrained into a very thin plane.
-
-\begin{conjecture}[Magnetostatic Blob Minimization]
-  \label{conj:mbf}
-  The magnetostaic force on a 2-dimensional blob
-  tends to minimize the potential energy in the blob
-  and this occurs when its surfaces are in equal strength fields.
-  Equivalently, every surface of a blob at rest with no outside
-  forces is a line of equal field strength and all surfaces are equal.
-\end{conjecture}
-
-\subsection{This section may be wrong; it is written in terms of gradient, not force!}
-
-Now imagine that a we have a monotone decreasing field centered
-on the origin which which is not necessarily circular, with
-the A region containg a thin tube, and the B region containing
-a wide open region. Imagine that the field in B is radially
-symmettric, but monotonically decreasing with distrance from
-the origin (but not necessarily the same in the region A.)
-A force resisting flow from the outlet to the inlet (from B to A)
-is equal to the gradient at a point multiplied by the surface
-length.
-In this scenario, the air pressure on the blob is a function
-of the length of the surface, but the magnetostatic force is
-also a function length, so the length cancels out and becomes
-irrelevant.
-The collapse pressure is therefore the maximum gradient
-gradient at any point between the rest position and the origin
-(this gradient is by construction equal on a semi-circular arc.)
-The collapse pressure also depends on the gradient
-at the point of the surface in A, but this surface has small length,
-and therefore contributes little to the sum of the force.
-
-Conversely, the cracking pressure will be minimized by
-making the gradient in the region B as shallow as possible
-at the point when the ferrfofuid has been entirely driven into
-region A by air pressure from the inlet.
-
-Understanding this, we can deign a profile of the ideal
-magnetic field to maximize the ratio of collapse pressure
-to cracking pressure as shown in the figure below.
 
 
-\begin{figure}
-\centerline{\includegraphics[width=4in]{figure/IdealFieldProfile.png}}
-\caption{Ideal Field Profile}
-\label{fig:IdealFieldProfile}
-\end{figure}
-
-
-
-
-
-
-\subsection{Other Thoughs}
+\subsection{Other Thoughts}
 
 The valve can be explained by relatively simple magnetostatics.
 In a magnetic field, ferrofluid tends to minimize the potential energy.
@@ -970,3 +954,35 @@ ASME bibliography stype file \verb+asmems4.bst+.
 %%%%%%%%%%%%%%%%%
 
 Here I attempt to write some wolframscript commands
+
+\subsection{I am now dubious of this subsection}
+
+Note: The 4th power is hard to integrate:
+\url{https://math.stackexchange.com/questions/333611/evaluating-int-frac1x41-dx}
+
+
+The force on the part of the bolus in the area $A$ is:
+\begin{align}
+\end{align}
+
+\begin{align}
+  F_A = & \int_{0}^{a} d \frac{1}{1 + x^4} dx \\
+  F_A = &\frac{\sqrt{2} \left(- \log{\left(a^{2} - \sqrt{2} a + 1 \right)} +
+    \log{\left(a^{2} + \sqrt{2} a + 1 \right)} +
+    2 \operatorname{atan}{\left(\sqrt{2} a - 1 \right)} +
+    2 \operatorname{atan}{\left(\sqrt{2} a + 1 \right)}\right)}{8} \\
+\end{align}
+
+The force in $B$ region is the integration over a semicircle.
+It has no dependence on the angle, but only the distance,
+so it is convenient to intgrate over semi-circles at distance $r$,
+each of which has a distance of $\pi r$:
+\begin{align}
+  F_B = & - \int_{0}^{b} \pi \frac{r}{1 + r^4} \\
+  F_B = & - \pi \int_{0}^{b} \frac{r}{1 + r^4} \\
+  F_B = & - \frac{\arctan{b^2}}{2}
+\end{align}
+
+Our goal now is to sum $F = F_A + F_B$ and use Equation~\ref{eqn:afromS},
+possibly with other assumptions about $S$ and $d$, to see if the force is
+reasonable.
