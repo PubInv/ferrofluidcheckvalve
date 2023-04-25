@@ -452,15 +452,13 @@ F(y) =
     \end{cases}
     \]
 
-    The total force on the bolus is:
+    The total force on the bolus is by pure algebra:
 \begin{align}
   F(x) = & F_A(x-1) + F_B(x+1) \\
   F(x) = & d B(x-1) + -d B(x+1) \\
   F(x) = & d(1/(1 + (x-1)^2) + - 1/(1 + (x +1)^2)) \\
-  F(x) = & \frac{4x}{x^4+4}
+  F(x) = & \frac{4dx}{x^4+4}
 \end{align}
-
-
 
 Plotting this function of $x$, we immediately find it matches
 our experience. If you put a bolus in a thing straw subject
@@ -470,6 +468,29 @@ At some point of increasing pressure, the bolus
 is displaced to a point that the magnetic force on it goes
 down, and the bolus explodes violently away from your breath,
 generally spattering and making a mess.
+
+It is interesting to note that we obatin the same result by
+a different method. We can consider the potential energy
+of the bolus. Reling on the fact that the bolus always
+has a length of 2, the potential energy is the integral
+of the field strength times the area:
+\begin{align}
+  PE(0) = & \int_{-1}^{1} d B(x)dx \\
+  PE(y) = & \int_{-1+y}^{1+y} d B(x)dx \\
+  \int \frac{1}{1+x^2} dx = \arctan{x} \\
+  PE(y) = & d (arctan{-1+y} - arctan{1+y})
+\end{align}
+But change in potential energy is work, which is force times distance,
+to force is the change in potential energy divied by the distance:
+\begin{align}
+  F(y) = &  \frac{\Delta PE(y)}{\Delta y} \\
+\end{align}
+The limit of this as $\Delta y$ goes to zero is just the derivate of $PE(y)$:
+\begin{align}
+  F(y) = & PE'(y) \\
+  F(y) = & \frac{4dy}{y^4+4}
+\end{align}
+
 
 The extrema of this force $F(x)$ occur at
 $(-\frac{\sqrt{2}}{\sqrt[4]{3}},\frac{\sqrt{2}}{\sqrt[4]{3}})$, or $(-1.0746,1.0746)$, which
@@ -525,38 +546,77 @@ This can be solved for $a$:
   a = -\frac{\pi b^2 - 2 S}{2d}
   \label{eqn:afromS}
 \end{align}
-
-
-
-Utilizing our priniciple that only the position of the surfaces
-matter,
-we seek the force on the total bolus $F$.
-The length of the surface in the B region is $\pi b$, since it
-is a semicircle. The length of the surface in the A region is just $d$.
-
+Note that when $a = 0$, the dependence on $d$ vanishes and:
 \begin{align}
-  F(b) = & F_A(b) + F_B(b) \\
-  F_A(b) = & d B(a) \\
-  F_B(b) = & - \pi b B(b) \\
-  F(b) = & d B(a) + - \pi b B(b) \\
-  F(b) = & \frac{d}{1 + a^2} + -\frac{\pi b}{1+b^2}
+  b = & \sqrt{\frac{2S}{\pi}} \\
+  b^2 = & \frac{2S}{\pi}
 \end{align}
 
-which does not appear to be simplifiable.
+Since at rest the bolus surface $A$ will be in the same field strenght as surface $B$, we can set:
 
-But investigating further we can choose reasonable values and
-at least check that shape of the function is reasonable.
-Let us choose a size of the bolus that has a radius of
-approximate 1, so let $S = \pi$. Let $d$ be thin compared to
-this, so let $d = 1/10$. Then Wolfram alpha give us a plot:
+\begin{align}
+  B(a) = & B(b) \\
+  B(-\frac{\pi b^2 - 2 S}{2d}) = & B(b)
+\end{align}
 
-\begin{figure}
-\centerline{\includegraphics[width=6in]{figure/PlotOfIntermediateFunction.png}}
-\caption{Plot of Force as a function of $b$}
-\label{fig_plot}
-\end{figure}
+This can be solved by WolframAlpha (results not incuded here.)
+As expected, $ b = -a $, that is, both surfaces are equidistant from the
+center of our radially symmetric magnetic field.
 
 
+\subsection{A strategy for computing force}
+
+Our fundamental goal is to compute the collapse and cracking
+pressure. This is determined by the maximum force needed
+to reduce $b$ and the force needed to drive the region $A$ to the
+orgin respectively.
+
+If the bolus at rest is displaced, the potential energy increases,
+moving off a minimum. At a given point, the infinitessimal change
+in energy divided by the infinitessimal change in distance
+is equal to the force.
+
+If we had a formula for the potential energy as a function of $b$,
+we would have a chance of computing this analytically.
+
+Just as we did before, we compute the integral over the bolus:
+
+In need to decide if $y$ is measured as a displacement of $b$.
+Probably best to make it a displacement of $b$ and replace $a$ in
+the below
+\begin{align}
+  PE(0) = & \int_{a}^{0} d B(x)dx + \int_{0}^{b} \pi x B(x)dx\\
+  PE(0) = & \int_{-\frac{\pi b^2 - 2 S}{2d}}^{0} d B(x)dx + \int_{0}^{b} \pi x B(x)dx\\
+  PE(y) = & d\int_{-\frac{\pi b^2 - 2 S}{2d}+y}^{0} B(x)dx + \pi \int_{0}^{b+y} x B(x)dx\\
+  PE(y) = & d\arctan{-\frac{\pi b^2 - 2 S}{2d}+y} + \pi \frac{1}{2} \log{(b+y)^2 +1}\\
+  F(y) = & PE'(y) = \frac{d}{(-\frac{\pi b^2 - 2 S}{2d}+y)^2+1} + \pi\frac{b + y}{(b+y)^2 + 1}
+\end{align}
+
+Alternatively, considering only the interfaces,
+\begin{align}
+  F_B(b) = & \pi b B(b) \\
+  F_A(b) = & d B(a) \\
+  F_A(b) = & d B(-\frac{\pi b^2 - 2 S}{2d}) \\
+  F(b) = F_A(b) + F_B(b) \\
+  F(b) = \frac{d}{1 + (-\frac{\pi b^2 - 2 S}{2d})^2} + \frac{\pi b}{1 + b^2}
+\end{align}
+Of course, $F(b)$ is a function of $S$ (the bolus area) and $d$, the channel
+width. For a physically realizable geometry, we might have $d$ be about
+one-tenth the diameter of the bolus, and it might be convenient to
+have the diametor of the bolus be close to 1.
+When $d$ is small, we imagine that $F_A$ is much smaller than $F_B$.
+
+To find the collapse pressure, we want to find the $b$ that maximizes of $F(b)$.
+The cracking pressure is simpler, it occurs when $a = 0$, or
+\begin{align}
+  F_{\text{collapse}} = & \frac{d}{1 + (-\frac{\pi \frac{2S}{\pi} - 2 S}{2d})^2} + \frac{\pi \sqrt{\frac{2S}{\pi}}}{1 + \frac{2S}{\pi}} \\
+  F_{\text{collapse}} = & \frac{d}{1 + 0} + \frac{\pi \sqrt{\frac{2S}{\pi}}}{1 + \frac{2S}{\pi}} \\
+  F_{\text{collapse}} = & d + \frac{\pi \sqrt{\frac{2S}{\pi}}}{1 + \frac{2S}{\pi}}
+\end{align}
+
+If we assume $d$ is small, we may be able to ignore this.
+Seeking the extrema of this, we find it occurs when $S = \pi /2$.
+Note, that his is a function of filed $B(x)$ that we chose to model.
 
 
 \subsection{Idea}
