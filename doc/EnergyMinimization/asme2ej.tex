@@ -31,8 +31,10 @@
 }
 \usepackage[square,numbers]{natbib}
 
+
 \newtheorem{conjecture}{Conjecture}
-\newtheorem{corollary}{Corollay}
+\newtheorem{corollary}{Corollary}
+\newtheorem{theorem}{Theorem}
 
 %% The class has several options
 %  onecolumn/twocolumn - format for one or two columns per page
@@ -371,17 +373,66 @@ in the single magnet configuration.
 
 \section{Theory of Operation (Best as of Apr. 24)}
 
-Assume that a blob in this section means an ideal 2-dimensional blob,
+Let us consider an ideal blob of ferrfoluid.
+\begin{itemize}
+\item Assume that a blob in this section means an ideal 2-dimensional blob,
 approximated by a blob constrained into a very thin plane.
+\item Assume that the B-field is purely perpendicalur to this plane,
+and that it completely dominates the magnetism induced in
+the ferrofluid itself.
+\item Assume that all forces of viscosity and surface tension may
+  be ignored.
+\item Although we will not model the forces that make it so,
+  we will assume that blob of ferrofluid is self-connected and
+  will not split into more than one blob.
+\item The blob is perfectly incompressible, and so
+  has an absolutely unchanging area.
+\item The magnetic particles are evenly distributed in the
+  fluid no matter what the magnetic field, so that the potential
+  energy in the fluid by being in the field depends only on the
+  strength of the field.
+\item We need not treat the motion, velocity, or inertia of
+  our fluid in any way.
+\end{itemize}
+Under suitable assumptions, we can state two drastically
+simplifying assumptions.
 
 \begin{conjecture}[Magnetostatic Blob Minimization]
   \label{conj:mbf}
-  The magnetostaic force on a 2-dimensional blob
+  The magnetostaic force on an ideal 2-dimensional blob
   tends to minimize the potential energy in the blob
   and this occurs when its surfaces are in equal strength fields.
   Equivalently, every surface of a blob at rest with no outside
   forces is a line of equal field strength and all surfaces are equal.
 \end{conjecture}
+
+\begin{theorem}[Surface Force Computation]
+  \label{conj:sfc}
+  The force exerted on an ideal blob by the magnetic field
+  is the sum over each surface of the
+  integral of magnetic field along that surface, either
+  pushing the surface into the blob or pulling the surface
+  away from the blob.
+\end{theorem}
+
+\begin{proof}
+  Force is work times distance. Within an infinitessimal
+  distance, force is the change in potential energy.
+  Because or fluid is uniform, the potential energy of
+  a blob one position and a blob displaced from that position
+  by an infinitessimal changes only by the change in the thin
+  areas along the surfaces. The change in potential energy in
+  these infintessimal areas is purely a function of the their
+  path through the B-field and the intensity of the field at that point.
+\end{proof}
+
+If the area is expanding the blob, it always decreases potential
+energy. If the area is contracting the blob, it always increasing
+potential energy. However, since the B-field at the two (or more)
+surfaces may be different, there may be a force exerted on the
+blob. In particular, we are interested in the force exerted on
+the blob counterbalancing the force exerted on by fluid pressure
+of non-ferrofluid at the surfaces.
 
 Now imagine that a we have a monotone decreasing field centered
 on the origin which which is not necessarily circular, with
@@ -410,8 +461,6 @@ region A by air pressure from the inlet.
 Understanding this, we can deign a profile of the ideal
 magnetic field to maximize the ratio of collapse pressure
 to cracking pressure as shown in the figure below.
-
-
 
 \subsection{Warmup: A Bolus in A Channel}
 
@@ -519,6 +568,15 @@ at our diagram (where the channel meets the chamber.)
 Call the region to the left A and the region to the right B, and assume
 the orgin is at the center of the diagram.
 
+The most important geometric feature of the channel-and-chamber
+valve design is the radius of the cylindrical magnet or magnets
+in it. It will be most convenient to take the radius of this
+magnet to be unity (1.0) and express all other spatial
+measures relative to that. The origin of our plane of operation
+will be the center of the top face of the cylindrical magnet,
+which is assumed to be beneath the plane, with its North face
+in contact with the plane.
+
 Note: I believe using a magnetic force that falls off with the square of distance may
 not allow for a stable solution. I am not sure how to model this in a way
 which is realistic and convenient. Using the fourth power will probably work and
@@ -526,9 +584,9 @@ may be realistic given of action is perpendicular to the magnet. I think I will 
 
 Let us assume once again a magnetic field centered on the origin of strength
 \[
-B(r) = \frac{1}{1 + r^2}
+B(x) = \frac{1}{1 + x^2}
 \]
-where $r$ is the distance from the orgin.
+where $x$ is the distance from the orgin.
 
 If we assume as previously argued the principle that a bolus
 can be treated as a single object (The One Dimensional Bolus Theorem),
@@ -563,7 +621,6 @@ This can be solved by WolframAlpha (results not incuded here.)
 As expected, $ b = -a $, that is, both surfaces are equidistant from the
 center of our radially symmetric magnetic field.
 
-
 \subsection{A strategy for computing force}
 
 Our fundamental goal is to compute the collapse and cracking
@@ -579,20 +636,7 @@ is equal to the force.
 If we had a formula for the potential energy as a function of $b$,
 we would have a chance of computing this analytically.
 
-Just as we did before, we compute the integral over the bolus:
-
-In need to decide if $y$ is measured as a displacement of $b$.
-Probably best to make it a displacement of $b$ and replace $a$ in
-the below
-\begin{align}
-  PE(0) = & \int_{a}^{0} d B(x)dx + \int_{0}^{b} \pi x B(x)dx\\
-  PE(0) = & \int_{-\frac{\pi b^2 - 2 S}{2d}}^{0} d B(x)dx + \int_{0}^{b} \pi x B(x)dx\\
-  PE(y) = & d\int_{-\frac{\pi b^2 - 2 S}{2d}+y}^{0} B(x)dx + \pi \int_{0}^{b+y} x B(x)dx\\
-  PE(y) = & d\arctan{-\frac{\pi b^2 - 2 S}{2d}+y} + \pi \frac{1}{2} \log{(b+y)^2 +1}\\
-  F(y) = & PE'(y) = \frac{d}{(-\frac{\pi b^2 - 2 S}{2d}+y)^2+1} + \pi\frac{b + y}{(b+y)^2 + 1}
-\end{align}
-
-Alternatively, considering only the interfaces,
+Considering only the surfaces and using Eq.~\ref{eqn:afromS}:
 \begin{align}
   F_B(b) = & \pi b B(b) \\
   F_A(b) = & d B(a) \\
@@ -600,21 +644,46 @@ Alternatively, considering only the interfaces,
   F(b) = F_A(b) + F_B(b) \\
   F(b) = \frac{d}{1 + (-\frac{\pi b^2 - 2 S}{2d})^2} + \frac{\pi b}{1 + b^2}
 \end{align}
+
+
 Of course, $F(b)$ is a function of $S$ (the bolus area) and $d$, the channel
 width. For a physically realizable geometry, we might have $d$ be about
 one-tenth the diameter of the bolus, and it might be convenient to
 have the diametor of the bolus be close to 1.
-When $d$ is small, we imagine that $F_A$ is much smaller than $F_B$.
+
+The cracking pressure will me the maximum force the magent can exert
+on the blob in the range $a < 0$, because when $a >= 0$, the
+air or water being valved will ``bubble'' out of the valve.
+
+The collapse pressure will be the maximum force time half-circumference
+in the range $b >=0$.
+By the time $b$ decreases to $b = 0$ (and probably before), the valve
+will explosively collapse.
+
+It is clear that we want the bolus to be somewhat large then
+the semi-circle of maximum magnetic force, so that as the outlet pressure
+is increased it will find this maximum point of force and hold itself
+against the highest outlet pressure possible without collapsing.
+(Nontheless we must have a field monotonically increasing with $b$ in
+order to sure inlet fluids ``bubble away'' from the blob to the outlet side.)
 
 To find the collapse pressure, we want to find the $b$ that maximizes of $F(b)$.
-The cracking pressure is simpler, it occurs when $a = 0$, or
 \begin{align}
-  F_{\text{crack}} = & \frac{d}{1 + (-\frac{\pi \frac{2S}{\pi} - 2 S}{2d})^2} + \frac{\pi \sqrt{\frac{2S}{\pi}}}{1 + \frac{2S}{\pi}} \\
-  F_{\text{crack}} = & \frac{d}{1 + 0} + \frac{\pi \sqrt{\frac{2S}{\pi}}}{1 + \frac{2S}{\pi}} \\
-  F_{\text{crack}} = & d + \frac{\pi \sqrt{\frac{2S}{\pi}}}{1 + \frac{2S}{\pi}}
+  F(b) = \frac{d}{1 + (-\frac{\pi b^2 - 2 S}{2d})^2} + \frac{\pi b}{1 + b^2}
 \end{align}
 
+Recall however, the this derivation uses a suspect formula for $B(x)$.
+Possible we can design the magnetic field, for example using conical
+magnets, to make this valve more performant.
 
+Important note: This math strongly suggest that the valve can be
+made twice as performant by opening the chamber completely, so that the
+valve is merely a chamber in the center of the bolus.
+Likewise thickening of the chamber (in the z-dimesion, violating
+our current 2-dimensional assuption) at the point of the strongest
+magent force would mean that more ferrofluid would have to be driven
+away at that point, increasing the potentially energy and therefore
+requiring more force.
 
 \subsection{Idea}
 
