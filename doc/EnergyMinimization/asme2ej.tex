@@ -438,7 +438,7 @@ Now imagine that a we have a monotone decreasing field centered
 on the origin which which is not necessarily circular, with
 the A region containg a thin tube, and the B region containing
 a wide open region. Imagine that the field in B is radially
-symmettric, but monotonically decreasing with distrance from
+symmetric, but monotonically decreasing with distrance from
 the origin (but not necessarily the same in the region A.)
 A force resisting flow from the outlet to the inlet (from B to A)
 is equal to the field strength at a point multiplied by the surface
@@ -458,9 +458,18 @@ making the field strength in the region B as low as possible
 at the point when the ferrfofuid has been entirely driven into
 region A by air pressure from the inlet.
 
-Understanding this, we can deign a profile of the ideal
-magnetic field to maximize the ratio of collapse pressure
-to cracking pressure as shown in the figure below.
+\subsection{How the Valve Cracks}
+
+It is clear that a blob that has a bubble of non-ferrous fluid inside it
+has higher potential energy that the same blob without that bubble.
+Furthermore, such a bubble will feel a pressure to move away from
+an area of a higher magnetic strength towared an area of weaker magnetic
+strength. A bubble could be trapped, but if we assume that our
+field decreases monotonically from a central peak, a bubble
+will have a path to escape and will do so.
+In this scenario a valve will ``crack'' that, is, crack open
+allowing a fluid from the inlet to the outlet, as soon as the
+non-ferrous fluid crosses a central boundary.
 
 \subsection{Warmup: A Bolus in A Channel}
 
@@ -490,9 +499,10 @@ qualitative result.
 Now imagine that bolus has a length of 2, and let $x$ be
 the midpoint of the bolus.  The force on the ferrfoluid
 is purely a function of the position of the two surfaces,
+East and West,
 which are by construction at $x - 1$ and $x + 1$.
 Ignore constants based on units for the time being.
-For a surface at $y$,
+For a surface at any point $y$,
 \[
 F(y) =
     \begin{cases}
@@ -503,14 +513,14 @@ F(y) =
 
     The total force on the bolus is by pure algebra:
 \begin{align}
-  F(x) = & F_A(x-1) + F_B(x+1) \\
+  F(x) = & F_E(x-1) + F_B(x+1) \\
   F(x) = & d B(x-1) + -d B(x+1) \\
   F(x) = & d(1/(1 + (x-1)^2) + - 1/(1 + (x +1)^2)) \\
   F(x) = & \frac{4dx}{x^4+4}
 \end{align}
 
 Plotting this function of $x$, we immediately find it matches
-our experience. If you put a bolus in a thing straw subject
+our experience. If you put a bolus in a thin straw subject
 to a magnetic field and blow on it, it will be displaced a bit,
 increasing the force it exerts on your breath.
 At some point of increasing pressure, the bolus
@@ -518,7 +528,7 @@ is displaced to a point that the magnetic force on it goes
 down, and the bolus explodes violently away from your breath,
 generally spattering and making a mess.
 
-It is interesting to note that we obatin the same result by
+It is interesting to note that we obtain the same result by
 a different method. We can consider the potential energy
 of the bolus. Reling on the fact that the bolus always
 has a length of 2, the potential energy is the integral
@@ -530,7 +540,7 @@ of the field strength times the area:
   PE(y) = & d (arctan{-1+y} - arctan{1+y})
 \end{align}
 But change in potential energy is work, which is force times distance,
-to force is the change in potential energy divied by the distance:
+so force is the change in potential energy divied by the distance:
 \begin{align}
   F(y) = &  \frac{\Delta PE(y)}{\Delta y} \\
 \end{align}
@@ -539,6 +549,12 @@ The limit of this as $\Delta y$ goes to zero is just the derivate of $PE(y)$:
   F(y) = & PE'(y) \\
   F(y) = & \frac{4dy}{y^4+4}
 \end{align}
+
+In other words, Theorem~\ref{conj:sfc} gives us the same result
+as integrating the entire space, but gives us a shortcut of allowing
+us to integrate over only the edges, which in some cases can be
+replace with simple algebra.
+
 
 
 The extrema of this force $F(x)$ occur at
@@ -582,22 +598,28 @@ not allow for a stable solution. I am not sure how to model this in a way
 which is realistic and convenient. Using the fourth power will probably work and
 may be realistic given of action is perpendicular to the magnet. I think I will try it.
 
+In what follows, region $A$ is the inlet region and region $B$ is the
+outlet region; I should probably remove the labels $A$ and $B$ entirely
+since we are using $B$ for the B-field.
+
 Let us assume once again a magnetic field centered on the origin of strength
-\[
+\begin{align}
 B(x) = \frac{1}{1 + x^2}
-\]
+\end{align}
 where $x$ is the distance from the orgin.
 
-If we assume as previously argued the principle that a bolus
-can be treated as a single object (The One Dimensional Bolus Theorem),
+Since we have previously assumed that the bolus is a single blob,
 at least until it collapses, then we can can relate $a$ and $b$
-via the total area of the bolus $S$ by:
-\[
+via the total area of the bolus $S$.
+Let us assume that the channel of width $d$ is narrow enough
+that the slight arc of the fluid inside the inlet region can be treated as a
+straight line.
+\begin{align}
 S = d \cdot a + \frac{1}{2} \pi b^2
-\]
+\end{align}
 when $a > 0$ and $b > 0$, so that the areas of $A$ and $B$ are both positive.
 It is most convenient to measure our position of the bolus, which is
-changing shape in this case, as the coordinat $b$, so we we express
+changing shape in this case, as the coordinate $b$, so we we express
 $a$ in terms of $b$.
 This can be solved for $a$:
 \begin{align}
@@ -621,12 +643,24 @@ This can be solved by WolframAlpha (results not incuded here.)
 As expected, $ b = -a $, that is, both surfaces are equidistant from the
 center of our radially symmetric magnetic field.
 
-\subsection{A strategy for computing force}
+\subsection{A strategy for computing pressure}
 
 Our fundamental goal is to compute the collapse and cracking
-pressure. This is determined by the maximum force needed
-to reduce $b$ and the force needed to drive the region $A$ to the
-orgin respectively.
+pressure. The collapse pressure is determined by the maximum force needed
+to reduce $b$ in the outlet region past some point we will call the
+{\em collapse point.}
+The cracking pressure is the pressure needed to drive the region $A$, represented
+by the variable $a$, to the {\em cracking point}, at which point
+a bubble forms and is pushed to the outlet.
+
+The check valve we are trying to design will be characterized by
+both the collapse pressure and the cracking pressure, but in a single
+number the can define the performance of the valve as this ratio $P$,
+which we want to be as high as possible:
+\begin{align}
+  P = \frac{\text{Collapse Pressure}}{\text{Crack Pressure}}
+  \end{align}
+
 
 If the bolus at rest is displaced, the potential energy increases,
 moving off a minimum. At a given point, the infinitessimal change
@@ -636,31 +670,62 @@ is equal to the force.
 If we had a formula for the potential energy as a function of $b$,
 we would have a chance of computing this analytically.
 
+Note: I am now concerned that the concept of the ``force on the
+blob'' may not even make make sense. I may instead have
+to think in terms of force on one surface. The hydraulic prinicple
+suggests this; pascal's principle is that pressure, not force is
+conserved in the blob.
+
 Considering only the surfaces and using Eq.~\ref{eqn:afromS}:
 \begin{align}
-  F_B(b) = & \pi b B(b) \\
-  F_A(b) = & d B(a) \\
-  F_A(b) = & d B(-\frac{\pi b^2 - 2 S}{2d}) \\
-  F(b) = F_A(b) + F_B(b) \\
-  F(b) = \frac{d}{1 + (-\frac{\pi b^2 - 2 S}{2d})^2} + \frac{\pi b}{1 + b^2}
+  F^m_O(b) = & \pi b B(b) \\
+  F^m_I(b) = & d B(a) \\
+  F^m_I(b) = & d B(-\frac{\pi b^2 - 2 S}{2d})
+\end{align}
+\begin{align}
+  F^m(b) = F^m_I(b) + F^m_O(b) \\
+  F^m(b) = \frac{d}{1 + (-\frac{\pi b^2 - 2 S}{2d})^2} + \frac{\pi b}{1 + b^2}
 \end{align}
 
 
-Of course, $F(b)$ is a function of $S$ (the bolus area) and $d$, the channel
+Of course, $F^m(b)$ is a function of $S$ (the bolus area) and $d$, the channel
 width. For a physically realizable geometry, we might have $d$ be about
 one-tenth the diameter of the bolus, and it might be convenient to
 have the diametor of the bolus be close to 1.
 
-The cracking pressure will me the maximum force the magent can exert
+The cracking pressure will be the maximum force the magnet can exert
 on the blob in the range $a < 0$, because when $a >= 0$, the
 air or water being valved will ``bubble'' out of the valve.
 
-The collapse pressure will be the maximum force time half-circumference
+The force exerted by pressure is the pressure times the area, or,
+in our 2-dimentionsal model, the pressure times the length of an edge.
+Since our edges may be curved and our ferrofluid does not support
+shear forces, the force on a blob cause by a inlet or outlet pressure
+is the pressure times the length across the blob (as opposed to the
+arc length of the edge.)
+
+We will denote the force on the blob due to magnetism by the superscript
+$m$ and the force due to fluid pressure on the edges by $p$.
+
+The outlet pressure force is thus:
+\begin{align}
+  F_{o}^{p} = P_o 2 b
+\end{align}
+
+Collapse occurs when the outlet pressure force exceeds the
+maximum force $F_{o}^{m}(b)$. Both the magnetic force and
+the pressure force depend on the position of the edge
+given by $b$.
+
+
+The collapse pressure will be the maximum force times the half-circumference
 in the range $b >=0$.
 By the time $b$ decreases to $b = 0$ (and probably before), the valve
 will explosively collapse.
 
-It is clear that we want the bolus to be somewhat large then
+Note: I now question whether this can explain the behavior of the valve at all.
+
+It is clear that we want the bolus to be somewhat larger then
 the semi-circle of maximum magnetic force, so that as the outlet pressure
 is increased it will find this maximum point of force and hold itself
 against the highest outlet pressure possible without collapsing.
@@ -694,13 +759,43 @@ or making the walls of the thin chamber very thick, might solve this problem.
 This math makes it clear that on the outlet side we want the
 bolus surface to be outside a strong field at $r$ to that $r B(r)$ is
 maximized to maximize the collapse pressure.
+Let us call the value of $b$ that maximizes $b B(b)$ the {\em collapse point.}
+We can now see that we want $S$ to be large enough that the edge
+of the bolus at rest is beyond the collapse point by some
+comfortable margin.
 
-However, to minimize the crack pressure, we want the bolus inside
-such a band.  This suggest that on the inlet side we attempt to make
+However, to minimize the crack pressure, we want the bolus at rest
+in the region $A$ inside
+the collapse point, because we don't want the inlet pressure to have
+to overcome that, even though on the inlet side the length $d$ will
+be much smaller that length $\pi b$. However, by the
+Magnestatic Blob Minimization principle, this is impossible in a
+radially symmetric B field.
+
+This suggest that on the inlet side we attempt to make
 the magnetic field, only within the channel, as gradual, linear, and
 long as possible. This might be possible to accomplish by simply adding
 a piece of ferrous metal under the channel, or by making the channel
-itself a steel needle.
+itself a steel needle. A specially designed magnet or two magnets could be
+used. This is somewhat depicted in Fig.~\ref{fig:ifp}.
+
+\begin{figure}
+\centerline{\includegraphics[width=6in]{figure/IdealFieldProfile.png}}
+\caption{(Rough) Ideal Field Profile}
+\label{fig:ifp}
+\end{figure}
+
+\subsection{Idea: An Improved Version}
+
+It is clear based on the above theory that allowing the bolus to be semi-circular
+is an arbitrary inefficiency. There is no reason not to allow a 360 degree bolus,
+as depicted in Figure~\ref{fig:360}.
+
+\begin{figure}
+\centerline{\includegraphics[width=6in]{figure/360degreeplanarcheckvalve.png}}
+\caption{360 degree planar check valve, an improvement derived from theory}
+\label{fig:360}
+\end{figure}
 
 \subsection{Idea: a 3D version}
 
@@ -711,6 +806,31 @@ In a spherical-like magnetic field, the same principle would
 apply, but the added dimensionality would be expected to further
 separate the collapse pressure from the crack pressue.
 
+However, a simpler version of this idea based on accessible
+cylindrical bar magnets is depicted in Fig.~\ref{fig:3dcheckvalve}.
+This has not yet been experimentally tested.
+
+The advantage of having a 3D version predicted by the math is that the area
+of the small inlet port would be tiny compared to the area of the spherical
+shape. This would tend to produce a very performant valve, if the magnet
+field can be designed with sufficient strength. It would seem to be harder
+to manufacture in the intended use case of very small valves.
+
+There are two obvious ways to manufacture such a 3D device, both of which require
+drilling a small hole into magnet. The first is use a small cylidrical or spherical
+magnet. This would be a dipole that could not be approximated as a radially
+symmetric field; but it might work anyway.  The second would be to drill a hole
+through the axis of a conical magnet. Hopefully the concentration of field strength
+at the apex of the magnet would produce a roughly spherical field strength.
+
+Possibly rather than using a sphere, a hemisphere would be more reasonable.
+
+\begin{figure}
+\centerline{\includegraphics[width=6in]{figure/3DCheckValve.png}}
+\caption{Untested 3D check valve idea}
+\label{fig:3dcheckvalve}
+\end{figure}
+
 \subsection{Idea}
 
 We can protect the valve from explosive collapse by using a separate
@@ -719,119 +839,6 @@ valve.
 
 
 
-\subsection{Other Thoughts}
-
-The valve can be explained by relatively simple magnetostatics.
-In a magnetic field, ferrofluid tends to minimize the potential energy.
-
-Let us first perform a thought experiment.
-Consider a two-dimensional magnetic field in the shape of a disc
-formed by two sheets of
-glass or plastic in, for example,
-a circular air gap in a magnetic circuit.
-Assume for a moment that the magnetic field is perfectly uniform
-within the disc and perfectly zero outside of the disc.
-Although there is no gradient in such a scenario, if a connected
-blob of ferrofluid enters the disc, it will be pulled entirely
-within the disc, since it is magnetically connected to itself
-and this minimizes the potential energy, even though there is no
-magnetic gradient at any point.
-In such a scenario, if the blob is smaller than the disc,
-it will not matter where it is inside the blob resides,
-since the field is uniform, any is as good as any other.
-If however, the blob is larger than the disc, it will tend to
-form a circle centered on the disc center.
-If the blob is smaller than the disc, it will still self-attract
-itself into a circle, but the center of the blob circle might not
-coincide with the center of the magnetic disc.
-
-Now let us consider a complex two-dimesional field of arbitrary
-shape varying in intensity at every point--for example, it could
-be in the shape of a star or a bunny rabbit.
-Setting aside for a minute the fact that the ferrofluid will interact
-with itself a small amount to vary the shape of this field as it
-enters it, we now what the magnetic potential energy at every point
-of the boundary of this blob will be the same. If it is not,
-it will not be in a minimum energy configuration, and it will
-flow until it reaches a minimum configuration. The blob, however or
-small, will effectively define an ``isopotential line'' of the
-magnetic field.
-
-If we assume the field is radially symmetric, it is clear the
-blob will be circular. (Let us ignore a field which had several
-local minima energy conditions.)
-
-
-Now, let use return to a uniform magnetic field of radius
-$R$ wish is of strength $B_R$ within this disc and zero
-outside it.
-Now, what is the potential energy of a ferrfluid blob at
-any arbitrary position (before it has sought a minimum)?
-For a given patch of ferrfofluid $A$
-and the magnetization of the ferrofluid is $M_{A}$
-the potential energy is:
-\begin{align}
-U &= - B_R A M_{A}, \text{if $A$ is with disc $R$,} \\
-U &= 0, \text{if $A$ is outside the disc}
-\end{align}
-
-Representing this a Kronecker Delta $\delta{A}$,
-
-\[
-\delta_{A} =
-    \begin{cases}
-            1, &         \text{if $A$ is with disc $R$,} \\
-            0, &         \text{if $A$ is outside the disc}
-    \end{cases}
-\]
-
-we can integrate over the entire area, we have:
-\[ U = \int_{A} -B_R  M_{A} \delta_{A} \,dA \],
-but since $B_R$ does not depend on $A$, we have:
-\[ U = -B_R \int_{A}  M_{A} \delta_{A} \,dA \],
-
-If we approximate our magnetic field as ``strong'' within
-a small finite boundary and zero elsewhere, and assume that
-the within the strong field the ferrofluid reaches its
-saturation magnetization $M_s$, we can simplify this further:
-\[ U =  -B_R M_{s} \int_{A}   \,dA \]
-
-In other words, the potential energy is minimized by keeping as
-much of the ferrorfluid in the disc $R$ as possible.
-
-It is clear from this that if a bubble of air was magically
-placed inside the blob of ferrofluid in inside $R$, it would
-quickly be pushed out by energy minimization.
-
-But how can we smuggle a bubble of air into the blob?
-Well, we can make a thin ``staw'' and pace the end of it inside
-the blob. Now, it take no work to displace the blob until
-it is pushed outside the disc. Now the ferrofluid will
-form the shape of a circle naturally, whether a straw is
-pushed into it or not.
-
-If we blow into the straw (in other words, if we raise the
-pressure there), the ferrofluid will easily move out of the straw,
-making the remainder circular blob bigger---until it starts to
-push the ferrofluid outside of the disc. At that point, the
-ferrofluid would resist being further displaced.
-If, however, there was enough room in the disc for all of the
-ferrofluid, even when that inside the valve was displaced,
-the air would enter the bolus and then be elimnated to the
-other, non-straw boundary of the bolus. In other word, the valve
-would have ``cracked'' and allowed the air to pass out.
-
-Now suppose that you push from the other side. The circle would
-shrink, and to the extent that the circcle shrinks, that much
-ferrofluid would have to be pushed out the straw. However,
-if the other end of the straw were at the disc boundary and
-a wall prevented the ferrofluid from returning, it would be
-removed from the disc. But this requires work, because we are
-increasing the energy, by moving away from a minimum energy
-configuration.
-
-Unfortunately, we cannot analyze this further without introducing
-gradients.
 
 
 \section{Conclusions}
@@ -1105,36 +1112,116 @@ ASME bibliography stype file \verb+asmems4.bst+.
 
 %%%%%%%%%%%%%%%%%
 
-Here I attempt to write some wolframscript commands
+\subsection{Other Thoughts}
 
-\subsection{I am now dubious of this subsection}
+The valve can be explained by relatively simple magnetostatics.
+In a magnetic field, ferrofluid tends to minimize the potential energy.
 
-Note: The 4th power is hard to integrate:
-\url{https://math.stackexchange.com/questions/333611/evaluating-int-frac1x41-dx}
+Let us first perform a thought experiment.
+Consider a two-dimensional magnetic field in the shape of a disc
+formed by two sheets of
+glass or plastic in, for example,
+a circular air gap in a magnetic circuit.
+Assume for a moment that the magnetic field is perfectly uniform
+within the disc and perfectly zero outside of the disc.
+Although there is no gradient in such a scenario, if a connected
+blob of ferrofluid enters the disc, it will be pulled entirely
+within the disc, since it is magnetically connected to itself
+and this minimizes the potential energy, even though there is no
+magnetic gradient at any point.
+In such a scenario, if the blob is smaller than the disc,
+it will not matter where it is inside the blob resides,
+since the field is uniform, any is as good as any other.
+If however, the blob is larger than the disc, it will tend to
+form a circle centered on the disc center.
+If the blob is smaller than the disc, it will still self-attract
+itself into a circle, but the center of the blob circle might not
+coincide with the center of the magnetic disc.
+
+Now let us consider a complex two-dimesional field of arbitrary
+shape varying in intensity at every point--for example, it could
+be in the shape of a star or a bunny rabbit.
+Setting aside for a minute the fact that the ferrofluid will interact
+with itself a small amount to vary the shape of this field as it
+enters it, we now what the magnetic potential energy at every point
+of the boundary of this blob will be the same. If it is not,
+it will not be in a minimum energy configuration, and it will
+flow until it reaches a minimum configuration. The blob, however or
+small, will effectively define an ``isopotential line'' of the
+magnetic field.
+
+If we assume the field is radially symmetric, it is clear the
+blob will be circular. (Let us ignore a field which had several
+local minima energy conditions.)
 
 
-The force on the part of the bolus in the area $A$ is:
+Now, let use return to a uniform magnetic field of radius
+$R$ wish is of strength $B_R$ within this disc and zero
+outside it.
+Now, what is the potential energy of a ferrfluid blob at
+any arbitrary position (before it has sought a minimum)?
+For a given patch of ferrfofluid $A$
+and the magnetization of the ferrofluid is $M_{A}$
+the potential energy is:
 \begin{align}
+U &= - B_R A M_{A}, \text{if $A$ is with disc $R$,} \\
+U &= 0, \text{if $A$ is outside the disc}
 \end{align}
 
-\begin{align}
-  F_A = & \int_{0}^{a} d \frac{1}{1 + x^4} dx \\
-  F_A = &\frac{\sqrt{2} \left(- \log{\left(a^{2} - \sqrt{2} a + 1 \right)} +
-    \log{\left(a^{2} + \sqrt{2} a + 1 \right)} +
-    2 \operatorname{atan}{\left(\sqrt{2} a - 1 \right)} +
-    2 \operatorname{atan}{\left(\sqrt{2} a + 1 \right)}\right)}{8} \\
-\end{align}
+Representing this a Kronecker Delta $\delta{A}$,
 
-The force in $B$ region is the integration over a semicircle.
-It has no dependence on the angle, but only the distance,
-so it is convenient to intgrate over semi-circles at distance $r$,
-each of which has a distance of $\pi r$:
-\begin{align}
-  F_B = & - \int_{0}^{b} \pi \frac{r}{1 + r^4} \\
-  F_B = & - \pi \int_{0}^{b} \frac{r}{1 + r^4} \\
-  F_B = & - \frac{\arctan{b^2}}{2}
-\end{align}
+\[
+\delta_{A} =
+    \begin{cases}
+            1, &         \text{if $A$ is with disc $R$,} \\
+            0, &         \text{if $A$ is outside the disc}
+    \end{cases}
+\]
 
-Our goal now is to sum $F = F_A + F_B$ and use Equation~\ref{eqn:afromS},
-possibly with other assumptions about $S$ and $d$, to see if the force is
-reasonable.
+we can integrate over the entire area, we have:
+\[ U = \int_{A} -B_R  M_{A} \delta_{A} \,dA \],
+but since $B_R$ does not depend on $A$, we have:
+\[ U = -B_R \int_{A}  M_{A} \delta_{A} \,dA \],
+
+If we approximate our magnetic field as ``strong'' within
+a small finite boundary and zero elsewhere, and assume that
+the within the strong field the ferrofluid reaches its
+saturation magnetization $M_s$, we can simplify this further:
+\[ U =  -B_R M_{s} \int_{A}   \,dA \]
+
+In other words, the potential energy is minimized by keeping as
+much of the ferrorfluid in the disc $R$ as possible.
+
+It is clear from this that if a bubble of air was magically
+placed inside the blob of ferrofluid in inside $R$, it would
+quickly be pushed out by energy minimization.
+
+But how can we smuggle a bubble of air into the blob?
+Well, we can make a thin ``staw'' and pace the end of it inside
+the blob. Now, it take no work to displace the blob until
+it is pushed outside the disc. Now the ferrofluid will
+form the shape of a circle naturally, whether a straw is
+pushed into it or not.
+
+If we blow into the straw (in other words, if we raise the
+pressure there), the ferrofluid will easily move out of the straw,
+making the remainder circular blob bigger---until it starts to
+push the ferrofluid outside of the disc. At that point, the
+ferrofluid would resist being further displaced.
+If, however, there was enough room in the disc for all of the
+ferrofluid, even when that inside the valve was displaced,
+the air would enter the bolus and then be elimnated to the
+other, non-straw boundary of the bolus. In other word, the valve
+would have ``cracked'' and allowed the air to pass out.
+
+Now suppose that you push from the other side. The circle would
+shrink, and to the extent that the circcle shrinks, that much
+ferrofluid would have to be pushed out the straw. However,
+if the other end of the straw were at the disc boundary and
+a wall prevented the ferrofluid from returning, it would be
+removed from the disc. But this requires work, because we are
+increasing the energy, by moving away from a minimum energy
+configuration.
+
+Unfortunately, we cannot analyze this further without introducing
+gradients.
