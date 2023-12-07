@@ -3,6 +3,7 @@ from scipy.spatial.transform import Rotation as R
 import magpylib as magpy
 import matplotlib.pyplot as plt
 import plotly.graph_objects as go
+import math
 
 
 cyl = magpy.magnet.Cylinder(
@@ -39,12 +40,20 @@ fig = go.Figure().set_subplots(
 
 # compute field and plot in 2D-axis
 for i, lab in enumerate(["Bx", "By", "Bz"]):
+    print(i)
+    print(lab)
+
+for i, lab in enumerate(["Bx", "By", "Bz"]):
     fig.add_trace(go.Scatter(x=np.linspace(-3, 3, 201), y=B[:, i], name=lab))
 
-temp_fig = go.Figure()
-magpy.show(loop, cylinder, canvas=temp_fig, backend="plotly")
-fig.add_traces(temp_fig.data, rows=1, cols=2)
-fig.layout.scene.update(temp_fig.layout.scene)
+# now I specifically want to add the total magnitude
+M = [];
+for i in range(0,200):
+    M.append(math.sqrt(B[i][0]*B[i][0] + B[i][2]*B[i][2]))
+
+
+fig.add_trace(go.Scatter(x=np.linspace(-3, 3, 201),y=M,name=lab))
+# temp_fig = go.Figure()
 
 # generate figure
 fig.show()
