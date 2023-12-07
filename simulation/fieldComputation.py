@@ -2,6 +2,8 @@ import numpy as np
 from scipy.spatial.transform import Rotation as R
 import magpylib as magpy
 import matplotlib.pyplot as plt
+import plotly.graph_objects as go
+
 
 cyl = magpy.magnet.Cylinder(
     magnetization=(0,0,1000),
@@ -27,12 +29,22 @@ B = magpy.getB(
 
 print(B.round())
 
-# magpy.show(cyl)
-
 magpy.show(cyl, sensor, animation=True, backend='plotly')
 
 # Trying to do plotting
 
-# fig = plt.figure(figsize=(10, 4))
-# ax1 = fig.add_subplot(121)  # 2D-axis
-# ax2 = fig.add_subplot(122, projection="3d"
+fig = go.Figure().set_subplots(
+    rows=1, cols=2, specs=[[{"type": "xy"}, {"type": "scene"}]]
+)
+
+# compute field and plot in 2D-axis
+for i, lab in enumerate(["Bx", "By", "Bz"]):
+    fig.add_trace(go.Scatter(x=np.linspace(-3, 3, 201), y=B[:, i], name=lab))
+
+temp_fig = go.Figure()
+magpy.show(loop, cylinder, canvas=temp_fig, backend="plotly")
+fig.add_traces(temp_fig.data, rows=1, cols=2)
+fig.layout.scene.update(temp_fig.layout.scene)
+
+# generate figure
+fig.show()
