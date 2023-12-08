@@ -18,6 +18,8 @@ cyl = magpy.magnet.Cylinder(
 # Create paths
 ts = np.linspace(-3, 3, 201)
 pos = np.array([(t, 0, 0.1) for t in ts])
+# The points at which we will evaluate the force
+xpoints=np.linspace(-3, 3, 201)
 
 # Set path at initialization
 sensor = magpy.Sensor(position=pos)
@@ -30,7 +32,6 @@ B = magpy.getB(
 
 print(B.round())
 
-magpy.show(cyl, sensor, animation=True, backend='plotly')
 
 # Trying to do plotting
 
@@ -47,13 +48,37 @@ for i, lab in enumerate(["Bx", "By", "Bz"]):
     fig.add_trace(go.Scatter(x=np.linspace(-3, 3, 201), y=B[:, i], name=lab))
 
 # now I specifically want to add the total magnitude
-M = [];
-for i in range(0,200):
+M = []
+for i in range(0,201):
     M.append(math.sqrt(B[i][0]*B[i][0] + B[i][2]*B[i][2]))
 
+fig.add_trace(go.Scatter(x=np.linspace(-3, 3, 201),y=M,name="M"))
 
-fig.add_trace(go.Scatter(x=np.linspace(-3, 3, 201),y=M,name=lab))
-# temp_fig = go.Figure()
+MaxOnAxis = max(M) # This should in fact be analytically computable.
 
-# generate figure
+Scores = []
+# Seems most simple....
+for k,v in enumerate([3/2]):
+    Scores.append([])
+    for j in [6]:
+        F = []
+        G = []
+        for i,x in enumerate(xpoints):
+            s = abs(v * x)
+            F.append(M[i] - MaxOnAxis * 1/(1+s**j))
+            G.append(MaxOnAxis * 1/(1+s**j))
+        print("max - min",max(F)-min(F))
+        Scores[k].append(max(F)-min(F))
+        name = "F"+str(j)+"-"+str(v)
+        print(name)
+        fig.add_trace(go.Scatter(x=np.linspace(-3, 3, 201),y=F,name=name))
+        fig.add_trace(go.Scatter(x=np.linspace(-3, 3, 201),y=G,name=name))
+
+# p = np.poly1d( np.polyfit(xpoints,F8,4) )
+# FP = []
+# for i,x in enumerate(xpoints):
+#     FP.append(p(x))
+
+# fig.add_trace(go.Scatter(x=xpoints,y=FP,name="FP"))
+
 fig.show()
