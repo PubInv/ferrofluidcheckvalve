@@ -30,8 +30,6 @@ B = magpy.getB(
     observers = pos
 )
 
-print(B.round())
-
 
 # Trying to do plotting
 
@@ -44,41 +42,46 @@ for i, lab in enumerate(["Bx", "By", "Bz"]):
     print(i)
     print(lab)
 
-for i, lab in enumerate(["Bx", "By", "Bz"]):
+for i, lab in enumerate(["Bx"]):
     fig.add_trace(go.Scatter(x=np.linspace(-3, 3, 201), y=B[:, i], name=lab))
 
-# now I specifically want to add the total magnitude
-M = []
-for i in range(0,201):
-    M.append(math.sqrt(B[i][0]*B[i][0] + B[i][2]*B[i][2]))
+F = []
+for i,x in enumerate(xpoints):
+    F.append(B[i,0])
 
-fig.add_trace(go.Scatter(x=np.linspace(-3, 3, 201),y=M,name="M"))
+# now we seek to split xpoints into three arrays to do piece-wise curve fitting
+Ex,Ey = [],[] # East points
+Cx,Cy = [],[] # Central points
+Wx,Wy = [],[] # West points
+for i,x in enumerate(xpoints):
+    if x <= -0.5:
+        Ex.append(xpoints[i])
+        Ey.append(F[i])
+    elif x <= 0.5:
+        Cx.append(xpoints[i])
+        Cy.append(F[i])
+    else:
+        Wx.append(xpoints[i])
+        Wy.append(F[i])
 
-MaxOnAxis = max(M) # This should in fact be analytically computable.
+pE = np.poly1d(np.polyfit(Ex,Ey,1))
+EP = []
+for i,x in enumerate(Ex):
+    EP.append(pE(x))
 
-Scores = []
-# Seems most simple....
-for k,v in enumerate([3/2]):
-    Scores.append([])
-    for j in [6]:
-        F = []
-        G = []
-        for i,x in enumerate(xpoints):
-            s = abs(v * x)
-            F.append(M[i] - MaxOnAxis * 1/(1+s**j))
-            G.append(MaxOnAxis * 1/(1+s**j))
-        print("max - min",max(F)-min(F))
-        Scores[k].append(max(F)-min(F))
-        name = "F"+str(j)+"-"+str(v)
-        print(name)
-        fig.add_trace(go.Scatter(x=np.linspace(-3, 3, 201),y=F,name=name))
-        fig.add_trace(go.Scatter(x=np.linspace(-3, 3, 201),y=G,name=name))
+fig.add_trace(go.Scatter(x=Ex,y=Ey,name="EP"))
 
-# p = np.poly1d( np.polyfit(xpoints,F8,4) )
-# FP = []
-# for i,x in enumerate(xpoints):
-#     FP.append(p(x))
+pC = np.poly1d(np.polyfit(Cx,Cy,1))
+CP = []
+for i,x in enumerate(Cx):
+    CP.append(pC(x))
 
-# fig.add_trace(go.Scatter(x=xpoints,y=FP,name="FP"))
+fig.add_trace(go.Scatter(x=Cx,y=Cy,name="CP"))
 
+pW = np.poly1d(np.polyfit(Wx,Wy,1))
+WP = []
+for i,x in enumerate(Wx):
+    WP.append(pW(x))
+
+magpy.show(cyl, sensor, backend='plotly')
 fig.show()
