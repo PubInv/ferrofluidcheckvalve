@@ -17,7 +17,8 @@ cyl = magpy.magnet.Cylinder(
 
 # Create paths
 ts = np.linspace(-3, 3, 201)
-pos = np.array([(t, 0, 0.1) for t in ts])
+# pos = np.array([(t, 0, 0.1) for t in ts])
+pos = np.array([(t, 0, 0.6) for t in ts])
 # The points at which we will evaluate the force
 xpoints=np.linspace(-3, 3, 201)
 

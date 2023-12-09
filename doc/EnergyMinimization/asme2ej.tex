@@ -487,7 +487,7 @@ catastrophically, spraying Eastward into the channel and letting air through.
 The magnetic field in the line just above the face of the magnet can be analytically
 described by ellpitical integrals, but they are very difficult to work with symbolically,
 but easy to calculate numerically. MagPyLib is a convenient package for doing so.
-Figure~\ref{fig:BoluSetup} shows our setup of the problem.
+Figure~\ref{fig:BolusSetup} shows our setup of the problem.
 
 By making assumptions, we can
 analyze this to obtain closed form solutions which match our
@@ -525,19 +525,21 @@ three approximations are shown in Figure~ref{fig:piecewise}.
 \label{fig:piecewise}
 \end{figure}
 
+The piecewise approximation $B'$ to the field $B$ is:
 
-\begin{figure}
-\centerline{\includegraphics[width=6in]{figure/One-dimensionalBolusMath.png}}
-\caption{One Dimensional Bolus Math [ This Figure is now inaccurate. ]}
-\label{fig_oneD}
-\end{figure}
+\begin{equation}
+B'(x) =
+\left\{
+    \begin{array}{lr}
+      0 , & \text{if } x < -3 \\
+      -18.93 x + 52.5 x^2 , & \text{if } -3 < x  < -1/2 \\
+      105x , & \text{if } -1/2 < x < 1/2 \\
+      -18.93 x + -52.5 x^2 , & \text{if } 1/2 < x < 3 \\
+      0 , & \text{if } x > 3
+    \end{array}
+\right\}
+\end{equation}
 
-The $x$-axis in the channel at point $x$ is:
-\begin{align}
-  B(x) = & \int F_E(x-1) + F_W(x+1) \\
-  B(x) = & d B(x-1) + -d B(x+1) \\
-  B(x) = & M d (1/(1 + (3(x-1)/2)^6) + - 1/(1 + (3(x +1)/2)^6)) \\
-\end{align}
 
 Now imagine that bolus has a length of 2, and let the channel area be $d$, and let $x$ be
 the midpoint of the bolus.
