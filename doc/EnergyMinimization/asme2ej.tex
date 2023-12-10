@@ -492,7 +492,6 @@ Figure~\ref{fig:BolusSetup} shows our setup of the problem.
 By making assumptions, we can
 analyze this to obtain closed form solutions which match our
 experience and inform more complicated cases.
-This is depicted in Figure~\ref{fig_oneD}.
 
 \begin{figure}
 \centerline{\includegraphics[width=6in]{figure/SetupBolusProblem.png}}
@@ -527,42 +526,96 @@ three approximations are shown in Figure~ref{fig:piecewise}.
 
 The piecewise approximation $B'$ to the field $B$ is:
 
-\begin{equation}
-B'(x) =
+\begin{align}
+  P(x) = -18.50670842 x^6 + -230.18413653 x^5 + -1174.49453555 + \\
+  x^4 + -3154.6263118x^3 +
+       -4734.06101237x^2 + -3819.38958143x + -1339.63590984 \\
+       Q(x) = 18.50670842 x^6 + -230.18413653 x^5 + 1174.49453555 + \\
+       x^4 + -3154.6263118x^3 +
+       4734.06101237x^2 + -3819.38958143x + 1339.63590984 \\
+B'(x) = &
 \left\{
     \begin{array}{lr}
       0 , & \text{if } x < -3 \\
-      -18.93 x + 52.5 x^2 , & \text{if } -3 < x  < -1/2 \\
-      105x , & \text{if } -1/2 < x < 1/2 \\
-      -18.93 x + -52.5 x^2 , & \text{if } 1/2 < x < 3 \\
+      P(x) , & \text{if } -3 < x  < -1/2 \\
+      545 x , & \text{if } -1/2 < x < 1/2 \\
+      Q(x) , & \text{if } 1/2 < x < 3 \\
       0 , & \text{if } x > 3
     \end{array}
 \right\}
-\end{equation}
+\end{align}
+
+Where $P(x)$ and $Q(x)$ are nearly indentical 6-degree polynomials determined
+by NumPy's polyfit.
 
 
-Now imagine that bolus has a length of 2, and let the channel area be $d$, and let $x$ be
+Setting aside issues of magnetic susceptibility of the ferrofluid used, the force is proportional
+to the field strength times the area. Since the area is unchanging in a simple tube, the force on
+a slice of ferrofluid at position $x$ is proportional to $B'(x)$.
+
+
+
+Now imagine that bolus has a length of $L$, and let the channel area be $d$, and let $x$ be
 the midpoint of the bolus.
 Assume the magnet is a 1000 milliTesla (mT) polariazed magnet.
 The $x$-axis force on the bolus can be computed as the integral of $dx$:
 
-The $x$-axis force on a bolus in the channel generally is:
+The $x$-axis force on a bolus in the channel centered at $y$ generally is proportional to:
 \begin{align}
-  F(x) = & \int d B(x-1) + -d B(x+1) \\
-  F(x) = & M d (1/(1 + (3(x-1)/2)^6) + - 1/(1 + (3(x +1)/2)^6)) \\
+  F(y,L) = & \int_{y-L/2}^{y-L/2} B'(x) dx
 \end{align}
 
-The force on the ferrfoluid
-is purely a function of the position of the two surfaces,
-East and West,
-which are by construction at $x - 1$ and $x + 1$.
+Let us assume that we are blowing air from the left in the positive $x$ direction, in which case
+we can ignore cases when $y < 0$. It is clear from symmetry that $ F(0,L) = 0 $ for any $L$.
 
-    The total force on the bolus is by pure algebra:
 \begin{align}
-  F(x) = & F_E(x-1) + F_W(x+1) \\
-  F(x) = & d B(x-1) + -d B(x+1) \\
-  F(x) = & M d (1/(1 + (3(x-1)/2)^6) + - 1/(1 + (3(x +1)/2)^6)) \\
+  F(y,L) = & \int_{y-L/2}^{y-L/2} B'(x) dx
 \end{align}
+
+In order to compute where the bolus will be when it explodes catastrophically when blown from
+the negative $x$ direction to the positive $x$ direction, we simply need to know when the derirvative of
+$F(y,L)$ with respect to $y$ becomes zero. Since $F(y,L)$ is a piecewise function, we can find $G(y,L)$,
+integral of $F$ such that $d/dy G(y,L) = F(y,L)$. Let $C(x)$ be the integral of $B'(x)$.
+
+\begin{align}
+  C(x) =  &
+\left\{
+    \begin{array}{lr}
+      0 , & \text{if } x < -3 \\
+      \text{anti-derivate of P(x))} , & \text{if } -3 < x  < -1/2 \\
+      \alpha x^2/2 , & \text{if } -1/2 < x < 1/2 \\
+     \text{anti-derivate of P(x))}   , & \text{if } 1/2 < x < 3 \\
+      0 , & \text{if } x > 3
+    \end{array}
+\right\}
+\end{align}
+
+Then by the fundamental theorem of calculus:
+\begin{align}
+  F(y,L) = & \int_{y-L/2}^{y+L/2} B'(x) dx
+  F(y,L) = & C(y+L/2) - C(y-L/2)
+\end{align}
+
+Call the edge of the bolus blown in the positive $x$ direciton that has the lower $x$ value the high-side bolus and the edge with the higher $x$ value the low-side bolus.
+This corresponds to the high-pressure side and the low-pressure side.
+
+It is clear the collapse point will not occur until low-side edge is past creater than $1/2$. It is clear it will occur before the high-side edge reaches $1/2$. We therefore need only consider the bolus straddling
+$1/2$. Let us assume that bolus $L < 1$, so that we need not consider the case that the high-side edge is
+the left of $-1/2$.
+Under these assumption, we have:
+\begin{align}
+  C(y+L/2) = & \text{Antiderivative of P(y+L/2)} \\
+  C(y-L/2) = & \alpha (y-L/2)^2/2
+\end{align}
+Therefore the function $F(y,L)$ is a simple polynomial, which we can differentiate:
+
+\begin{align}
+  F(y,L) = &  \\
+  F'(y,L) = &
+\end{align}
+
+
+
 
 Plotting this function of $x$, we immediately find it matches
 our experience. If you put a bolus in a thin straw subject

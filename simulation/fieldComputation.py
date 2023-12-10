@@ -17,8 +17,7 @@ cyl = magpy.magnet.Cylinder(
 
 # Create paths
 ts = np.linspace(-3, 3, 201)
-# pos = np.array([(t, 0, 0.1) for t in ts])
-pos = np.array([(t, 0, 0.6) for t in ts])
+pos = np.array([(t, 0, 0.1) for t in ts])
 # The points at which we will evaluate the force
 xpoints=np.linspace(-3, 3, 201)
 
@@ -56,33 +55,61 @@ Cx,Cy = [],[] # Central points
 Wx,Wy = [],[] # West points
 for i,x in enumerate(xpoints):
     if x <= -0.5:
-        Ex.append(xpoints[i])
-        Ey.append(F[i])
+        Wx.append(xpoints[i])
+        Wy.append(F[i])
     elif x <= 0.5:
         Cx.append(xpoints[i])
         Cy.append(F[i])
     else:
-        Wx.append(xpoints[i])
-        Wy.append(F[i])
+        Ex.append(xpoints[i])
+        Ey.append(F[i])
 
-pE = np.poly1d(np.polyfit(Ex,Ey,1))
+pE = np.poly1d(np.polyfit(Ex,Ey,6))
 EP = []
 for i,x in enumerate(Ex):
     EP.append(pE(x))
 
-fig.add_trace(go.Scatter(x=Ex,y=Ey,name="EP"))
+fig.add_trace(go.Scatter(x=Ex,y=EP,name="EP"))
 
 pC = np.poly1d(np.polyfit(Cx,Cy,1))
 CP = []
 for i,x in enumerate(Cx):
     CP.append(pC(x))
 
-fig.add_trace(go.Scatter(x=Cx,y=Cy,name="CP"))
+fig.add_trace(go.Scatter(x=Cx,y=CP,name="CP"))
 
-pW = np.poly1d(np.polyfit(Wx,Wy,1))
+pW = np.poly1d(np.polyfit(Wx,Wy,6))
 WP = []
 for i,x in enumerate(Wx):
     WP.append(pW(x))
+    print(i,x,pW(x))
 
-magpy.show(cyl, sensor, backend='plotly')
+fig.add_trace(go.Scatter(x=Wx,y=WP,name="WP"))
+
+
+# pW = np.poly1d(np.polyfit(Wx,Wy,6))
+# ZP = []
+# for i,x in enumerate(Wx):
+#     ZP.append(pW(x))
+
+# fig.add_trace(go.Scatter(x=Wx,y=ZP,name="ZP"))
+
+
+# # Spud boy
+# def guessz(x):
+#     v = -3.0 - x
+#     return -7*(v)**4
+
+# This is the best one so far
+# def guessq(x):
+#     v = -3.0 - x
+#     return -1.1*(v)**6
+
+# QP = []
+# for i,x in enumerate(Wx):
+#     QP.append(guessq(x))
+
+# fig.add_trace(go.Scatter(x=Wx,y=QP,name="QP"))
+
+# magpy.show(cyl, sensor, backend='plotly')
 fig.show()
