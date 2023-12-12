@@ -406,25 +406,6 @@ simplifying assumptions.
   forces is a line of equal field strength and all surfaces are equal.
 \end{conjecture}
 
-\begin{theorem}[Surface Force Computation]
-  \label{conj:sfc}
-  The force exerted on an ideal blob by the magnetic field
-  is the sum over each surface of the
-  integral of magnetic field along that surface, either
-  pushing the surface into the blob or pulling the surface
-  away from the blob.
-\end{theorem}
-
-\begin{proof}
-  Force is work times distance. Within an infinitessimal
-  distance, force is the change in potential energy.
-  Because or fluid is uniform, the potential energy of
-  a blob one position and a blob displaced from that position
-  by an infinitessimal changes only by the change in the thin
-  areas along the surfaces. The change in potential energy in
-  these infintessimal areas is purely a function of the their
-  path through the B-field and the intensity of the field at that point.
-\end{proof}
 
 If the area is expanding the blob, it always decreases potential
 energy. If the area is contracting the blob, it always increasing
@@ -503,7 +484,7 @@ The red line represents the thin channel just slightly above the face of
 the magnet.
 MagPyLib conveniently computes the field along this line. In particular,
 only the $x$ component (the East-West coordinate) of the B-field is relevant to us.
-The field was plotted with MagPyLib in Figure~ref{fig:Bx}.
+The field was plotted with MagPyLib in Figure~ref{fig:Bx}. {\em Note: I do not understand the sign of this field. It appears to be wrong to me.}
 
 \begin{figure}
 \centerline{\includegraphics[width=3in]{figure/Bx.png}}
@@ -527,26 +508,43 @@ three approximations are shown in Figure~ref{fig:piecewise}.
 The piecewise approximation $B'$ to the field $B$ is:
 
 \begin{align}
-  P(x) = -18.50670842 x^6 + -230.18413653 x^5 + -1174.49453555 + \\
-  x^4 + -3154.6263118x^3 +
-       -4734.06101237x^2 + -3819.38958143x + -1339.63590984 \\
-       Q(x) = 18.50670842 x^6 + -230.18413653 x^5 + 1174.49453555 + \\
-       x^4 + -3154.6263118x^3 +
-       4734.06101237x^2 + -3819.38958143x + 1339.63590984 \\
+  p(x) = & -18.5 x^6 + -230.2 x^5 + -1174.5 + \
+  x^4 + -3154.6 x^3 + -4734.1 x^2 + -3819.4x + -1339.6 \\
+  c(x) = & \hphantom{-}545.8 x \\
+  q(x) = &  \hphantom{-}18.5 x^6 + -230.2 x^5 + \hphantom{-} 1174.5 + \
+  x^4 + -3154.6x^3 +  \hphantom{-} 4734.1x^2 + -3819.4x + \hphantom{-} 1339.6 \\
 B'(x) = &
 \left\{
     \begin{array}{lr}
       0 , & \text{if } x < -3 \\
       P(x) , & \text{if } -3 < x  < -1/2 \\
-      545 x , & \text{if } -1/2 < x < 1/2 \\
+      C(x) , & \text{if } -1/2 < x < 1/2 \\
       Q(x) , & \text{if } 1/2 < x < 3 \\
       0 , & \text{if } x > 3
     \end{array}
 \right\}
 \end{align}
 
+The numbers have been rounded to reflect the expected accuracy of the simulation and keep the expressions tractible.
+It would be preferable to find these constants analytically from the
+geometry and polarization of the magnet, but that is future work.
+
 Where $P(x)$ and $Q(x)$ are nearly indentical 6-degree polynomials determined
 by NumPy's polyfit.
+
+The piecewise approximations: $p(x)$, $c(x)$, and $q(x)$ are
+polynomials, which are easy to anti-differentiate to find the functions
+
+$P,C$ and $Q$, such that $P' = p, C' = c,$ and $Q' = q$:
+
+\begin{align}
+  P(x) = & -1339.6 x - 1909.7 x^2 - 1578.03 x^3 - 788.65 x^4 - 234.9 x^5 - 38.3667 x^6 - 2.64286 x^7 \\
+  C(x) = & 272.9 x^2 \\
+  Q(x) = &  \hphantom{-}1339.6 x - 1909.7 x^2 + \hphantom{-}1578.03 x^3 - 788.65 x^4 + \hphantom{-}234.9 x^5 - 38.3667 x^6 + \hphantom{-}2.64286 x^7 \\
+\end{align}
+
+
+
 
 
 Setting aside issues of magnetic susceptibility of the ferrofluid used, the force is proportional
@@ -575,92 +573,55 @@ we can ignore cases when $y < 0$. It is clear from symmetry that $ F(0,L) = 0 $ 
 In order to compute where the bolus will be when it explodes catastrophically when blown from
 the negative $x$ direction to the positive $x$ direction, we simply need to know when the derirvative of
 $F(y,L)$ with respect to $y$ becomes zero. Since $F(y,L)$ is a piecewise function, we can find $G(y,L)$,
-integral of $F$ such that $d/dy G(y,L) = F(y,L)$. Let $C(x)$ be the integral of $B'(x)$.
+integral of $F$ such that $d/dy G(y,L) = F(y,L)$. Let $D(x)$ be the integral of $B'(x)$.
 
 \begin{align}
-  C(x) =  &
+  D(x) =  &
 \left\{
     \begin{array}{lr}
       0 , & \text{if } x < -3 \\
-      \text{anti-derivate of P(x))} , & \text{if } -3 < x  < -1/2 \\
-      \alpha x^2/2 , & \text{if } -1/2 < x < 1/2 \\
-     \text{anti-derivate of P(x))}   , & \text{if } 1/2 < x < 3 \\
+      P(x) , & \text{if } -3 < x  < -1/2 \\
+      C(x) , & \text{if } -1/2 < x < 1/2 \\
+      Q(x)   , & \text{if } 1/2 < x < 3 \\
       0 , & \text{if } x > 3
     \end{array}
 \right\}
 \end{align}
 
-Then by the fundamental theorem of calculus:
-\begin{align}
-  F(y,L) = & \int_{y-L/2}^{y+L/2} B'(x) dx
-  F(y,L) = & C(y+L/2) - C(y-L/2)
-\end{align}
+
 
 Call the edge of the bolus blown in the positive $x$ direciton that has the lower $x$ value the high-side bolus and the edge with the higher $x$ value the low-side bolus.
 This corresponds to the high-pressure side and the low-pressure side.
 
-It is clear the collapse point will not occur until low-side edge is past creater than $1/2$. It is clear it will occur before the high-side edge reaches $1/2$. We therefore need only consider the bolus straddling
-$1/2$. Let us assume that bolus $L < 1$, so that we need not consider the case that the high-side edge is
-the left of $-1/2$.
+It is clear the collapse point will not occur until low-side edge is past greater than $1/2$. It is clear it will occur before the high-side edge reaches $1/2$. We therefore need only consider the bolus straddling
+$1/2$.
 Under these assumption, we have:
 \begin{align}
-  C(y+L/2) = & \text{Antiderivative of P(y+L/2)} \\
-  C(y-L/2) = & \alpha (y-L/2)^2/2
-\end{align}
-Therefore the function $F(y,L)$ is a simple polynomial, which we can differentiate:
-
-\begin{align}
-  F(y,L) = &  \\
-  F'(y,L) = &
-\end{align}
-
-
-
-
-Plotting this function of $x$, we immediately find it matches
-our experience. If you put a bolus in a thin straw subject
-to a magnetic field and blow on it, it will be displaced a bit,
-increasing the force it exerts on your breath.
-At some point of increasing pressure, the bolus
-is displaced to a point that the magnetic force on it goes
-down, and the bolus explodes violently away from your breath,
-generally spattering and making a mess.
-
-It is interesting to note that we obtain the same result by
-a different method. We can consider the potential energy
-of the bolus. Reling on the fact that the bolus always
-has a length of 2, the potential energy is the integral
-of the field strength times the area:
-\begin{align}
-  PE(0) = & \int_{-1}^{1} d B(x)dx \\
-  PE(y) = & \int_{-1+y}^{1+y} d B(x)dx \\
-\end{align}
-But change in potential energy is work, which is force times distance,
-so force is the change in potential energy divied by the distance:
-\begin{align}
-  F(y) = &  \frac{\Delta PE(y)}{\Delta y} \\
-\end{align}
-The limit of this as $\Delta y$ goes to zero is just the derivative of $PE(y)$:
-\begin{align}
-  F(y) = & PE'(y) \\
-  F(y) = & \frac{d M}{1+(3y/2)^6}
+  F(y,L) = & \int_{y-L/2}^{y+L/2} B'(x) dx \\
+  F(y,L) = & \int_{y-L/2}^{0.5} c(x) dx  + \int_{0.5}^{y+L/2} q(x) dx   \\
+  F(y,L) = & C(x) \bigg\rvert_{y-L/2}^{0.5}   +  Q(x) \bigg\rvert_{0.5}^{y+L/2} \\
+  \begin{split}
+  F(y,L) = & 272.9 0.5^2 - 272.9 (y-L/2)^2 + \\
+  & 1339.6 (y+L/2) - 1909.7 (y+L/2)^2 + 1578.03 (y+L/2)^3 \\
+  & - 788.65 (y+L/2)^4 + 234.9 (y+L/2)^5 - 38.3667 (y+L/2)^6 + 2.64286 (y+L/2)^7 \\
+  & -(  1339.6 (0.5) - 1909.7 (0.5)^2 + 1578.03 (0.5)^3 \\
+  & - 788.65 (0.5)^4 + 234.9 (0.5)^5 - 38.3667 (0.5)^6 + \\
+  & 2.64286 (0.5)^7)
+  \end{split} \\
+  \begin{split}
+  F(y,L) = & -278.875 - 272.9 (y-L/2)^2 + 1339.6 (y+L/2) - 1909.7 (y+L/2)^2 + \\
+  & 1578.03 (y+L/2)^3 - 788.65 (y+L/2)^4 + 234.9 (y+L/2)^5 \\
+  & - 38.3667 (y+L/2)^6 + 2.64286 (y+L/2)^7
+  \end{split}
+    \label{eq:force}
 \end{align}
 
-In other words, Theorem~\ref{conj:sfc} gives us the same result
-as integrating the entire space, but gives us a shortcut of allowing
-us to integrate over only the edges, which in some cases can be
-replace with simple algebra.
+Using Wolfram alpha and setting $L = 1$, the maximum force occurs
+at $y = 0.592, F \propto 142.4 $, when the center of the bolus is just to the right
+of the break point. This accords with the graph inspection.
 
+At $L = 2.0$, $y = 1.01766, F \propto 167.07$.
 
-
-The extrema of this force $F(x)$ occur at
-$(-\frac{\sqrt{2}}{\sqrt[4]{3}},\frac{\sqrt{2}}{\sqrt[4]{3}})$, or $(-1.0746,1.0746)$, which
-again accords with physical experience of how much a bolus can be displaced
-before it explodes. It must be remembered, however, that these
-calculations will change if the intensity of the magnetic field is
-modeled differently. Nonetheless, having a closed-form solution to this
-problem is valuable both for the intuition it provides and
-to allow direct design of bolus ferrofluid system.
 
 \subsection{The Channel-to-a-Chamber}
 
