@@ -637,6 +637,8 @@ as depicted in Fig.~\ref{fig:ChannelToChamber}.
 \label{fig:ChannelToChamber}
 \end{figure}
 
+In that diagram, I have labelled the width of the channel $d$, but that is
+confusing when using derivatiaves, so henceforward the channel width will be represented by $k$.
 We would ideally like to treat this as a one-dimensional problem as well.
 Let us assume once again that a magnetic field is placed at the center
 at our diagram (where the channel meets the chamber.)
@@ -672,11 +674,11 @@ is the distance from the center of the face of the magnet.
 Since we have previously assumed that the bolus is a single blob,
 at least until it collapses, then we can can relate $a$ and $b$
 via the total area of the bolus $S$.
-Let us assume that the channel of width $d$ is narrow enough
+Let us assume that the channel of width $k$ is narrow enough
 that the slight arc of the fluid inside the inlet region can be treated as a
 straight line.
 \begin{align}
-S = d \cdot a + \frac{1}{2} \pi b^2
+S = k \cdot a + \frac{1}{2} \pi b^2
 \end{align}
 when $a > 0$ and $b > 0$, so that the areas of $A$ and $B$ are both positive.
 It is most convenient to measure our position of the bolus, which is
@@ -684,7 +686,7 @@ changing shape in this case, as the coordinate $b$, so we we express
 $a$ in terms of $b$. Since we will use this algebraic relationship later, we will define it as a function $A$:
 This can be solved for $a$:
 \begin{align}
-  a = A(b) = -\frac{\pi b^2 - 2 S}{2d}
+  a = A(b) = -\frac{\pi b^2 - 2 S}{2k}
   \label{eqn:afromS}
 \end{align}
 
@@ -692,20 +694,25 @@ This can be solved for $a$:
 Note that when $a = 0$, the dependence on $d$ vanishes and:
 \begin{align}
   b = & \sqrt{\frac{2S}{\pi}} \\
-  b^2 = & \frac{2S}{\pi}
-  \label{eq:a_zero}
+  \label{eq:maximalB}
 \end{align}
 
 Since at rest the bolus surface $A$ will be in the same field strength as surface $B$, we can set:
 
 \begin{align}
   B(a) = & B(b) \\
-  B(-\frac{\pi b^2 - 2 S}{2d}) = & B(b)
+  B(-\frac{\pi b^2 - 2 S}{2k}) = & B(b)
 \end{align}
+
 
 This can be solved by WolframAlpha (results not incuded here.)
 As expected, $ b = -a $, that is, both surfaces are equidistant from the
 center of our radially symmetric magnetic field.
+
+We will late use the value of $S$ which occurs when $a = 0.5$, $b = 0.5$, $d = 0.05$, where:
+\begin{align}
+  S = \frac{1 + 5 \pi}{40}
+\end{align}
 
 \subsection{A strategy for computing pressure}
 
@@ -741,7 +748,7 @@ The presence of ferrofluid at a point or infinitessimal area ($da$) decreases th
 of the entire system in proportion to the strength of the field at a point,
 and that that strength is describe by our function $B(r)$ where $r$ is the
 distance from the origin (and thus the center of the face of the magnet).
-We can thus describe the potential energy as an integral over surface patches:
+We can thus describe the potential energy as an integral over surface patches $da$:
 
 \begin{align}
   U = -\int
@@ -769,28 +776,82 @@ enough that we can model the field across the channel as if it is rectilinear.
 \begin{align}
   U_A = & -\int_0^b B(r) dr , & \text{if } -pi/2 < \theta < pi/2 \\
   U_A = & -\pi \int_0^b B(r) dr \\
-  U_B = & -d \int_0^a B(r) dr\\
+  U_B = & -k\int_0^a B(r) dr\\
 \end{align}
 
 However, we have previously computed the indefinite integral $D(x) = \int B(x)$ in Equation~\ref{eq:Dintegration},
 so:
 \begin{align}
-  U = & -\pi D(x) \vert_{x=0}^{x=b}  + -d D(x)\vert_{y=0}^{y=A(b)} \\
-  U = & -\pi (D(b) - D(0)) + -d (D(A(b)) - D(0))
+  U = & -\pi D(x) \vert_{x=0}^{x=b}  + -k D(x)\vert_{y=0}^{y=A(b)} \\
+  U = & -\pi (D(b) - D(0)) + -k (D(A(b)) - D(0))
+  \label{eq:U}
 \end{align}
 
-We can use this expression, if we can differentiate it, to compute force necessary to displace the bolus to one side or another:
+
+Let us define $b_0$ as the value of $b$ when the pressure in the chamber and the channel are equal,
+so that the bolus is at rest. This is the point of minimum potential energy.
+Let $F(b)$ be the force exerted by the magnet on the bolus.
+Then $F(b_0) = 0$.
+The potential energy increases as the surrounding gases do work on it (up to the point of collapse
+or crack.) Within that range, the forces are conservative; the potential energy could in theory
+be recovered as the bolus spring back to position if the pressure on the bolus was removed.
+The force exerted by the magnet is positive if $b < b_0$, and negative if $b > b_0$.
+Then we have:
 \begin{align}
-  dU = -F_r dr
+  \frac{d U}{db} =  -F(b)
 \end{align}
+
+The should allow us to compute the $F(b)$ from $U$.
 
 But before attempting that, we simply observe that the bolus will will collapse when the force on
 it caused by pressure from the right (in the chamber) drives it to the point where the force
-resiting it is maximized.
+resiting it is maximized, which will occur when the derivative of $F(b)$ with respect to $b$ is
+zero. (The behavior is different when the pressure is from the left.)
+Thus we seek the values of $b$ for which:
+\begin{align}
+  \frac{d F(b)}{db} = & 0 \\
+  \frac{d^2 U}{db^2} = & 0
+\end{align}
+
+Note: I'm modestly confident up to this point. The math below here is highly questionable
+and does not yet appear to be correct.
+
+Since we have used polynomial approximations of high order to approximate the field,
+the will be many solutions to this equation, but we will be careful to choose a solution
+within a proscribed range $0 < b < b_0$, which should be unique.
+Differentiating Equation~\ref{eq:U} is easy if we assume that the area of the ferrofluid
+blob $S$ has been chosen so that $b_0$ is at most $1/2$ (that is, the radius of our
+magnet.) Then $D(b) = C(b)$, so we seek:
+
+\begin{align}
+  0 = & \frac{d^2 }{db^2} -\pi (C(b) - C(0)) + -k (C(A(b)) - C(0)) \\
+  0 = & \frac{d^2 }{db^2} -\pi C(b) + -k C(A(b)) \\
+  0 = &  -\pi 272.9 \frac{d^2 }{db^2} b^2 + -k 272.9 \frac{d^2 }{db^2}(A(b))^2 \\
+  0 = &  -\pi 272.9 \cdot 2 + -k 272.9 \cdot 2 ( A(b)  \frac{d^2 A(b)}{db^2} +  (\frac{d A(b)}{db})^2) \\
+  0 = &  \pi + k ( A(b)  \frac{d^2 A(b)}{db^2} +  (\frac{d A(b)}{db})^2) \\
+  A(b) = & -\frac{\pi b^2 - 2 S}{2k} \\
+  \frac{d A(b)}{db} = & -\frac{b \pi}{k} \\
+  \frac{d^2 A(b)}{db^2} = &   -\frac{\pi}{k} \\
+  S = & \frac{1 + 5 \pi}{40} \\
+  0 = &  \pi + k ( -\frac{\pi}{k} A(b)   +  (-\frac{b \pi}{k})^2) \\
+  0 = &  \pi +  -\pi A(b)   +  (\frac{b^2 \pi^2}{k}) \\
+  0 = &  1 +  \frac{\pi b^2 - 2 S}{2k}  +  \frac{b^2 \pi}{k} \\
+  \\
+  0 = &  1 +  \frac{\pi b^2 - 2 \frac{1 + 5 \pi}{40}}{2k}  +  \frac{b^2 \pi}{k} \\
+  0 = &  k +  \frac{\pi b^2 -  \frac{1 + 5 \pi}{20}}{2}  +  b^2 \pi \\
+  b \approx & 0.27934
+\end{align}
+
+This answer is plausible, though I do not trust taht I have not made a mistake.
+
+
+
+
 
 Qualitatively, we assume that at rest (ambient pressure), the bolus exerts no force. As the
-pressure in the chambe increases, the force (the change in potential energy) will increase
-as $b$ is decreased and the bolus is disturbed from its rest position. This force will increase
+pressure in the chamber increases, the force (the increase in potential energy) will increase
+as $b$ is decreased and the bolus is disturbed from its rest position. This force on the
+bolus and resiting force exerted by the bolus will increase
 as $b$ decreased further from its rest postion. However, eventuall this force will cease to
 increase and reach its maximum. At that point, the valve will collapse.
 
@@ -805,9 +866,9 @@ that will be the collapse pressure $P_c$.
 
 The cracking pressure $P_r$ will be the force necessary to reach $a = 0$, because at that point,
 the non-magnetic fluid will form a ``bubble'' which will be pinched off and displaced into the chamber
-by the ferrofluid. This ``bubble'' will be forced in the direction of decreasing mangentic field strength,
+by the ferrofluid. This ``bubble'' will be forced in the direction of decreasing magnetic field strength,
 because it minimizes potential energy to fill the strong field with ferrofluid preferentially over
-non-magnetic fluid. This occurs at $a = 0$, so $A(b) = 0$, or $b = \sqrt{\frac{2S}{\pi}}$ by Equation~\ref{eq:a_zerio}.
+non-magnetic fluid. This occurs at $a = 0$, so $A(b) = 0$, or $b = \sqrt{\frac{2S}{\pi}}$ by Equation~\ref{eq:maximalB}.
 
 \begin{align}
   P_r d = F(\sqrt{\frac{2S}{\pi}})
