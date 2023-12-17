@@ -513,18 +513,20 @@ The piecewise approximation $B'$ to the field $B$ is:
   c(x) = & \hphantom{-}545.8 x \\
   q(x) = &  \hphantom{-}18.5 x^6 + -230.2 x^5 + \hphantom{-} 1174.5 + \
   x^4 + -3154.6x^3 +  \hphantom{-} 4734.1x^2 + -3819.4x + \hphantom{-} 1339.6 \\
-B'(x) = &
+B(x) = &
 \left\{
     \begin{array}{lr}
-      0 , & \text{if } x < -3 \\
+      0 , & \text{if } x -leq -3 \\
       p(x) , & \text{if } -3 < x  < -1/2 \\
       c(x) , & \text{if } -1/2 < x < 1/2 \\
       q(x) , & \text{if } 1/2 < x < 3 \\
-      0 , & \text{if } x > 3
+      0 , & \text{if } x \geq 3
     \end{array}
     \right\}
     \label{eq:Bfield}
 \end{align}
+
+Note that $B(x)$ is an odd function; that is, $B(-x) = -B(x)$.
 
 The numbers have been rounded to reflect the expected accuracy of the simulation and keep the expressions tractible.
 It would be preferable to find these constants analytically from the
@@ -669,6 +671,30 @@ Since that field is completely radially symmetric, we can use that equation to
 describe the B field in the plane, where the parameter of the function
 is the distance from the center of the face of the magnet.
 
+In moving to a 2-dimensional representation, we move to polar coordinates
+centered at the point the point where the channel and the chamber meet.
+Technically, the $B$ field is a field of 3-dimensional vectors; but
+by working only in a plane, we treat is as a function of $r$, the distance
+from the orgin, and $\theta$, the angle of rotation from the $x$-axis. However,
+since the $B$ field is completely symmetric, we can think of it as a one-dimensional
+function of distance from the origin $B(r)$. Essentially, we are treating the
+$B$ field as the absolute value of the field we treated in the case of the 1-dimensional
+bolus.
+This can be interpreted as the strength drawing towards the origin, however, since
+we deduce everything from this point in terms of change in potential energy,
+we need not think of it as signed at all.
+In this interpretation, we can simplify $B(x)$:
+\begin{align}
+B(x) = &
+\left\{
+    \begin{array}{lr}
+      c(x) , & \text{if } 0 \leq x < 1/2 \\
+      q(x) , & \text{if } 1/2 < x < 3 \\
+      0 , & \text{if } x \geq 3
+    \end{array}
+    \right\}
+    \label{eq:Bfield}
+\end{align}
 
 
 Since we have previously assumed that the bolus is a single blob,
@@ -680,13 +706,13 @@ straight line.
 \begin{align}
 S = k \cdot a + \frac{1}{2} \pi b^2
 \end{align}
-when $a > 0$ and $b > 0$, so that the areas of $A$ and $B$ are both positive.
+when $a \geq 0$ and $b \geq 0$, so that the areas of $A$ and $B$ are both positive.
 It is most convenient to measure our position of the bolus, which is
 changing shape in this case, as the coordinate $b$, so we we express
 $a$ in terms of $b$. Since we will use this algebraic relationship later, we will define it as a function $A$:
 This can be solved for $a$:
 \begin{align}
-  a = A(b) = -\frac{\pi b^2 - 2 S}{2k}
+  a = A(b) = \frac{2S - \pi b^2}{2k}
   \label{eqn:afromS}
 \end{align}
 
@@ -701,7 +727,7 @@ Since at rest the bolus surface $A$ will be in the same field strength as surfac
 
 \begin{align}
   B(a) = & B(b) \\
-  B(-\frac{\pi b^2 - 2 S}{2k}) = & B(b)
+  B(\frac{2 S - \pi b^2 }{2k}) = & B(b)
 \end{align}
 
 
@@ -777,19 +803,7 @@ We can treat these as line integrals:
 
 \begin{align}
   U_B = & - \int_0^b \pi r B(r) dr \\
-  U_A = & -k\int_0^a B(r) dr\\
-\end{align}
-
-NOTE: EVERYTHING BELOW HERE is suspect, as I did not add the $r$ term in correctly in $U_B$!
-
-I need to redo the integral below taking this into account.
-
-However, we have previously computed the indefinite integral $D(x) = \int B(x)$ in Equation~\ref{eq:Dintegration},
-so:
-\begin{align}
-  U = & -\pi D(x) \vert_{x=0}^{x=b}  + -k D(x)\vert_{y=0}^{y=A(b)} \\
-  U = & -\pi (D(b) - D(0)) + -k (D(A(b)) - D(0))
-  \label{eq:U}
+  U_N = & -k\int_0^a B(r) dr\\
 \end{align}
 
 
@@ -808,48 +822,121 @@ Then we have:
 
 The should allow us to compute the $F(b)$ from $U$.
 
+
 But before attempting that, we simply observe that the bolus will will collapse when the force on
 it caused by pressure from the right (in the chamber) drives it to the point where the force
 resiting it is maximized, which will occur when the derivative of $F(b)$ with respect to $b$ is
 zero. (The behavior is different when the pressure is from the left.)
 Thus we seek the values of $b$ for which:
 \begin{align}
-  \frac{d F(b)}{db} = & 0 \\
-  \frac{d^2 U}{db^2} = & 0
+  0 = & \frac{d F(b)}{db} \\
+  0 = & \frac{d^2 U}{db^2}  \\
+  0 = & \frac{d^2}{db^2} U_B +  \frac{d^2}{db^2} U_N \\
+  0 = & - \frac{d}{db} (\pi \frac{d}{db} \int_0^b r B(r) dr) +  - \frac{d}{db} ( k \frac{d}{db}\int_0^{a} B(r) dr)
+  \label{eq:mainPE}
 \end{align}
 
-Note: I'm modestly confident up to this point. The math below here is highly questionable
-and does not yet appear to be correct.
-
-Since we have used polynomial approximations of high order to approximate the field,
-the will be many solutions to this equation, but we will be careful to choose a solution
-within a proscribed range $0 < b < b_0$, which should be unique.
-Differentiating Equation~\ref{eq:U} is easy if we assume that the area of the ferrofluid
-blob $S$ has been chosen so that $b_0$ is at most $1/2$ (that is, the radius of our
-magnet.) Then $D(b) = C(b)$, so we seek:
+Let us treat subparts here, using our knowledge of the piecewise definition
+of $B(x)$.
 
 \begin{align}
-  0 = & \frac{d^2 }{db^2} -\pi (C(b) - C(0)) + -k (C(A(b)) - C(0)) \\
-  0 = & \frac{d^2 }{db^2} -\pi C(b) + -k C(A(b)) \\
-  0 = &  -\pi 272.9 \frac{d^2 }{db^2} b^2 + -k 272.9 \frac{d^2 }{db^2}(A(b))^2 \\
-  0 = &  -\pi 272.9 \cdot 2 + -k 272.9 \cdot 2 ( A(b)  \frac{d^2 A(b)}{db^2} +  (\frac{d A(b)}{db})^2) \\
-  0 = &  \pi + k ( A(b)  \frac{d^2 A(b)}{db^2} +  (\frac{d A(b)}{db})^2) \\
-  A(b) = & -\frac{\pi b^2 - 2 S}{2k} \\
-  \frac{d A(b)}{db} = & -\frac{b \pi}{k} \\
-  \frac{d^2 A(b)}{db^2} = &   -\frac{\pi}{k} \\
-  S = & \frac{1 + 5 \pi}{40} \\
-  0 = &  \pi + k ( -\frac{\pi}{k} A(b)   +  (-\frac{b \pi}{k})^2) \\
-  0 = &  \pi +  -\pi A(b)   +  (\frac{b^2 \pi^2}{k}) \\
-  0 = &  1 +  \frac{\pi b^2 - 2 S}{2k}  +  \frac{b^2 \pi}{k} \\
-  \\
-  0 = &  1 +  \frac{\pi b^2 - 2 \frac{1 + 5 \pi}{40}}{2k}  +  \frac{b^2 \pi}{k} \\
-  0 = &  k +  \frac{\pi b^2 -  \frac{1 + 5 \pi}{20}}{2}  +  b^2 \pi \\
-  b \approx & 0.27934
+  \frac{d}{db} \int_0^b B(r) r  = &
+ \frac{d}{db} \int_0^b
+  \left\{
+    \begin{array}{lr}
+      r \cdot c(r) dr , & \text{if } -1/2 < r < 1/2 \\
+      r \cdot q(r) dr , & \text{if } 1/2 < r < 3 \\
+      0  dr , & \text{if } r > 3
+    \end{array}
+    \right\} \\
+  \frac{d}{db} \int_0^b B(r) r = &
+  \left\{
+  \begin{array}{lr}
+      b \cdot c(b) , & \text{if } 0 \leq b < 1/2 \\
+      b \cdot q(b) , & \text{if } 1/2 < b < 3 \\
+      0  , & \text{if } r > 3
+    \end{array}
+    \right\}
 \end{align}
 
-This answer is plausible, though I do not trust taht I have not made a mistake.
+Having cancelled the differentiation and integration in this way, we now apply another
+differentiation:
+
+\begin{align}
+  \frac{d}{db}   \left\{
+  \begin{array}{lr}
+      b \cdot c(b) , & \text{if } 0 \leq b < 1/2 \\
+      b \cdot q(b) , & \text{if } 1/2 < b < 3 \\
+      0  , & \text{if } r > 3
+    \end{array}
+  \right\}
+  = &
+  \left\{
+  \begin{array}{lr}
+    b \cdot c'(b) + c(b), & \text{if } 0 \leq b < 1/2 \\
+      b \cdot q'(b) + c(b), & \text{if } 1/2 < b < 3 \\
+      0  , & \text{if } r > 3
+    \end{array}
+  \right\}
+\end{align}
+
+Now we need to consider the potential energy in the channel $U_N$, and substitue
+$A(b)$ for $a$:
+
+\begin{align}
+  \frac{d}{db}\int_0^{a} B(r) = &
+  \frac{d}{db}\int_0^{a}
+  \left\{
+  \begin{array}{lr}
+      c(x) , & \text{if } 0 \leq x < 1/2 \\
+      q(x) , & \text{if } 1/2 < x < 3 \\
+      0 , & \text{if } x \geq 3
+  \end{array}
+  \right\} \\
+  \frac{d}{db}\int_0^{a} B(r) = &
+  \left\{
+  \begin{array}{lr}
+      c(a) , & \text{if } 0 \leq a < 1/2 \\
+      q(a) , & \text{if } 1/2 < a < 3 \\
+      0 , & \text{if } a \geq 3
+  \end{array}
+  \right\} \\
+  \frac{d}{db}\int_0^{a} B(r) = &
+  \left\{
+  \begin{array}{lr}
+      c(A(b)) , & \text{if } 0 \leq A(b) < 1/2 \\
+      q(A(b)) , & \text{if } 1/2 < A(b) < 3 \\
+      0 , & \text{if } a \geq 3
+  \end{array}
+  \right\}
+\end{align}
+
+We can now substitute these into Equation~\ref{eq:mainPE}:
+\begin{align}
+  0 = & - \frac{d}{db} (\pi \frac{d}{db} \int_0^b r B(r) dr) + - \frac{d}{db} ( k \frac{d}{db}\int_0^{a} B(r) dr) \\
+  0 = & - \frac{d}{db} (\pi
+  \left\{
+  \begin{array}{lr}
+      b \cdot c'(b) + c(b) , & \text{if } 0 \leq b < 1/2 \\
+      b \cdot q'(b) + q(b), & \text{if } 1/2 < b < 3 \\
+      0  , & \text{if } r > 3
+    \end{array}
+  \right\}) +
+  \\
+  & - \frac{d}{db} ( k \left\{
+  \begin{array}{lr}
+      c(A(b)) , & \text{if } 0 \leq A(b) < 1/2 \\
+      q(A(b)) , & \text{if } 1/2 < A(b) < 3 \\
+      0 , & \text{if } a \geq 3
+  \end{array}
+  \right\})
+\end{align}
 
 
+NOTE: Now I am out of steam. I suppose that we can do this
+differentiation if we choose $S$ and $k$, and then we will
+have a polynomial in $b$, which we can solve to get a $b$ value. But the piecewise nature makes it a bit complicated. I
+will be simplified after we choose $S$.
 
 
 
