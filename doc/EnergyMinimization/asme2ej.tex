@@ -508,11 +508,11 @@ three approximations are shown in Figure~ref{fig:piecewise}.
 The piecewise approximation $B'$ to the field $B$ is:
 
 \begin{align}
-  p(x) = & -18.5 x^6 + -230.2 x^5 + -1174.5 + \
-  x^4 + -3154.6 x^3 + -4734.1 x^2 + -3819.4x + -1339.6 \\
+  p(x) = & -18.5 x^6 + -230.2 x^5 + -1174.5  x^4\
+  + -3154.6 x^3 + -4734.1 x^2 + -3819.4x + -1339.6 \\
   c(x) = & \hphantom{-}545.8 x \\
-  q(x) = &  \hphantom{-}18.5 x^6 + -230.2 x^5 + \hphantom{-} 1174.5 + \
-  x^4 + -3154.6x^3 +  \hphantom{-} 4734.1x^2 + -3819.4x + \hphantom{-} 1339.6 \\
+  q(x) = &  \hphantom{-}18.5 x^6 + -230.2 x^5 + \hphantom{-} 1174.5x^4 \
+  + -3154.6x^3 +  \hphantom{-} 4734.1x^2 + -3819.4x + \hphantom{-} 1339.6 \\
 B(x) = &
 \left\{
     \begin{array}{lr}
@@ -582,11 +582,11 @@ integral of $F$ such that $d/dy G(y,L) = F(y,L)$. Let $D(x)$ be the integral of 
   D(x) =  &
 \left\{
     \begin{array}{lr}
-      0 , & \text{if } x < -3 \\
+      0 , & \text{if } x \leq -3 \\
       P(x) , & \text{if } -3 < x  < -1/2 \\
-      C(x) , & \text{if } -1/2 < x < 1/2 \\
+      C(x) , & \text{if } -1/2 \leq x \leq 1/2 \\
       Q(x)   , & \text{if } 1/2 < x < 3 \\
-      0 , & \text{if } x > 3
+      0 , & \text{if } x \geq 3
     \end{array}
     \right\}
     \label{eq:Dintegration}
@@ -688,7 +688,7 @@ In this interpretation, we can simplify $B(x)$:
 B(x) = &
 \left\{
     \begin{array}{lr}
-      c(x) , & \text{if } 0 \leq x < 1/2 \\
+      c(x) , & \text{if } 0 \leq x \leq 1/2 \\
       q(x) , & \text{if } 1/2 < x < 3 \\
       0 , & \text{if } x \geq 3
     \end{array}
@@ -802,9 +802,19 @@ enough that we can model the field across the channel as if it is rectilinear.
 We can treat these as line integrals:
 
 \begin{align}
-  U_B = & - \int_0^b \pi r B(r) dr \\
+  U_B = & - \pi \int_0^b r B(r) dr \\
   U_N = & -k\int_0^a B(r) dr\\
+  U = U_B + U_N
 \end{align}
+
+This expresses our fundamental situation. Because force applied in the chamber moves the bolus
+into the channel, and force applied in the channel moves the bolus into the chamber, the
+potential energy changes in both. The potential energy always goes down as more fluid is added to one side (or
+at least never goes down), and thereofore always goes up in the chamber from which it is removed.
+The minimum potential energy is a point of balance. We seek a mathematical description of the
+change in totoal potential energy as $b$ changes so that we can compute the force. This should
+allow us to choose $S$ to be most advantageous. Eventually, this may allow us to design different
+magnetic fields to change the performance of the valve.
 
 
 Let us define $b_0$ as the value of $b$ when the pressure in the chamber and the channel are equal,
@@ -844,7 +854,7 @@ of $B(x)$.
  \frac{d}{db} \int_0^b
   \left\{
     \begin{array}{lr}
-      r \cdot c(r) dr , & \text{if } -1/2 < r < 1/2 \\
+      r \cdot c(r) dr , & \text{if } -1/2 < r \leq 1/2 \\
       r \cdot q(r) dr , & \text{if } 1/2 < r < 3 \\
       0  dr , & \text{if } r > 3
     \end{array}
@@ -852,7 +862,7 @@ of $B(x)$.
   \frac{d}{db} \int_0^b B(r) r = &
   \left\{
   \begin{array}{lr}
-      b \cdot c(b) , & \text{if } 0 \leq b < 1/2 \\
+      b \cdot c(b) , & \text{if } 0 \leq b \leq 1/2 \\
       b \cdot q(b) , & \text{if } 1/2 < b < 3 \\
       0  , & \text{if } r > 3
     \end{array}
@@ -865,7 +875,7 @@ differentiation:
 \begin{align}
   \frac{d}{db}   \left\{
   \begin{array}{lr}
-      b \cdot c(b) , & \text{if } 0 \leq b < 1/2 \\
+      b \cdot c(b) , & \text{if } 0 \leq b \leq 1/2 \\
       b \cdot q(b) , & \text{if } 1/2 < b < 3 \\
       0  , & \text{if } r > 3
     \end{array}
@@ -873,7 +883,7 @@ differentiation:
   = &
   \left\{
   \begin{array}{lr}
-    b \cdot c'(b) + c(b), & \text{if } 0 \leq b < 1/2 \\
+    b \cdot c'(b) + c(b), & \text{if } 0 \leq b \leq 1/2 \\
       b \cdot q'(b) + c(b), & \text{if } 1/2 < b < 3 \\
       0  , & \text{if } r > 3
     \end{array}
@@ -888,7 +898,7 @@ $A(b)$ for $a$:
   \frac{d}{db}\int_0^{a}
   \left\{
   \begin{array}{lr}
-      c(x) , & \text{if } 0 \leq x < 1/2 \\
+      c(x) , & \text{if } 0 \leq x \leq 1/2 \\
       q(x) , & \text{if } 1/2 < x < 3 \\
       0 , & \text{if } x \geq 3
   \end{array}
@@ -896,7 +906,7 @@ $A(b)$ for $a$:
   \frac{d}{db}\int_0^{a} B(r) = &
   \left\{
   \begin{array}{lr}
-      c(a) , & \text{if } 0 \leq a < 1/2 \\
+      c(a) , & \text{if } 0 \leq a \leq 1/2 \\
       q(a) , & \text{if } 1/2 < a < 3 \\
       0 , & \text{if } a \geq 3
   \end{array}
@@ -904,7 +914,7 @@ $A(b)$ for $a$:
   \frac{d}{db}\int_0^{a} B(r) = &
   \left\{
   \begin{array}{lr}
-      c(A(b)) , & \text{if } 0 \leq A(b) < 1/2 \\
+      c(A(b)) , & \text{if } 0 \leq A(b) \leq 1/2 \\
       q(A(b)) , & \text{if } 1/2 < A(b) < 3 \\
       0 , & \text{if } a \geq 3
   \end{array}
@@ -917,7 +927,7 @@ We can now substitute these into Equation~\ref{eq:mainPE}:
   0 = & - \frac{d}{db} (\pi
   \left\{
   \begin{array}{lr}
-      b \cdot c'(b) + c(b) , & \text{if } 0 \leq b < 1/2 \\
+      b \cdot c'(b) + c(b) , & \text{if } 0 \leq b \leq 1/2 \\
       b \cdot q'(b) + q(b), & \text{if } 1/2 < b < 3 \\
       0  , & \text{if } r > 3
     \end{array}
@@ -925,12 +935,110 @@ We can now substitute these into Equation~\ref{eq:mainPE}:
   \\
   & - \frac{d}{db} ( k \left\{
   \begin{array}{lr}
-      c(A(b)) , & \text{if } 0 \leq A(b) < 1/2 \\
+      c(A(b)) , & \text{if } 0 \leq A(b) \leq 1/2 \\
       q(A(b)) , & \text{if } 1/2 < A(b) < 3 \\
       0 , & \text{if } a \geq 3
   \end{array}
   \right\})
+  \label{eq:model}
 \end{align}
+
+Equation~\ref{eq:model} is a model for how we can find the extrema of force in different geometries.
+The number $1/2$ is of
+course the radius of the magnet; if we have a different geometry this equation
+would look different in specifics but would be generally the same if we use piecewise approximations
+of the $B$ field, which seems likely to be necessary.
+
+Unfortunately, this equation may require a careful case analysis based on the choices of $k$ and $S$.
+Let us attempt to do this for a particular assumption.
+Figure~\ref{fig:ifp} and Figure~\ref{fig:Bx} suggest that $S$ should be chosen so that $b_0$ is
+greater than $1/2$, and perhaps at most than $1$. Let us attempt to analyze this with $b_0 = 3/4$. Let us set $k = 1/10$, which seems reasonable to manufacture.
+In this case,
+\begin{align}
+  S = & 3/40 + (\pi 9/32) \approx 0.9585729
+\end{align}
+
+We can deonte this: $A_{3/4}^{1/10}(b)$:
+
+\begin{align}
+  A_{3/4}^{1/10}(b) =  9.58575 - 5 \pi b^2
+\end{align}
+
+
+Now if we solve Equation~\ref{eq:model} under the assumption that $b_m$ is at most $1/2$, and
+then under the assumption that $b_m$ is more than $1/2$, and compare these results.
+
+Case $b_m \leq 1/2$:
+
+In this case, $a = A_{3/4}^{1/10}(1/2) \approx 5.65876$ which is greater than 3, which
+allows us to simplify our base equation
+Equation~\ref{eq:model} becomes:
+
+\begin{align}
+  0 = & - \frac{d}{db} (\pi b \cdot c'(b) + c(b)) +
+  - \frac{d}{db} 0 \\
+  0 = & \pi (\frac{d}{db} b \cdot c'(b) + \frac{d}{db} c(b)) \\
+  0 = & \pi \frac{d}{db} (b \cdot c'(b)) +  c'(b) \\
+  0 = & \pi (b c''(b) + 2c'(b)) \\
+  0 = & \pi (0 + 2 * 545.8) \\
+  0 = & \pi 2 * 545.8 \\
+  \end{align}
+
+This is a contradiction. Possibly this means that this case cannot occur---possibly it means I have done the math wrong.
+
+Case $b_m > 1/2$:
+
+In this case, we know that $b_m < 3/4$. On the entire range $ 1/2 \leq b \leq 3/4 $, $ A_{3/4}^{1/10}(b) > 1/2$,
+which allows us to simplify our piecewise construction:
+
+\begin{align}
+  0 = & - \frac{d}{db} \pi ( b \cdot q'(b) + q(b)) + - \frac{d}{db} (k q(A(b))) \\
+  0 = & \pi \frac{d}{db} (b \cdot q'(b) + q(b)) + \frac{1}{10} \frac{d}{db} q(A(b)) \\
+  0 = & \pi (b \cdot q''(b) + 2q'(b)) + \frac{1}{10} \frac{d}{db} q( 9.58575 - 5 \pi b^2) \\
+  0 = & \pi (b \cdot q''(b) + 2q'(b)) + \frac{1}{10}\cdot -10 \pi b q'(9.58575 - 5 \pi b^2) \\
+  0 = & \pi (b \cdot q''(b) + 2q'(b)) + - \pi b q'(9.58575 - 5 \pi b^2) \\
+  0 = & b q''(b) + 2q'(b) + - b q'(9.58575 - 5 \pi b^2) \\
+   \begin{split}
+    0 = & (555. b^5 - 4604. b^4 + 14094. b^3 - 18927.6 b^2 + 9468.2 b)  + \\
+    & 2(111 b^5 - 1151 b^4 + 4698 b^3 - 9463.8 b^2 + 9468.2 b - 3819.4) + \\
+    & - b (-1.06151\cdot(10)^8 b^{10} + 2.53817\cdot(10)^8 b^8 - 2.42467\cdot(10)^8 b^6 \\
+    & + 1.15662\cdot(10)^8 b^4 - 2.75489\cdot(10)^7 b^2 + 2.62095\cdot(10)^6) \\
+   \end{split} \\
+   \begin{split}
+     0 = & 777 b^5 - 6906 b^4 + 23490 b^3 - 37855.2 b^2 + 28404.6 b - 7638.8 \\
+     & + 1.06151*(10)^8 b^{11} - 2.53817*(10)^8 b^9 + 2.42467*(10)^8 b^7 - 1.15662*(10)^8 b^5 \\
+     & + 2.75489*(10)^7 b^3 - 2.62095(10)^6 b \\
+   \end{split} \\
+   \begin{split}
+     0 = & 1.06151\cdot(10)^8 b^11 - 2.53817\cdot(10)^8 b^9 + 2.42467\cdot(10)^8 b^7 \\
+      & - 1.15661\cdot(10)^8 b^5 - 6906 b^4 + 2.75724×10^7 b^3 - 37855.2 b^2 - 2.59255×10^6 b - 7638.8
+     \end{split}
+\end{align}
+
+According to Wolframalpha, the only real solution positive solution is: $b \approx 0.632115$.
+I don't trust that I haven't made a mistake, but this seems to be a plausible solution.
+
+%% (555 b^5 - 4604 b^4 + 14094. b^3 + b^2×(-18927.6) + 9468.2 b) +  2 (111 b^5 - 1151 b^4 + 4698 b^3 + b^2(-9463.8) + 9468.2 b - 3819.4)
+
+%% 0 = (555 b^5 - 4604 b^4 + 14094. b^3 + b^2×(-18927.6) + 9468.2 b) +  2 (111 b^5 - 1151 b^4 + 4698 b^3 + b^2(-9463.8) + 9468.2 b - 3819.4)  + 1.06151*(10)^8 b^{11} - 2.53817*(10)^8 b^9 + 2.42467*(10)^8 b^7 - 1.15662*(10)^8 b^5  + 2.75489*(10)^7 b^3 - 2.62095(10)^6 b
+
+
+%% 1.06151*(10)^8 b^11 - 2.53817*(10)^8 b^9 + 2.42467*(10)^8 b^7 - 1.15662*(10)^8 b^5 + 2.75489*(10)^7 b^3 - 2.62095(10)^6 b
+
+%% (555 b^5 - 4604 b^4 + 14094. b^3 + b^2×(-18927.6) + 9468.2 b) + 2 (111 b^5 - 1151 b^4 + 4698 b^3 + b^2×(-9463.8) + 9468.2 b - 3819.4)
+
+%% q(x) = 18.5 x^6 + -230.2 x^5 +1174.5x^4 + -3154.6x^3  + 4734.1x^2 + -3819.4x + 1339.6
+%% q'(x) = 111 x^5 - 1151 x^4 + 4698 x^3 - 9463.8 x^2 + 9468.2 x - 3819.4
+%% q''(x) = 555. x^4 - 4604. x^3 + 14094. x^2 - 18927.6 x + 9468.2
+
+%%  0 =  1091.6 + \pi b ( 111 (7.5 - 5 \pi b^2)^5 - 1151 (7.5 - 5 \pi b^2)^4  + 4698 (7.5 - \pi b^2)^3 +  (7.5 - 5 \pi b^2)^2(-9463.8) + 9468.2 (7.5 - 5 \pi b^2) - 3819.4)
+
+%% (555. b^5 - 4604. b^4 + 14094. b^3 - 18927.6 b^2 + 9468.2 b)  + 2(111 b^5 - 1151 b^4 + 4698 b^3 - 9463.8 b^2 + 9468.2 b - 3819.4) +  - b (-1.06151*(10)^8 b^{10} + 2.53817*(10)^8 b^8 - 2.42467*(10)^8 b^6 + 1.15662*(10)^8 b^4 - 2.75489*(10)^7 b^2 + 2.62095*(10)^6)
+
+%% (555 b^5 - 4604 b^4 + 14094. b^3 + b^2×(-18927.6) + 9468.2 b) + 2 (111 b^5 - 1151 b^4 + 4698 b^3 + b^2×(-9463.8) + 9468.2 b - 3819.4)
+
+
+%% -1.06151×10^8 b^10 + 2.53817×10^8 b^8 - 2.42467×10^8 b^6 + 1.15662×10^8 b^4 - 2.75489×10^7 b^2 + 2.62095×10^6
 
 
 NOTE: Now I am out of steam. I suppose that we can do this
