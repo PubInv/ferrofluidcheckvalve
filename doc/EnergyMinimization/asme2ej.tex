@@ -569,9 +569,6 @@ The $x$-axis force on a bolus in the channel centered at $y$ generally is propor
 Let us assume that we are blowing air from the left in the positive $x$ direction, in which case
 we can ignore cases when $y < 0$. It is clear from symmetry that $ F(0,L) = 0 $ for any $L$.
 
-\begin{align}
-  F(y,L) = & \int_{y-L/2}^{y-L/2} B'(x) dx
-\end{align}
 
 In order to compute where the bolus will be when it explodes catastrophically when blown from
 the negative $x$ direction to the positive $x$ direction, we simply need to know when the derirvative of
@@ -732,13 +729,8 @@ Since at rest the bolus surface $A$ will be in the same field strength as surfac
 
 
 This can be solved by WolframAlpha (results not incuded here.)
-As expected, $ b = -a $, that is, both surfaces are equidistant from the
+As expected, $ b = a $, that is, both surfaces are equidistant from the
 center of our radially symmetric magnetic field.
-
-We will late use the value of $S$ which occurs when $a = 0.5$, $b = 0.5$, $d = 0.05$, where:
-\begin{align}
-  S = \frac{1 + 5 \pi}{40}
-\end{align}
 
 \subsection{A strategy for computing pressure}
 
@@ -1040,14 +1032,6 @@ I don't trust that I haven't made a mistake, but this seems to be a plausible so
 
 %% -1.06151×10^8 b^10 + 2.53817×10^8 b^8 - 2.42467×10^8 b^6 + 1.15662×10^8 b^4 - 2.75489×10^7 b^2 + 2.62095×10^6
 
-
-NOTE: Now I am out of steam. I suppose that we can do this
-differentiation if we choose $S$ and $k$, and then we will
-have a polynomial in $b$, which we can solve to get a $b$ value. But the piecewise nature makes it a bit complicated. I
-will be simplified after we choose $S$.
-
-
-
 Qualitatively, we assume that at rest (ambient pressure), the bolus exerts no force. As the
 pressure in the chamber increases, the force (the increase in potential energy) will increase
 as $b$ is decreased and the bolus is disturbed from its rest position. This force on the
@@ -1071,7 +1055,16 @@ because it minimizes potential energy to fill the strong field with ferrofluid p
 non-magnetic fluid. This occurs at $a = 0$, so $A(b) = 0$, or $b = \sqrt{\frac{2S}{\pi}}$ by Equation~\ref{eq:maximalB}.
 
 \begin{align}
-  P_r d = F(\sqrt{\frac{2S}{\pi}})
+  P_r k = F(\sqrt{\frac{2S}{\pi}})
+\end{align}
+
+We can thus create a testable hypothesis that can be verified experimentally by building an appropriate
+apparatus. Choosing $k = 10$ and $b_0 = 3/4$, we expect:
+
+\begin{align}
+  P = & \frac{\text{Collapse Pressure}}{\text{Crack Pressure}} \\
+  P = & \frac{P_c}{P_r} \\
+  P = & \frac{\frac{F(b_m)}{\pi b_m}}{\frac{F(\sqrt{\frac{2S}{\pi}})}{k}}
 \end{align}
 
 
