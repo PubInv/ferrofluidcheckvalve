@@ -7,7 +7,7 @@
 
 
 // Thanks to  Mike Thompson for ths CC Attribution-NonCommercial-SA 3.0 set of threaded tools
-include <Nut_Job_v2.scad>;
+// include <Nut_Job_v2.scad>;
 
 $fn = 40;
 
@@ -20,8 +20,8 @@ PlaneThickness = 1.0;
 MagnetHeight = 50;
 ww = 1.5; // This is the wall width, assumed to be sturdy enough
 
-LuerPosition = SlabLength/2  + 15;
-LockRingHeight = 20;
+LuerPosition = SlabLength/2+5;
+LockRingHeight = 15;
 
 PI = 3.14152;
 GapHeight = 3.0;
@@ -99,10 +99,19 @@ ptype = "valve";
 module slab() {
 
     l = ChamberRadius*4;
-    color("green",0.3)
+    color("blue")
+    linear_extrude(height = SlabHeight, center = true, convexity = 10, twist = 0)
     union() {
-    cube([SlabLength,SlabWidth,SlabHeight],center=true);
+        circle(ChamberRadius+5);
+        square([5*ChamberRadius+10,ChamberRadius+5],center=true); 
     }
+//    union() {
+//        difference() {
+//            union() {
+//            cube([SlabLength,SlabWidth,SlabHeight],center=true);
+//            }
+//        }
+//    }
 }
 
 module basicRing(r) {
@@ -123,6 +132,7 @@ module lockRings() {
 
 module addStands() {
     StandHeight = 2*25.4;
+//    StandHeight = 25.4;
     translate([SlabLength/2+0,-SlabWidth/2,0])
     rotate([0,0,90])
     difference() {
@@ -143,7 +153,7 @@ module completeValve() {
     union() {
         translate([LuerPosition,0,0]) rotate([0,270,0]) luer();
         translate([-LuerPosition,0,0]) rotate([0,90,0]) luer();
-        addStands();
+  //      addStands();
         difference() {
             union() {
                 slab();
