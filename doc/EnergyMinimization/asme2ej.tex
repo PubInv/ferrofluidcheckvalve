@@ -82,10 +82,10 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \begin{abstract}
 
-This work focuses on a novel passive ferrofluid check valve. The structure is free of mechanical moving parts and is based on a ferrofluid plug in a narrow channel. 
-Check valves, also known as one-way valves, are devices that allow fluids to move in only one direction primarily to prevent backflow in the system. 
-The valve returns to stasis (closes) under the influence of a static magnetic field when the pressure on the ferrofluid is less than the magnetic forces of the ferrofluid itself. 
-Here, we present a simple design for a passive, normally closed ferrofluid check valve consisting of a unique channel-and-chamber geometry, a bolus of ferrofluid, and a static magnetic field. 
+This work focuses on a novel passive ferrofluid check valve. The structure is free of mechanical moving parts and is based on a ferrofluid plug in a narrow channel.
+Check valves, also known as one-way valves, are devices that allow fluids to move in only one direction primarily to prevent backflow in the system.
+The valve returns to stasis (closes) under the influence of a static magnetic field when the pressure on the ferrofluid is less than the magnetic forces of the ferrofluid itself.
+Here, we present a simple design for a passive, normally closed ferrofluid check valve consisting of a unique channel-and-chamber geometry, a bolus of ferrofluid, and a static magnetic field.
 The flow is determined only by the force differential between the pressure of the fluid in the channel and the magnetic force of the ferrofluid at the intersection of the channel and the chamber
 
 Small pumps and valves enable flow management in microfluidic systems.
@@ -107,7 +107,7 @@ and compare predicted performance to actual performance.
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \section{Introduction}
 
-Ferrofluids are colloidal suspensions of ferromagnetic particles in a non-polar, liquid carrier. 
+Ferrofluids are colloidal suspensions of ferromagnetic particles in a non-polar, liquid carrier.
 In the work presented in this paper, a finite volume method based numerical study is performed to investigate the ferrofluid behavior in a passive valve using Ferrohydrodynamics. % Lisa ref 2
 Ferrofluid can be manipulated by electronically controlled magnetic
 fields to exert force on fluids\cite{torres2014recent,kole2021engineering,ozbey2015modeling}.
@@ -806,35 +806,40 @@ and we do not attempt to model anything after
 a collapse event.
 
 Therefore, we in fact have a one dimensional system of the coordinate $b$, which
-it is convenent to break into $U = U_A + U_B$.
-(The channel and the chamber, respectively.) We assume that the channel $A$ is narrow
+it is convenent to break into $U = U_N + U_R$,
+the channel and the chamber, respectively. We assume that the channel is narrow
 enough that we can model the field across the channel as if it is rectilinear.
 We can treat these as line integrals:
 
 \begin{align}
-  U_B = & - \pi \int_0^b r B(r) dr \\
+  U_R = & - \pi \int_0^b r B(r) dr \\
   U_N = & -k\int_0^a B(r) dr\\
-  U = U_B + U_N
+  U = & U_N + U_R
 \end{align}
 
-This expresses our fundamental situation. Because force applied in the chamber moves the bolus
-into the channel, and force applied in the channel moves the bolus into the chamber, the
-potential energy changes in both. The potential energy always goes down as more fluid is added to one side (or
-at least never goes down), and thereofore always goes up in the chamber from which it is removed.
-The minimum potential energy is a point of balance. We seek a mathematical description of the
-change in totoal potential energy as $b$ changes so that we can compute the force. This should
-allow us to choose $S$ to be most advantageous. Eventually, this may allow us to design different
+Because pressure applied in the chamber moves the bolus
+into the channel, and pressue applied in the channel moves
+the bolus into the chamber, the
+potential energy changes in both.
+The potential energy always goes down as more fluid is added to one side (or
+at least never goes up), and thereofore always goes up in the chamber from which it is removed.
+The minimum potential energy is a point of balance.
+We seek a mathematical description of the
+change in totoal potential energy as $b$ changes so
+that we can compute the force.
+This should allow us to choose $S$ to be most advantageous.
+Eventually, this may allow us to design different
 magnetic fields to change the performance of the valve.
-
 
 Let us define $b_0$ as the value of $b$ when the pressure in the chamber and the channel are equal,
 so that the bolus is at rest. This is the point of minimum potential energy.
 Let $F(b)$ be the force exerted by the magnet on the bolus.
 Then $F(b_0) = 0$.
 The potential energy increases as the surrounding gases do work on it (up to the point of collapse
-or crack.) Within that range, the forces are conservative; the potential energy could in theory
-be recovered as the bolus spring back to position if the pressure on the bolus was removed.
-The force exerted by the magnet is positive if $b < b_0$, and negative if $b > b_0$.
+or crack.)
+Within that range, the forces are conservative; the potential energy could in theory
+be recovered as the bolus spring back to position
+if the pressure on the bolus was removed.
 Then we have:
 \begin{align}
   \frac{d U}{db} =  -F(b)
@@ -851,45 +856,48 @@ Thus we seek the values of $b$ for which:
 \begin{align}
   0 = & \frac{d F(b)}{db} \\
   0 = & \frac{d^2 U}{db^2}  \\
-  0 = & \frac{d^2}{db^2} U_B +  \frac{d^2}{db^2} U_N \\
-  0 = & - \frac{d}{db} (\pi \frac{d}{db} \int_0^b r B(r) dr) +  - \frac{d}{db} ( k \frac{d}{db}\int_0^{a} B(r) dr)
+  0 = & \frac{d^2}{db^2} U_R +  \frac{d^2}{db^2} U_N \\
+  0 = & - \frac{d}{db} (\pi \frac{d}{db} \int_0^b r B(r) dr) +  - \frac{d}{db} ( k \frac{d}{db}\int_0^{a} B(r) dr)\\
+  0 = & -  \pi  \frac{d}{db} b B(b) +  - k \frac{d}{db} B(a)
   \label{eq:mainPE}
 \end{align}
 
 Let us treat subparts here, using our knowledge of the piecewise definition
 of $B(x)$.
 
-\begin{align}
-  \frac{d}{db} \int_0^b B(r) r  = &
- \frac{d}{db} \int_0^b
-  \left\{
-    \begin{array}{lr}
-      r \cdot c(r) dr , & \text{if } -1/2 < r \leq 1/2 \\
-      r \cdot q(r) dr , & \text{if } 1/2 < r < 3 \\
-      0  dr , & \text{if } r > 3
-    \end{array}
-    \right\} \\
-  \frac{d}{db} \int_0^b B(r) r = &
-  \left\{
-  \begin{array}{lr}
-      b \cdot c(b) , & \text{if } 0 \leq b \leq 1/2 \\
-      b \cdot q(b) , & \text{if } 1/2 < b < 3 \\
-      0  , & \text{if } r > 3
-    \end{array}
-    \right\}
-\end{align}
+%% \begin{align}
+%%   \frac{d}{db} b B(b) = &
+%%   \frac{d}{db} \int_0^b B(r) r  = &
+%%  \frac{d}{db} \int_0^b
+%%   \left\{
+%%     \begin{array}{lr}
+%%       r \cdot c(r) dr , & \text{if } -1/2 < r \leq 1/2 \\
+%%       r \cdot q(r) dr , & \text{if } 1/2 < r < 3 \\
+%%       0  dr , & \text{if } r > 3
+%%     \end{array}
+%%     \right\} \\
+%%   \frac{d}{db} \int_0^b B(r) r = &
+%%   \left\{
+%%   \begin{array}{lr}
+%%       b \cdot c(b) , & \text{if } 0 \leq b \leq 1/2 \\
+%%       b \cdot q(b) , & \text{if } 1/2 < b < 3 \\
+%%       0  , & \text{if } r > 3
+%%     \end{array}
+%%     \right\}
+%% \end{align}
 
 Having cancelled the differentiation and integration in this way, we now apply another
 differentiation:
 
 \begin{align}
+   \frac{d}{db} b B(b) = &
   \frac{d}{db}   \left\{
   \begin{array}{lr}
       b \cdot c(b) , & \text{if } 0 \leq b \leq 1/2 \\
       b \cdot q(b) , & \text{if } 1/2 < b < 3 \\
       0  , & \text{if } r > 3
     \end{array}
-  \right\}
+  \right\} \\
   = &
   \left\{
   \begin{array}{lr}
@@ -904,16 +912,8 @@ Now we need to consider the potential energy in the channel $U_N$, and substitue
 $A(b)$ for $a$:
 
 \begin{align}
-  \frac{d}{db}\int_0^{a} B(r) = &
-  \frac{d}{db}\int_0^{a}
-  \left\{
-  \begin{array}{lr}
-      c(x) , & \text{if } 0 \leq x \leq 1/2 \\
-      q(x) , & \text{if } 1/2 < x < 3 \\
-      0 , & \text{if } x \geq 3
-  \end{array}
-  \right\} \\
-  \frac{d}{db}\int_0^{a} B(r) = &
+  \frac{d}{db} B(a) = &
+  \frac{d}{db}
   \left\{
   \begin{array}{lr}
       c(a) , & \text{if } 0 \leq a \leq 1/2 \\
@@ -921,7 +921,7 @@ $A(b)$ for $a$:
       0 , & \text{if } a \geq 3
   \end{array}
   \right\} \\
-  \frac{d}{db}\int_0^{a} B(r) = &
+  = &
   \left\{
   \begin{array}{lr}
       c(A(b)) , & \text{if } 0 \leq A(b) \leq 1/2 \\
@@ -933,8 +933,8 @@ $A(b)$ for $a$:
 
 We can now substitute these into Equation~\ref{eq:mainPE}:
 \begin{align}
-  0 = & - \frac{d}{db} (\pi \frac{d}{db} \int_0^b r B(r) dr) + - \frac{d}{db} ( k \frac{d}{db}\int_0^{a} B(r) dr) \\
-  0 = & - \frac{d}{db} (\pi
+    0 = & -  \pi  \frac{d}{db} b B(b) +  - k \frac{d}{db} B(a) \\
+  0 = & - \pi \frac{d}{db} (
   \left\{
   \begin{array}{lr}
       b \cdot c'(b) + c(b) , & \text{if } 0 \leq b \leq 1/2 \\
@@ -943,7 +943,7 @@ We can now substitute these into Equation~\ref{eq:mainPE}:
     \end{array}
   \right\}) +
   \\
-  & - \frac{d}{db} ( k \left\{
+  & - k \frac{d}{db}  \left\{
   \begin{array}{lr}
       c(A(b)) , & \text{if } 0 \leq A(b) \leq 1/2 \\
       q(A(b)) , & \text{if } 1/2 < A(b) < 3 \\
@@ -985,8 +985,8 @@ allows us to simplify our base equation
 Equation~\ref{eq:model} becomes:
 
 \begin{align}
-  0 = & - \frac{d}{db} (\pi b \cdot c'(b) + c(b)) +
-  - \frac{d}{db} 0 \\
+  0 = & - \pi \frac{d}{db} ( b \cdot c'(b) + c(b)) +
+  - k \frac{d}{db} 0 \\
   0 = & \pi (\frac{d}{db} b \cdot c'(b) + \frac{d}{db} c(b)) \\
   0 = & \pi \frac{d}{db} (b \cdot c'(b)) +  c'(b) \\
   0 = & \pi (b c''(b) + 2c'(b)) \\
@@ -1002,7 +1002,7 @@ In this case, we know that $b_m < 3/4$. On the entire range $ 1/2 \leq b \leq 3/
 which allows us to simplify our piecewise construction:
 
 \begin{align}
-  0 = & - \frac{d}{db} \pi ( b \cdot q'(b) + q(b)) + - \frac{d}{db} (k q(A(b))) \\
+  0 = & - \pi \frac{d}{db} ( b \cdot q'(b) + q(b)) + - k \frac{d}{db}  q(A(b)) \\
   0 = & \pi \frac{d}{db} (b \cdot q'(b) + q(b)) + \frac{1}{10} \frac{d}{db} q(A(b)) \\
   0 = & \pi (b \cdot q''(b) + 2q'(b)) + \frac{1}{10} \frac{d}{db} q( 9.58575 - 5 \pi b^2) \\
   0 = & \pi (b \cdot q''(b) + 2q'(b)) + \frac{1}{10}\cdot -10 \pi b q'(9.58575 - 5 \pi b^2) \\
@@ -1112,7 +1112,7 @@ of the bolus at rest is beyond the collapse point by some
 comfortable margin.
 
 However, to minimize the crack pressure, we want the bolus at rest
-in the region $A$ inside
+in the chamber region inside
 the collapse point, because we don't want the inlet pressure to have
 to overcome that, even though on the inlet side the length $d$ will
 be much smaller that length $\pi b$. However, by the
