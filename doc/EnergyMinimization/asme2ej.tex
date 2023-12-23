@@ -455,20 +455,31 @@ non-ferrous fluid crosses a central boundary.
 \subsection{Warmup: A Bolus in A Channel}
 
 A relatively simple problem is to consider a bolus of
-ferrofluid in thin channel. Placing a cylindrical permanent
-magnet beneath it tends to lock the bolus in place.
-If a small amount of air pressure is applied to from the West, the bolus will
-be displaced to the East, but will find a stable point in balance with the
-Westward forces exerted by the magnet.
-As the pressure is increased, the bolus will be displaced futher Eastward.
-It will reach a point where further displacement to the East does not increase
-the Westward force, and will soon decrease it. At this point the plug will fail
-catastrophically, spraying Eastward into the channel and letting air through.
+ferrofluid in a thin horizontal channel, described as an $x$-axis.
+Placing a cylindrical permanent
+magnet beneath it at the origin tends to lock the bolus in place,
+forming a plug.
+If a small amount of air pressure is applied to in the positive direction,
+the bolus will
+be displaced to in the positive $x$ direction, but will find a
+stable point in balance with the forces exerted by the magnet in
+the negative $x$ direction.
+
+As the pressure is increased, the bolus will be displaced further
+in the positive $x$ direction.
+It will reach a point where further displacement does not increase
+the force in the negative $x$ direction, and will soon decrease it.
+At this point the plug will fail
+catastrophically, spraying messily into the channel in the $x$ direction and letting air through.
 
 The magnetic field in the line just above the face of the magnet can be analytically
 described by ellpitical integrals, but they are very difficult to work with symbolically,
-but easy to calculate numerically. MagPyLib is a convenient package for doing so.
+but easy to calculate numerically.
+MagPyLib is a convenient package for doing so.
 Figure~\ref{fig:BolusSetup} shows our setup of the problem.
+The field is polarized, which is why it is negative in the $x$ direction, only
+the magnitude matters when
+operating on a ferrofluid bolus.
 
 By making assumptions, we can
 analyze this to obtain closed form solutions which match our
@@ -484,20 +495,22 @@ The red line represents the thin channel just slightly above the face of
 the magnet.
 MagPyLib conveniently computes the field along this line. In particular,
 only the $x$ component (the East-West coordinate) of the B-field is relevant to us.
-The field was plotted with MagPyLib in Figure~ref{fig:Bx}. {\em Note: I do not understand the sign of this field. It appears to be wrong to me.}
+The field was plotted with MagPyLib in Figure~ref{fig:Bx}.
 
 \begin{figure}
 \centerline{\includegraphics[width=3in]{figure/Bx.png}}
-\caption{Bx component of field}
+\caption{$B_x$ component of field}
 \label{fig:Bx}
 \end{figure}
 
 By inspection, we observe that this function can be accurately approximated with
-a piecewise polynomial representation breaking the function at the extrema, which
-are in fact the edges of the magnet. The resulting respresentation which is quadratic
-to the West of the magnet, linear above the magnet, and quadratic East of the magnet
+a piecewise polynomial representation breaking the function at the extrema,
+which
+are in fact the edges of the magnet.
+The resulting respresentation which is linear above the magnet,
+and uses a 6th order polynmial beyond the radius of the magnet,
 is remarkably accurate, under the assumption the MagPyLib is accurate. These
-three approximations are shown in Figure~ref{fig:piecewise}.
+three approximations are shown superimposed on the B-field in Figure~ref{fig:piecewise}. We will define $B(x)$ as this approximation.
 
 \begin{figure}
 \centerline{\includegraphics[width=3in]{figure/PlotOfBxWithPieceWiseInterpolation.png}}
@@ -505,7 +518,7 @@ three approximations are shown in Figure~ref{fig:piecewise}.
 \label{fig:piecewise}
 \end{figure}
 
-The piecewise approximation $B'$ to the field $B$ is:
+The piecewise approximation $B(x)$ to the field $B$ is:
 
 \begin{align}
   p(x) = & -18.5 x^6 + -230.2 x^5 + -1174.5  x^4\
@@ -526,17 +539,13 @@ B(x) = &
     \label{eq:Bfield}
 \end{align}
 
-Note that $B(x)$ is an odd function; that is, $B(-x) = -B(x)$.
+Note that $B(-x) = -B(x)$.
 
-The numbers have been rounded to reflect the expected accuracy of the simulation and keep the expressions tractible.
-It would be preferable to find these constants analytically from the
-geometry and polarization of the magnet, but that is future work.
+The numbers have been rounded to reflect the expected accuracy of the
+simulation and keep the expressions tractible.
 
-Where $P(x)$ and $Q(x)$ are nearly indentical 6-degree polynomials determined
-by NumPy's polyfit.
-
-The piecewise approximations: $p(x)$, $c(x)$, and $q(x)$ are
-polynomials, which are easy to anti-differentiate to find the functions
+$p(x)$ and $q(x)$ are nearly indentical 6-degree polynomials determined
+by NumPy's polyfit, which are easy to anti-differentiate to find the functions
 
 $P,C$ and $Q$, such that $P' = p, C' = c,$ and $Q' = q$:
 
@@ -547,23 +556,26 @@ $P,C$ and $Q$, such that $P' = p, C' = c,$ and $Q' = q$:
 \end{align}
 
 
+Setting aside issues of magnetic susceptibility of the ferrofluid used,
+the force is proportional
+to the field strength times the area.
+Since the area is unchanging in a simple tube, the force on
+a slice of ferrofluid at position $x$ is proportional to $B(x)$.
 
+\begin{figure}
+\centerline{\includegraphics[width=4in]{figure/BolusSetup.png}}
+\caption{Bolus Coordinate Setup}
+\label{fig:ChannelToChamber}
+\end{figure}
 
-
-Setting aside issues of magnetic susceptibility of the ferrofluid used, the force is proportional
-to the field strength times the area. Since the area is unchanging in a simple tube, the force on
-a slice of ferrofluid at position $x$ is proportional to $B'(x)$.
-
-
-
-Now imagine that bolus has a length of $L$, and let the channel area be $d$, and let $x$ be
+Now imagine that bolus has a length of $L$, and let the channel height be $k$, and let $x$ be
 the midpoint of the bolus.
 Assume the magnet is a 1000 milliTesla (mT) polariazed magnet.
 The $x$-axis force on the bolus can be computed as the integral of $dx$:
 
 The $x$-axis force on a bolus in the channel centered at $y$ generally is proportional to:
 \begin{align}
-  F(y,L) = & \int_{y-L/2}^{y-L/2} B'(x) dx
+  F(y,L) = & \int_{y-L/2}^{y-L/2} B(x) dx
 \end{align}
 
 Let us assume that we are blowing air from the left in the positive $x$ direction, in which case
@@ -573,7 +585,7 @@ we can ignore cases when $y < 0$. It is clear from symmetry that $ F(0,L) = 0 $ 
 In order to compute where the bolus will be when it explodes catastrophically when blown from
 the negative $x$ direction to the positive $x$ direction, we simply need to know when the derirvative of
 $F(y,L)$ with respect to $y$ becomes zero. Since $F(y,L)$ is a piecewise function, we can find $G(y,L)$,
-integral of $F$ such that $d/dy G(y,L) = F(y,L)$. Let $D(x)$ be the integral of $B'(x)$.
+integral of $F$ such that $\frac{d}{dy} G(y,L) = F(y,L)$. Let $D(x)$ be the integral of $B'(x)$.
 
 \begin{align}
   D(x) =  &
@@ -598,7 +610,7 @@ It is clear the collapse point will not occur until low-side edge is past greate
 $1/2$.
 Under these assumption, we have:
 \begin{align}
-  F(y,L) = & \int_{y-L/2}^{y+L/2} B'(x) dx \\
+  F(y,L) = & \int_{y-L/2}^{y+L/2} B(x) dx \\
   F(y,L) = & \int_{y-L/2}^{0.5} c(x) dx  + \int_{0.5}^{y+L/2} q(x) dx   \\
   F(y,L) = & C(x) \bigg\rvert_{y-L/2}^{0.5}   +  Q(x) \bigg\rvert_{0.5}^{y+L/2} \\
   \begin{split}
@@ -636,34 +648,24 @@ as depicted in Fig.~\ref{fig:ChannelToChamber}.
 \label{fig:ChannelToChamber}
 \end{figure}
 
-In that diagram, I have labelled the width of the channel $d$, but that is
-confusing when using derivatiaves, so henceforward the channel width will be represented by $k$.
+In that diagram, the edge of the bolus in the chamber is distance $b$ from the
+origin. The edge of the bolus in the channel is $a$.
 We would ideally like to treat this as a one-dimensional problem as well.
 Let us assume once again that a magnetic field is placed at the center
 at our diagram (where the channel meets the chamber.)
-Call the region to the left A and the region to the right B, and assume
-the orgin is at the center of the diagram.
 
 The most important geometric feature of the channel-and-chamber
 valve design is the radius of the cylindrical magnet or magnets
-in it. It will be most convenient to take the radius of this
-magnet to be unity (1.0) and express all other spatial
-measures relative to that. The origin of our plane of operation
+in it. The origin of our plane of operation
 will be the center of the top face of the cylindrical magnet,
 which is assumed to be beneath the plane, with its North face
 in contact with the plane.
 
-Note: I believe using a magnetic force that falls off with the square of distance may
-not allow for a stable solution. I am not sure how to model this in a way
-which is realistic and convenient. Using the fourth power will probably work and
-may be realistic given of action is perpendicular to the magnet. I think I will try it.
-
-In what follows, region $A$ is the inlet region and region $B$ is the
-outlet region; I should probably remove the labels $A$ and $B$ entirely
-since we are using $B$ for the B-field.
+The channel is the inlet and the chamber is the
+outlet.
 
 Let us assume once again a magnetic field centered on the origin as generated by a
-1/2'' by 1'' cylindrical magnet as defined by Equation~ref{eq:Bfield}.
+1/2'' by 1'' cylindrical magnet as defined by Equation~\ref{eq:Bfield}.
 Since that field is completely radially symmetric, we can use that equation to
 describe the B field in the plane, where the parameter of the function
 is the distance from the center of the face of the magnet.
@@ -738,7 +740,8 @@ Our fundamental goal is to compute the collapse and cracking
 pressure. The collapse pressure is determined by the maximum force needed
 to reduce $b$ in the outlet region past some point we will call the
 {\em collapse point.}
-The cracking pressure is the pressure needed to drive the region $A$, represented
+The cracking pressure is the pressure needed to drive the ferrofluid in the inlet,
+represented
 by the variable $a$, to the {\em cracking point}, at which point
 a bubble forms and is pushed to the outlet.
 
@@ -778,13 +781,20 @@ We can thus describe the potential energy as an integral over surface patches $d
 \right\} da
 \end{align}
 
-We are furthermore ignoring all effect of the ferrofluid interacting with itself in terms
-of the potential energy. However, we rely on the very important property of ferrofluid that
-it tends to clump together into a single blob in the presence of a magentic field.
-We will, in fact, assume that our blob or bolus is perfectly hemispherical in the chamber,
-and a perfect rectangle in the channel. Furthermore, we assume the fluid is incompressible,
-and therefore always as the aread $S$. This is true until the bolus collapses; we know that
-when it collapses it explodes drastically, and we do not attempt to model anything after
+We are furthermore ignoring all effect of the ferrofluid
+interacting with itself in terms
+of the potential energy.
+However, we rely on the very important property of ferrofluid that
+it tends to clump together into a single blob in the presence
+of a magentic field.
+We will, in fact, assume that our blob or bolus is perfectly
+hemispherical in the chamber,
+and a perfect rectangle in the channel. Furthermore,
+we assume the fluid is incompressible,
+and therefore always as the aread $S$.
+This is true until the bolus collapses; we know that
+when it collapses it explodes drastically,
+and we do not attempt to model anything after
 a collapse event.
 
 Therefore, we in fact have a one dimensional system of the coordinate $b$, which
