@@ -865,26 +865,6 @@ Thus we seek the values of $b$ for which:
 Let us treat subparts here, using our knowledge of the piecewise definition
 of $B(x)$.
 
-%% \begin{align}
-%%   \frac{d}{db} b B(b) = &
-%%   \frac{d}{db} \int_0^b B(r) r  = &
-%%  \frac{d}{db} \int_0^b
-%%   \left\{
-%%     \begin{array}{lr}
-%%       r \cdot c(r) dr , & \text{if } -1/2 < r \leq 1/2 \\
-%%       r \cdot q(r) dr , & \text{if } 1/2 < r < 3 \\
-%%       0  dr , & \text{if } r > 3
-%%     \end{array}
-%%     \right\} \\
-%%   \frac{d}{db} \int_0^b B(r) r = &
-%%   \left\{
-%%   \begin{array}{lr}
-%%       b \cdot c(b) , & \text{if } 0 \leq b \leq 1/2 \\
-%%       b \cdot q(b) , & \text{if } 1/2 < b < 3 \\
-%%       0  , & \text{if } r > 3
-%%     \end{array}
-%%     \right\}
-%% \end{align}
 
 Having cancelled the differentiation and integration in this way, we now apply another
 differentiation:
@@ -1070,7 +1050,14 @@ The cracking pressure $P_r$ will be the force necessary to reach $a = 0$, becaus
 the non-magnetic fluid will form a ``bubble'' which will be pinched off and displaced into the chamber
 by the ferrofluid. This ``bubble'' will be forced in the direction of decreasing magnetic field strength,
 because it minimizes potential energy to fill the strong field with ferrofluid preferentially over
-non-magnetic fluid. This occurs at $a = 0$, so $A(b) = 0$, or $b = \sqrt{\frac{2S}{\pi}}$ by Equation~\ref{eq:maximalB}.
+non-magnetic fluid.\footnote{Joe Herschberge has aptly
+  named this ``magnetic buoyancy''. The common use of the word buoyancy
+  refers to the upward force opposing gravity when a less dense object
+  displaces a more dense fluid in gravity. In our case, gravity
+  is irrelevant. We can define {\em magnetic buoyancy} as the
+  force on a cohering mass of less-susceptible material immersed in
+  more-susceptible ferrofluid in the direction opposite to
+  the field gradient.} This occurs at $a = 0$, so $A(b) = 0$, or $b = \sqrt{\frac{2S}{\pi}}$ by Equation~\ref{eq:maximalB}.
 
 \begin{align}
   P_r k = F(\sqrt{\frac{2S}{\pi}})
@@ -1218,6 +1205,17 @@ for example based on magnetic field strength as per \cite{ando2009ferrofluidic}.
   a collapse automatically when high outlet pressure is removed,
   which would increase robustness in some applications.
 \end{enumerate}
+
+\section{Possibly Venus for Publishing}
+
+
+** Consider submitting to this: https://www.sciencedirect.com/journal/journal-of-fluids-and-structures
+
+
+Read and add this to references:
+
+\url{https://hal.science/hal-01414182/file/2016_marss_mellal.pdf}
+
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % The bibliography is stored in an external database file
@@ -1541,7 +1539,14 @@ much of the ferrorfluid in the disc $R$ as possible.
 
 It is clear from this that if a bubble of air was magically
 placed inside the blob of ferrofluid in inside $R$, it would
-quickly be pushed out by energy minimization.
+quickly be pushed out by energy minimization. \footntoe{Joe Herschberge has aptly
+  named this ``magnetic buoyancy''. The common use of the word buoyancy
+  refers to the upward force opposing gravity when a less dense object
+  displaces a more dense fluid in gravity. In our case, gravity
+  is irrelevant. We can define {\em magnetic buoyancy} as the
+  force on a cohering mass of less-magnetic material immersed in
+  more-magentic ferrofluid in the direction opposite to
+  the field gradient.}
 
 But how can we smuggle a bubble of air into the blob?
 Well, we can make a thin ``staw'' and pace the end of it inside
