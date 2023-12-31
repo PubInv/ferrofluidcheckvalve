@@ -17,13 +17,13 @@ meanFluidHeight_mm = 2
 # provides a higher cracking pressure. At present,
 # I do not know how to compute the field of two magnets,
 # except to simply add them.
-useTwoMagnetSolution = False
+useTwoMagnetSolution = True
 
 # TODO: This magnetism is probably too high. We need to
 # find an actual value for our rare earth magnets.
 # https://www.quora.com/What-is-the-magnetic-field-strength-of-a-1x1-in-cube-neodymium-magnet-in-teslas
 magnetization_mT = 640
-cyl = magpy.magnet.Cylinder(
+cyl1 = magpy.magnet.Cylinder(
     magnetization=(0,0,magnetization_mT),
     dimension=(magWidth_mm,magLength_mm),
     position=(0,0,-magLength_mm/2.0 -meanFluidHeight_mm),
@@ -52,14 +52,27 @@ xpoints=np.linspace(-spaceSize_mm, spaceSize_mm, 201)
 sensor = magpy.Sensor(position=pos)
 
 # Compute the magnetic field via the direct interface.
+B = np.array()
+B1 = []
+B2 = []
+
 if useTwoMagnetSolution:
-    B = magpy.getB(
-        cyl,
+    B1 = magpy.getB(
+        cyl1,
         observers = pos
     )
+    B2 = magpy.getB(
+        cyl2,
+        observers = pos
+    )
+    B = np.copy(B1);
+    for i,b in enumerate(B):
+        B[i][0] = B1[i][0] + B2[i][0]
+        B[i][1] = B1[i][1] + B2[i][1]
+        B[i][2] = B1[i][2] + B2[i][2]
 else:
     B = magpy.getB(
-        cyl,
+        cyl1,
         observers = pos
     )
 
@@ -120,6 +133,5 @@ for i,x in enumerate(Wx):
 
 fig.add_trace(go.Scatter(x=Wx,y=WP,name="WP"))
 
-magpy.show(cyl, sensor, backend='plotly')
-magpy.show(cyl2, sensor, backend='plotly')
+magpy.show([cyl1,cyl2], sensor, backend='plotly')
 fig.show()
