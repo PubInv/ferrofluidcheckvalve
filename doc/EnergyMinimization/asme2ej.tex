@@ -137,7 +137,7 @@ in normal operation.
 By passive, the authors
 mean a check valve that functions without changes to the magnetic
 field affecting the bolus, whether that field is induced by a
-permanent magnet or an electromagnet.
+permanent magne t or an electromagnet.
 That is, the flow is determined
 purely by the difference between the inlet port pressure and the
 outlet port pressure.
@@ -153,6 +153,25 @@ fabrication over valves with moving parts.
 Magnetic ferrofluid is a stable colloidal dispersion of magnetic particles in a liquid carrier,
 typically mineral oil or another non-polar solution. The properties of these fluids is highly
 influenced by Brownian motion\cite{Rosensweig, R.E. (1985) Ferrohydrodynamics. Cambridge University Press, Cambridge.}.
+The three primary mechanisms that are responsible for the existence of ferrofluids are:
+\begin{equation}
+  Q = k * \Delta T
+\end{equation}
+\begin{equation}
+  U_{mag} = {\mu}_{0}MHV
+\end{equation}
+\begin{equation}
+  U_{grav} = {\delta}{\rho}*V*g*L
+\end{equation}
+Where $Q$ is thermal energy, $k$ is the Boltzman constant, $\Delta{T}$ is change in temperature, 
+$U_{mag}$ is magnetic energy, ${\mu}_{0}$ is the permeability of free space, $V$ is volume of ferrofluid,
+$U_{grav}$ is gravitational energy, $\rho$ is the density of the ferrofluid, $g$ is the gravitational constant, \
+and $L$ is the elevation within the gravitational field. The ferrofluid check-valve proposed in
+this research additionally incorporates the kinetic energy of the air or liquid being transmitted through
+a bolus of ferrofluid.
+\begin{equation}
+  K_{air} = \frac{1}{2}m{\delta}v^{2}
+\end{equation}
 
 A number of papers report on ferrofluid pumps, focusing in particular
 on micropump and lab-on-a-chip applications\cite{ozbey2015modeling,hsu2018biocompatible}.
