@@ -51,8 +51,12 @@
 \title{A Novel Passive Ferrofluid One-way (Check) Valve Based on Energy Minimization}
 
 %%% first author
-\author{Lisa Kotowski, MS
-
+}
+\author{Lisa Kotowski
+  \affiliation{
+    Inventor + Physicist \\
+    %%Email:  lkotowski02@gmail.com
+    }
 }
 \author{Veronica Stuckey
   \affiliation{
@@ -107,9 +111,7 @@ and compare predicted performance to actual performance.
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \section{Introduction}
 
-Ferrofluids are colloidal suspensions of ferromagnetic particles in a non-polar, liquid carrier \cite{oehlsen2022approaches}.
-In the work presented in this paper, a finite volume method based numerical study is performed to investigate the ferrofluid behavior in a passive valve using Ferrohydrodynamics. % Lisa ref 2
-Ferrofluid can be manipulated by electronically controlled magnetic
+
 fields to exert force on fluids\cite{torres2014recent,kole2021engineering,ozbey2015modeling}.
 This makes it possible to build pneumatic or hydraulic
 devices, perhaps on very small scales,
@@ -141,7 +143,7 @@ in normal operation.
 By passive, the authors
 mean a check valve that functions without changes to the magnetic
 field affecting the bolus, whether that field is induced by a
-permanent magnet or an electromagnet.
+permanent magne t or an electromagnet.
 That is, the flow is determined
 purely by the difference between the inlet port pressure and the
 outlet port pressure.
@@ -152,7 +154,47 @@ significant advantages for operation and especially
 fabrication over valves with moving parts.
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\section{Related Research}
+\section{Theory and Background}
+
+Magnetic ferrofluid is a stable colloidal dispersion of magnetic particles in a liquid carrier,
+typically mineral oil or another non-polar solution. The properties of these fluids is highly
+influenced by Brownian motion\cite{Rosensweig, R.E. (1985) Ferrohydrodynamics. Cambridge University Press, Cambridge.}.
+The three primary mechanisms that are responsible for the existence of ferrofluids are:
+\begin{equation}
+  Q = k * \Delta T
+\end{equation}
+\begin{equation}
+  U_{mag} = {\mu}_{0}MHV
+\end{equation}
+\begin{equation}
+  U_{grav} = {\delta}{\rho}*V*g*L
+\end{equation}
+where $Q$ is thermal energy, $k$ is the Boltzman constant, $\Delta{T}$ is change in temperature, 
+$U_{mag}$ is magnetic energy, ${\mu}_{0}$ is the permeability of free space, $V$ is volume of ferrofluid,
+$U_{grav}$ is gravitational energy, $\rho$ is the density of the ferrofluid, $g$ is the gravitational constant, \
+and $L$ is the elevation within the gravitational field. The ferrofluid check-valve proposed in
+this research additionally incorporates the kinetic energy of the air or liquid being transmitted through
+a bolus of ferrofluid.
+\begin{equation}
+  K_{air} = \frac{1}{2}m{\delta}v_{air}^{2}
+\end{equation}
+where $K_{air}$ is the kinetic energy of the air bubble passing through the ferrofluid bolus,
+$m$ is the mass of the air bubble, and $v_{air}$ is the velocity of the air bubble.
+
+This research posits that a ferrofluid confined to a thin channel followed by an open area can function
+effectively as a check valve. Check valves are passive, one-way valves which prevent the backflow of liquid. 
+There is a minimum differential upstream pressure, known as cracking pressure, between the inlet and outlet 
+that will operate the valve. The cracking pressure can be specified for a specific cracking pressure; however, 
+this research focuses on measuring the cracking pressure of a ferrofluid check valve. Cracking pressure is defined as
+below in %Equation number
+
+%Equation with  numbering
+\begin{align}
+\vec{F}=P_{f}*{A}\\
+\end{align}
+
+where $\vec{F}$ is the magnitude of the force of the liquid on the ferrofluid, $P_{f}$ is the pressure of the ferrofluid,
+and $A$ is the surface area of the ferrofluid plug in the channel.
 
 A number of papers report on ferrofluid pumps, focusing in particular
 on micropump and lab-on-a-chip applications\cite{ozbey2015modeling,hsu2018biocompatible}.
