@@ -51,7 +51,6 @@
 \title{A Novel Passive Ferrofluid One-way (Check) Valve Based on Energy Minimization}
 
 %%% first author
-}
 \author{Lisa Kotowski
   \affiliation{
     Inventor + Physicist \\
@@ -169,7 +168,7 @@ The three primary mechanisms that are responsible for the existence of ferroflui
 \begin{equation}
   U_{grav} = {\delta}{\rho}*V*g*L
 \end{equation}
-where $Q$ is thermal energy, $k$ is the Boltzman constant, $\Delta{T}$ is change in temperature, 
+where $Q$ is thermal energy, $k$ is the Boltzman constant, $\Delta{T}$ is change in temperature,
 $U_{mag}$ is magnetic energy, ${\mu}_{0}$ is the permeability of free space, $V$ is volume of ferrofluid,
 $U_{grav}$ is gravitational energy, $\rho$ is the density of the ferrofluid, $g$ is the gravitational constant, \
 and $L$ is the elevation within the gravitational field. The ferrofluid check-valve proposed in
@@ -178,13 +177,14 @@ a bolus of ferrofluid.
 \begin{equation}
   K_{air} = \frac{1}{2}m{\delta}v_{air}^{2}
 \end{equation}
+
 where $K_{air}$ is the kinetic energy of the air bubble passing through the ferrofluid bolus,
 $m$ is the mass of the air bubble, and $v_{air}$ is the velocity of the air bubble.
 
 This research posits that a ferrofluid confined to a thin channel followed by an open area can function
-effectively as a check valve. Check valves are passive, one-way valves which prevent the backflow of liquid. 
-There is a minimum differential upstream pressure, known as cracking pressure, between the inlet and outlet 
-that will operate the valve. The cracking pressure can be specified for a specific cracking pressure; however, 
+effectively as a check valve. Check valves are passive, one-way valves which prevent the backflow of liquid.
+There is a minimum differential upstream pressure, known as cracking pressure, between the inlet and outlet
+that will operate the valve. The cracking pressure can be specified for a specific cracking pressure; however,
 this research focuses on measuring the cracking pressure of a ferrofluid check valve. Cracking pressure is defined as
 below in %Equation number
 
@@ -506,7 +506,8 @@ non-ferrous fluid crosses a central boundary.
 \subsection{Warmup: A Bolus in A Channel}
 
 A relatively simple problem is to consider a bolus of
-ferrofluid in a thin horizontal channel, described as an $x$-axis.
+ferrofluid in a thin horizontal channel. Let $x$ be the positions of the center of
+the bolus on the $x$-axis.
 Placing a cylindrical permanent
 magnet beneath it at the origin tends to lock the bolus in place,
 forming a plug.
@@ -527,7 +528,9 @@ The magnetic field in the line just above the face of the magnet can be analytic
 described by ellpitical integrals, but they are very difficult to work with symbolically,
 but easy to calculate numerically.
 MagPyLib is a convenient package for doing so.
-Figure~\ref{fig:BolusSetup} shows our setup of the problem.
+Figure~\ref{fig:BolusSetup} shows our setup of the problem coordinate,
+and Figure~\ref{fig:BoluSetupMagPyLib} shows the same setup in the MagPyLib simulation software.
+The $x$ dimesion is the horizontal, left to right dimension.
 The field is polarized, which is why it is negative in the $x$ direction, only
 the magnitude matters when
 operating on a ferrofluid bolus.
@@ -536,19 +539,24 @@ By making assumptions, we can
 analyze this to obtain closed form solutions which match our
 experience and inform more complicated cases.
 
-
-
-\begin{figure}
-\centerline{\includegraphics[width=6in]{figure/SetupBolusProblem.png}}
-\caption{Setup of the Bolus Problem}
+\begin{figure}[h]
+\centerline{\includegraphics[width=4in]{figure/BolusSetup.png}}
+\caption{Bolus Coordinate Setup}
 \label{fig:BolusSetup}
+\end{figure}
+
+
+\begin{figure}[h]
+\centerline{\includegraphics[width=6in]{figure/SetupBolusProblem.png}}
+\caption{Setup of the Bolus Problem in MagPyLib}
+\label{fig:BolusSetupMagPyLib}
 \end{figure}
 
 The red line represents the thin channel just slightly above the face of
 the magnet.
 MagPyLib conveniently computes the field along this line. In particular,
 only the $x$ component (the East-West coordinate) of the B-field is relevant to us.
-The field was plotted with MagPyLib in Figure~ref{fig:Bx}.
+The field was plotted with MagPyLib in Figure~\ref{fig:Bx}.
 
 \begin{figure}
 \centerline{\includegraphics[width=3in]{figure/Bx.png}}
@@ -563,7 +571,7 @@ are in fact the edges of the magnet.
 The resulting respresentation which is linear above the magnet,
 and uses a 6th order polynmial beyond the radius of the magnet,
 is remarkably accurate, under the assumption the MagPyLib is accurate. These
-three approximations are shown superimposed on the B-field in Figure~ref{fig:piecewise}. We will define $B(x)$ as this approximation.
+three approximations are shown superimposed on the B-field in Figure~\ref{fig:piecewise}. We will define $B(x)$ as this approximation.
 
 \begin{figure}
 \centerline{\includegraphics[width=3in]{figure/PlotOfBxWithPieceWiseInterpolation.png}}
@@ -615,14 +623,8 @@ to the field strength times the area.
 Since the area is unchanging in a simple tube, the force on
 a slice of ferrofluid at position $x$ is proportional to $B(x)$.
 
-\begin{figure}
-\centerline{\includegraphics[width=4in]{figure/BolusSetup.png}}
-\caption{Bolus Coordinate Setup}
-\label{fig:ChannelToChamber}
-\end{figure}
-
 Now imagine that bolus has a length of $L$, and let the channel height be $k$, and let $x$ be
-the midpoint of the bolus.
+the midpoint of the bolus, as shown in Figure~\ref{fig:BolusSetup}.
 Assume the magnet is a 1000 milliTesla (mT) polariazed magnet.
 The $x$-axis force on the bolus can be computed as the integral of $dx$:
 

@@ -13,10 +13,10 @@ $fn = 40;
 
 
 SlabHeight = 6;
-ChamberRadius = 32;
+ChamberRadius = 16;
 SlabLength = ChamberRadius*5.5;
 SlabWidth = ChamberRadius*2.5;
-PlaneThickness = 1.0;
+PlaneThickness = 2.0;
 MagnetHeight = 50;
 ww = 1.5; // This is the wall width, assumed to be sturdy enough
 
@@ -69,27 +69,30 @@ ptype = "valve";
  }
 
  module interior() {
-     color("red")
+     union () {
       linear_extrude(height = PlaneThickness, center = true, convexity = 10, twist = 0)
     union() {
         // First, we put in a rectangle that spans the whole thing
-        square([SlabLength,PlaneThickness],center=true);
+        square([SlabLength*1.5,PlaneThickness*2/3],center=true);
         difference() {
             circle(ChamberRadius);
             union() {
                 injectionWidth = PlaneThickness * 2;
-                translate([-SlabLength/2,PlaneThickness,0])
-                square([SlabLength,injectionWidth],center=true);
-                translate([-SlabLength/2,-PlaneThickness,0])
-                square([SlabLength,injectionWidth],center=true);
+                translate([-SlabLength/2,PlaneThickness* (1/2),0])
+                square([SlabLength,injectionWidth/4],center=true);
+                translate([-SlabLength/2,-PlaneThickness * (1/2),0])
+                square([SlabLength,injectionWidth/4],center=true);
             }
         }
         // Now we adde the "recovery chambers"
         translate([ChamberRadius*2.0,0])
         square([ChamberRadius,ChamberRadius],center=true); 
         translate([-ChamberRadius*2,0,0])
-        square([ChamberRadius,ChamberRadius],center=true);      
+        square([ChamberRadius,ChamberRadius],center=true);  
     }
+    
+
+}
  }
  
  module luer() {
@@ -105,13 +108,6 @@ module slab() {
         circle(ChamberRadius+5);
         square([5*ChamberRadius+10,ChamberRadius+5],center=true); 
     }
-//    union() {
-//        difference() {
-//            union() {
-//            cube([SlabLength,SlabWidth,SlabHeight],center=true);
-//            }
-//        }
-//    }
 }
 
 module basicRing(r) {
@@ -125,14 +121,13 @@ module basicRing(r) {
 
 module lockRings() {
     // This should be the diameter of the permanent magnets used in the locks
-    lockRadius = 12.8;
+    lockRadius = 12.8 / 2;
     rotate([0,90,0])
     basicRing(lockRadius); 
 }
 
 module addStands() {
     StandHeight = 2*25.4;
-//    StandHeight = 25.4;
     translate([SlabLength/2+0,-SlabWidth/2,0])
     rotate([0,0,90])
     difference() {
@@ -155,15 +150,13 @@ module completeValve() {
         translate([-LuerPosition,0,0]) rotate([0,90,0]) luer();
   //      addStands();
         difference() {
-            union() {
-                slab();
-            }
-            interior();
-        }
-        lockRings();
+          union() {
+             slab();
+             lockRings();
+          }
+         interior();
+       }
     } 
-
- 
 }
 
 if (ptype == "valve") {
