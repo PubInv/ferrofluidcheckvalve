@@ -1081,10 +1081,10 @@ Qualitatively, we assume that at rest (ambient pressure), the bolus exerts no fo
 pressure in the chamber increases, the force (the increase in potential energy) will increase
 as $b$ is decreased and the bolus is disturbed from its rest position. This force on the
 bolus and resiting force exerted by the bolus will increase
-as $b$ decreased further from its rest postion. However, eventuall this force will cease to
+as $b$ decreased further from its rest postion. However, eventually this force will cease to
 increase and reach its maximum. At that point, the valve will collapse.
 
-Our strategy is thus to find the value of $b$ $b_m$ that maximizes the force (maximizes the change in
+Our strategy is thus to find the value of $b$, let us call it $b_m$, that maximizes the force (maximizes the change in
 potential energy $dU$). The force at $b_m$, $F(b_m)$ will be equal to the pressure times $\pi b_m$, and
 that will be the collapse pressure $P_c$.
 
@@ -1116,20 +1116,18 @@ apparatus. Choosing $k = 10$ and $b_0 = 3/4$, we expect:
 \subsection{Conjecture}
 
 Important note: This math strongly suggest that the valve can be
-made twice as performant by opening the chamber completely, so that the
+made twice as performant by opening the chamber completely as shown in Figure!\ref{fig:360}, so that the
 valve is merely a chamber in the center of the bolus.
-Likewise thickening of the chamber (in the z-dimesion, violating
-our current 2-dimensional assuption) at the point of the strongest
-magent force would mean that more ferrofluid would have to be driven
-away at that point, increasing the potentially energy and therefore
-requiring more force.
-
 However, even though we have modeled the fluid as not reacting to itself,
 we would not want the ferrofluid itself
 to strengthen the field on the inlet side, which might occur. Creating
 therefore an arc of someething less than 360 degrees, such as 270 degrees,
 or making the walls of the thin chamber very thick, might solve this problem.
-
+\begin{figure}[H]
+\centerline{\includegraphics[width=6in]{figure/360degreeplanarcheckvalve.png}}
+\caption{360 degree planar check valve, an improvement derived from theory}
+\label{fig:360}
+\end{figure}
 This math makes it clear that on the outlet side we want the
 bolus surface to be outside a strong field at $r$ to that $r B(r)$ is
 maximized to maximize the collapse pressure.
@@ -1144,7 +1142,8 @@ the collapse point, because we don't want the inlet pressure to have
 to overcome that, even though on the inlet side the length $d$ will
 be much smaller that length $\pi b$. However, by the
 Magnestatic Blob Minimization principle, this is impossible in a
-radially symmetric B field.
+radially symmetric B field. However, we can build a magnetic field
+which is not radially symmetric, thereby improving the performance of the valve.
 
 This suggest that on the inlet side we attempt to make
 the magnetic field, only within the channel, as gradual, linear, and
@@ -1159,17 +1158,6 @@ used. This is somewhat depicted in Fig.~\ref{fig:ifp}.
 \label{fig:ifp}
 \end{figure}
 
-\subsection{Idea: An Improved Version}
-
-It is clear based on the above theory that allowing the bolus to be semi-circular
-is an arbitrary inefficiency. There is no reason not to allow a 360 degree bolus,
-as depicted in Figure~\ref{fig:360}.
-
-\begin{figure}
-\centerline{\includegraphics[width=6in]{figure/360degreeplanarcheckvalve.png}}
-\caption{360 degree planar check valve, an improvement derived from theory}
-\label{fig:360}
-\end{figure}
 
 \subsection{Idea: a 3D version}
 
