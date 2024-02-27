@@ -1,0 +1,175 @@
+This is pdfTeX, Version 3.141592653-2.6-1.40.25 (TeX Live 2023) (preloaded format=pdflatex 2024.1.12)  26 JAN 2024 13:39
+entering extended mode
+ restricted \write18 enabled.
+ file:line:error style messages enabled.
+ %&-line parsing enabled.
+**"c:/Users/lkoto/OneDrive/Documents/GitHub/ferrofluidcheckvalve/doc/SmartMaterials/ioplatexguidelines-1/IOPLaTeXGuidelines copy"
+(c:/Users/lkoto/OneDrive/Documents/GitHub/ferrofluidcheckvalve/doc/SmartMaterials/ioplatexguidelines-1/IOPLaTeXGuidelines copy.tex
+LaTeX2e <2023-11-01>
+L3 programming layer <2024-01-04>
+(./iopart.cls
+Document Class: iopart 1996/06/10 v0.0 IOP Journals LaTeX article class
+(./iopart12.clo
+File: iopart12.clo 1997/01/15 v1.0 LaTeX2e file (size option)
+)
+\c@jnl=\count187
+\c@section=\count188
+\c@subsection=\count189
+\c@subsubsection=\count190
+\c@paragraph=\count191
+\c@subparagraph=\count192
+\c@figure=\count193
+\c@table=\count194
+\abovecaptionskip=\skip48
+\belowcaptionskip=\skip49
+\indentedwidth=\skip50
+\mathindent=\dimen140
+\c@eqnval=\count195
+) (c:/texlive/2023/texmf-dist/tex/latex/l3backend/l3backend-pdftex.def
+File: l3backend-pdftex.def 2024-01-04 L3 backend support: PDF output (pdfTeX)
+\l__color_backend_stack_int=\count196
+\l__pdf_internal_box=\box51
+) (./IOPLaTeXGuidelines copy.aux)
+\openout1 = `"IOPLaTeXGuidelines copy.aux"'.
+
+LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 46.
+LaTeX Font Info:    ... okay on input line 46.
+LaTeX Font Info:    Checking defaults for OMS/cmsy/m/n on input line 46.
+LaTeX Font Info:    ... okay on input line 46.
+LaTeX Font Info:    Checking defaults for OT1/cmr/m/n on input line 46.
+LaTeX Font Info:    ... okay on input line 46.
+LaTeX Font Info:    Checking defaults for T1/cmr/m/n on input line 46.
+LaTeX Font Info:    ... okay on input line 46.
+LaTeX Font Info:    Checking defaults for TS1/cmr/m/n on input line 46.
+LaTeX Font Info:    ... okay on input line 46.
+LaTeX Font Info:    Checking defaults for OMX/cmex/m/n on input line 46.
+LaTeX Font Info:    ... okay on input line 46.
+LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 46.
+LaTeX Font Info:    ... okay on input line 46.
+LaTeX Font Info:    External font `cmex10' loaded for size
+(Font)              <17.28> on input line 49.
+LaTeX Font Info:    External font `cmex10' loaded for size
+(Font)              <12> on input line 49.
+LaTeX Font Info:    External font `cmex10' loaded for size
+(Font)              <7> on input line 61.
+LaTeX Font Info:    External font `cmex10' loaded for size
+(Font)              <5> on input line 61.
+LaTeX Font Info:    External font `cmex10' loaded for size
+(Font)              <8> on input line 96.
+LaTeX Font Info:    External font `cmex10' loaded for size
+(Font)              <6> on input line 96.
+ [1
+
+{c:/texlive/2023/texmf-var/fonts/map/pdftex/updmap/pdftex.map}] [2] [3]
+Underfull \hbox (badness 4492) in paragraph at lines 203--208
+[]\OT1/cmr/m/n/12 For the nu-mer-i-cal (Van-cou-ver) ref-er-ence style we rec-om-mend that au-
+ []
+
+
+Underfull \hbox (badness 6625) in paragraph at lines 203--208
+\OT1/cmr/m/n/12 thors use [][]\OT1/cmtt/m/n/12 unsrt.bst[]\OT1/cmr/m/n/12 ; this does not quite fol-low the style of pub-
+ []
+
+
+Underfull \hbox (badness 1675) in paragraph at lines 203--208
+\OT1/cmr/m/n/12 lished ar-ti-cles in our jour-nals but this is not a prob-lem. Al-ter-na-tively
+ []
+
+
+Underfull \hbox (badness 3323) in paragraph at lines 203--208
+\OT1/cmr/m/n/12 closely matches that in pub-lished ar-ti-cles. The file is avail-able from
+ []
+
+
+Underfull \hbox (badness 4353) in paragraph at lines 208--217
+\OT1/cmr/m/n/12 the [][]\OT1/cmtt/m/n/12 harvard.sty []\OT1/cmr/m/n/12 in conjunction with the [][]\OT1/cmtt/m/n/12 jphysicsB.bst []\OT1/cmr/m/n/12 BibTeX style
+ []
+
+
+Underfull \hbox (badness 1077) in paragraph at lines 208--217
+\OT1/cmr/m/n/12 file. These, and accompanying documentation, can be downloaded from 
+ []
+
+
+Underfull \hbox (badness 1147) in paragraph at lines 208--217
+[][]\OT1/cmtt/m/n/12 http://www.ctan.org/tex-archive/macros/latex/contrib/harvard/[]\OT1/cmr/m/n/12 . Note
+ []
+
+[4] [5] [6]
+Underfull \hbox (badness 2644) in paragraph at lines 337--350
+[]\OT1/cmr/m/n/12 For article types other than papers, [][]\OT1/cmtt/m/n/12 iopart.cls []\OT1/cmr/m/n/12 has a generic heading
+ []
+
+[7] [8] [9] [10] [11]
+Underfull \hbox (badness 10000) in alignment at lines 645--658
+[] [] [] [][][][][][][][][][][][][]
+ []
+
+[12] [13]
+Underfull \hbox (badness 2012) in paragraph at lines 742--747
+[]\OT1/cmr/m/n/12 Sometimes it is useful to number equations as parts of the same basic
+ []
+
+[14]
+Underfull \hbox (badness 2384) in paragraph at lines 759--761
+[]\OT1/cmr/m/n/12 Equation labels within the [][]\OT1/cmtt/m/n/12 \eqnarray []\OT1/cmr/m/n/12 environment will be referenced as
+ []
+
+[15] [16] [17] [18] [19]
+Underfull \hbox (badness 1082) in paragraph at lines 1083--1083
+[]\OT1/cmr/bx/n/10 Table 4. []\OT1/cmr/m/n/10 Alternatives to the normal references command $\OMS/cmsy/m/n/10 n$\OT1/cmtt/m/n/10 ref \OT1/cmr/m/n/10 available in
+ []
+
+[20] [21] [22] [23]
+Underfull \hbox (badness 3098) in paragraph at lines 1274--1279
+[]\OT1/cmr/m/n/12 For more detail about graphics inclusion see the documentation of the
+ []
+
+
+Underfull \hbox (badness 2197) in paragraph at lines 1274--1279
+[][]\OT1/cmtt/m/n/12 graphicx []\OT1/cmr/m/n/12 package, refer to one of the books on L[]T[]X, e.g. Goosens M,
+ []
+
+[24] [25] [26
+
+]
+Underfull \vbox (badness 10000) has occurred while \output is active []
+
+ [27] [28
+
+
+]
+Overfull \hbox (2.62785pt too wide) in paragraph at lines 1508--1532
+[][] 
+ []
+
+[29
+
+] [30
+
+] (./IOPLaTeXGuidelines copy.aux)
+ ***********
+LaTeX2e <2023-11-01>
+L3 programming layer <2024-01-04>
+ ***********
+ )
+(\end occurred inside a group at level 1)
+
+### simple group (level 1) entered at line 1278 ({)
+### bottom level 
+Here is how much of TeX's memory you used:
+ 825 strings out of 474166
+ 11744 string characters out of 5749518
+ 1941528 words of memory out of 5000000
+ 23190 multiletter control sequences out of 15000+600000
+ 568990 words of font info for 72 fonts, out of 8000000 for 9000
+ 1141 hyphenation exceptions out of 8191
+ 35i,14n,50p,911b,566s stack positions out of 10000i,1000n,20000p,200000b,200000s
+<c:/texlive/2023/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx10.pfb><c:/texlive/2023/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx12.pfb><c:/texlive/2023/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx8.pfb><c:/texlive/2023/texmf-dist/fonts/type1/public/amsfonts/cm/cmex10.pfb><c:/texlive/2023/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi10.pfb><c:/texlive/2023/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi12.pfb><c:/texlive/2023/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi7.pfb><c:/texlive/2023/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi8.pfb><c:/texlive/2023/texmf-dist/fonts/type1/public/amsfonts/cm/cmmib10.pfb><c:/texlive/2023/texmf-dist/fonts/type1/public/amsfonts/cm/cmr10.pfb><c:/texlive/2023/texmf-dist/fonts/type1/public/amsfonts/cm/cmr12.pfb><c:/texlive/2023/texmf-dist/fonts/type1/public/amsfonts/cm/cmr6.pfb><c:/texlive/2023/texmf-dist/fonts/type1/public/amsfonts/cm/cmr7.pfb><c:/texlive/2023/texmf-dist/fonts/type1/public/amsfonts/cm/cmr8.pfb><c:/texlive/2023/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy10.pfb><c:/texlive/2023/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy7.pfb><c:/texlive/2023/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy8.pfb><c:/texlive/2023/texmf-dist/fonts/type1/public/amsfonts/cm/cmti10.pfb><c:/texlive/2023/texmf-dist/fonts/type1/public/amsfonts/cm/cmti12.pfb><c:/texlive/2023/texmf-dist/fonts/type1/public/amsfonts/cm/cmti8.pfb><c:/texlive/2023/texmf-dist/fonts/type1/public/amsfonts/cm/cmtt10.pfb><c:/texlive/2023/texmf-dist/fonts/type1/public/amsfonts/cm/cmtt12.pfb>
+Output written on "IOPLaTeXGuidelines copy.pdf" (30 pages, 376044 bytes).
+PDF statistics:
+ 211 PDF objects out of 1000 (max. 8388607)
+ 133 compressed objects within 2 object streams
+ 0 named destinations out of 1000 (max. 500000)
+ 1 words of extra memory for PDF output out of 10000 (max. 10000000)
+
