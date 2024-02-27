@@ -14,22 +14,25 @@ $fn = 40;
 
 SlabHeight = 6;
 ChamberRadius = 16;
+// The idea of the Constrained Chamber Radius is to have a diameter of 0.33 inches.
+ConstrainedChamberRadius = 0.4* 25.4 / 2.0;
 SlabLength = ChamberRadius*5.5;
 SlabWidth = ChamberRadius*2.5;
 PlaneThickness = 2.0;
 MagnetHeight = 50;
 ww = 1.5; // This is the wall width, assumed to be sturdy enough
 
-LuerPosition = SlabLength/2+5;
+LuerPosition = SlabLength/2;
 LockRingHeight = 15;
 
 PI = 3.14152;
 GapHeight = 3.0;
 Thickness = 1.0;
 
-ptype = "valve";
+// ptype = "valve";
 // ptype = "interior";
-
+ptype = "valveWithRails";
+// ptype = "constrainedValve";
  module regular_polygon(order = 4, r=1){
      angles=[ for (i = [0:order-1]) i*(360/order) ];
      coords=[ for (th=angles) [r*cos(th), r*sin(th)] ];
@@ -68,19 +71,19 @@ ptype = "valve";
       square([2*a,a],center=true);
  }
 
- module interior() {
+ module interior(cr) {
      union () {
       linear_extrude(height = PlaneThickness, center = true, convexity = 10, twist = 0)
     union() {
         // First, we put in a rectangle that spans the whole thing
-        square([SlabLength*1.5,PlaneThickness*2/3],center=true);
+        square([SlabLength*1.5,PlaneThickness*3/3],center=true);
         difference() {
-            circle(ChamberRadius);
+            circle(cr);
             union() {
                 injectionWidth = PlaneThickness * 2;
-                translate([-SlabLength/2,PlaneThickness* (1/2),0])
+                translate([-SlabLength/2,PlaneThickness* (0.8),0])
                 square([SlabLength,injectionWidth/4],center=true);
-                translate([-SlabLength/2,-PlaneThickness * (1/2),0])
+                translate([-SlabLength/2,-PlaneThickness * (0.8),0])
                 square([SlabLength,injectionWidth/4],center=true);
             }
         }
@@ -90,23 +93,21 @@ ptype = "valve";
         translate([-ChamberRadius*2,0,0])
         square([ChamberRadius,ChamberRadius],center=true);  
     }
-    
-
-}
+  }
  }
  
  module luer() {
- import("Body1.stl", convexity=3);
+ //import("Body1.stl", convexity=3);
+     myBarbJustForThis();
  }
 
-module slab() {
-
-    l = ChamberRadius*4;
-    color("blue")
+module slab(r,cr) {
+    l = r*4;
+    color("red",1.0)
     linear_extrude(height = SlabHeight, center = true, convexity = 10, twist = 0)
     union() {
-        circle(ChamberRadius+5);
-        square([5*ChamberRadius+10,ChamberRadius+5],center=true); 
+        circle(cr+5);
+        square([5*r+10,r+5],center=true); 
     }
 }
 
@@ -118,12 +119,25 @@ module basicRing(r) {
         cylinder(LockRingHeight+10,r,r,center=true);
     }
 }
+module basicRail(r) {
+    w = 2;
+    translate([0,0,0])
+    cube([SlabWidth,w,LockRingHeight],center=true);
+}
 
 module lockRings() {
     // This should be the diameter of the permanent magnets used in the locks
     lockRadius = 12.8 / 2;
     rotate([0,90,0])
     basicRing(lockRadius); 
+}
+module lockRails() {
+    // This should be the diameter of the permanent magnets used in the locks
+    r = 12.8 / 2;
+    translate([0,r,0])   
+    basicRail(r);  
+    translate([0,-r,0])   
+    basicRail(r);    
 }
 
 module addStands() {
@@ -145,28 +159,122 @@ module addStands() {
 }
 
 module completeValve() {
+    c = ChamberRadius/2;
     union() {
         translate([LuerPosition,0,0]) rotate([0,270,0]) luer();
         translate([-LuerPosition,0,0]) rotate([0,90,0]) luer();
-  //      addStands();
         difference() {
           union() {
-             slab();
+             slab(ChamberRadius,ChamberRadius);
              lockRings();
           }
-         interior();
+         interior(hamberRadius);
        }
+       // now we add a "blocking bar"
+       translate([ChamberRadius*2.0,0])
+       cube([2,c,SlabHeight],center=true);
+       translate([-ChamberRadius*2.0,0])
+       cube([2,c,SlabHeight],center=true);
+    } 
+}
+
+module valveWithRails(r,cr) {
+    c = r/2;
+    union() {
+        translate([LuerPosition,0,0]) rotate([0,270,0]) luer();
+        translate([-LuerPosition,0,0]) rotate([0,90,0]) luer();
+        difference() {
+          union() {
+             slab(r,cr);
+             lockRails();
+          }
+         interior(cr);
+       }
+       // now we add a "blocking bar"
+       translate([cr*2.0,0])
+       cube([2,c,SlabHeight],center=true);
+       translate([-cr*2.0,0])
+       cube([2,c,SlabHeight],center=true);
     } 
 }
 
 if (ptype == "valve") {
     completeValve();
+} else if (ptype == "valveWithRails") {
+    valveWithRails(ChamberRadius,ChamberRadius);
+} else if (ptype == "constrainedValve") {
+    valveWithRails(ChamberRadius,ConstrainedChamberRadius);
 } else if (ptype == "interior"){
-    interior();
+    interior(ChamberRadius);
 } else {
     echo("NO PTYPE SET!!! XXXXXXX");
 }
 
+// %translate([0,50,0])
+// valveWithRails(ConstrainedChamberRadius);
 
+// Super-Duper Parametric Hose Barb : https://www.thingiverse.com/thing:2990340
+// By Varnerrants, licensed under CC - Attribution. Don't forget to attribute Varnerrants 
+// (no other name given in documentation?)
+$fn = 90;
+
+// Hose Outer Diameter (used to calculate shlouder length)
+// hose_od = 9.5;
+hose_od = 5;
+// Hose Inner Diameter
+// hose_id = 8;
+hose_id = 4;
+
+// How far the barbs swell the diameter.
+swell = 2;
+
+// Wall thickness of the barb.
+//wall_thickness = 1.31;
+wall_thickness = 0.8;
+
+// Number of barbs.
+barbs = 3;
+// How far between each barb section?
+barb_length = 2;
+
+// Do you want to render the outer shell?
+shell = true;
+
+// Do you want to render the bore?
+bore = true;
+
+// Flattens the barbs on one end. Usefull if youre printing barbs at angles, as the flattened side can be rotated downward facing the bed.
+ezprint = false;
+
+//barb(hose_od = hose_od, hose_id = hose_id, swell = swell, wall_thickness = wall_thickness, barbs = barbs, barb_length = barb_length, shell = shell, bore = bore, ezprint = ezprint);
+
+module barb(hose_od = 21.5, hose_id = 15, swell = 1, wall_thickness = 1.31, barbs = 3, barb_length = 2, shell = true, bore = true, ezprint = true) {
+    id = hose_id - (2 * wall_thickness);
+    translate([0, 0, -((barb_length * (barbs + 1)) + 4.5 + (hose_od - hose_id))])
+    difference() {
+        union() {
+            if (shell == true) {
+                cylinder(d = hose_id, h = barb_length);
+                for (z = [1 : 1 : barbs]) {
+                    translate([0, 0, z * barb_length]) cylinder(d1 = hose_id, d2 = hose_id + swell, h = barb_length);
+                }
+                translate([0, 0, barb_length * (barbs + 1)]) cylinder(d = hose_id, h = 4.5 + (hose_od - hose_id));
+            }
+        }
+        if (bore == true) {
+            translate([0, 0, -1]/2) cylinder(d = id, h = (barb_length * (barbs + 1)) + 4.5 + (hose_od - hose_id) + 1);
+        }
+        if (ezprint == true) {
+            difference() {
+                cylinder(d = hose_id + (swell * 3), h = (barb_length * (barbs + 1)));
+                translate([swell, 0, 0]) cylinder(d = hose_id + (swell * 2), h = (barb_length * (barbs + 1)));
+            }
+        }
+    }
+}
+
+module myBarbJustForThis() {
+    barb(hose_od = hose_od, hose_id = hose_id, swell = swell, wall_thickness = wall_thickness, barbs = barbs, barb_length = barb_length, shell = shell, bore = bore, ezprint = ezprint);
+}
 
 

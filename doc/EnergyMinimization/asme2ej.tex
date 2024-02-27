@@ -31,6 +31,8 @@
 }
 \usepackage[square,numbers]{natbib}
 
+\usepackage{float}
+
 
 \newtheorem{conjecture}{Conjecture}
 \newtheorem{corollary}{Corollary}
@@ -51,12 +53,6 @@
 \title{A Novel Passive Ferrofluid One-way (Check) Valve Based on Energy Minimization}
 
 %%% first author
-\author{Lisa Kotowski
-  \affiliation{
-    Inventor + Physicist \\
-    %%Email:  lkotowski02@gmail.com
-    }
-}
 \author{Veronica Stuckey
   \affiliation{
     Biomedical Engineer, University of Texas at Austin \\
@@ -152,49 +148,6 @@ active area of research and despite such a valve having
 significant advantages for operation and especially
 fabrication over valves with moving parts.
 
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\section{Theory and Background}
-
-Magnetic ferrofluid is a stable colloidal dispersion of magnetic particles in a liquid carrier,
-typically mineral oil or another non-polar solution. The properties of these fluids is highly
-influenced by Brownian motion\cite{Rosensweig, R.E. (1985) Ferrohydrodynamics. Cambridge University Press, Cambridge.}.
-The three primary mechanisms that are responsible for the existence of ferrofluids are:
-\begin{equation}
-  Q = k * \Delta T
-\end{equation}
-\begin{equation}
-  U_{mag} = {\mu}_{0}MHV
-\end{equation}
-\begin{equation}
-  U_{grav} = {\delta}{\rho}*V*g*L
-\end{equation}
-where $Q$ is thermal energy, $k$ is the Boltzman constant, $\Delta{T}$ is change in temperature,
-$U_{mag}$ is magnetic energy, ${\mu}_{0}$ is the permeability of free space, $V$ is volume of ferrofluid,
-$U_{grav}$ is gravitational energy, $\rho$ is the density of the ferrofluid, $g$ is the gravitational constant, \
-and $L$ is the elevation within the gravitational field. The ferrofluid check-valve proposed in
-this research additionally incorporates the kinetic energy of the air or liquid being transmitted through
-a bolus of ferrofluid.
-\begin{equation}
-  K_{air} = \frac{1}{2}m{\delta}v_{air}^{2}
-\end{equation}
-
-where $K_{air}$ is the kinetic energy of the air bubble passing through the ferrofluid bolus,
-$m$ is the mass of the air bubble, and $v_{air}$ is the velocity of the air bubble.
-
-This research posits that a ferrofluid confined to a thin channel followed by an open area can function
-effectively as a check valve. Check valves are passive, one-way valves which prevent the backflow of liquid.
-There is a minimum differential upstream pressure, known as cracking pressure, between the inlet and outlet
-that will operate the valve. The cracking pressure can be specified for a specific cracking pressure; however,
-this research focuses on measuring the cracking pressure of a ferrofluid check valve. Cracking pressure is defined as
-below in %Equation number
-
-%Equation with  numbering
-\begin{align}
-\vec{F}=P_{f}*{A}\\
-\end{align}
-
-where $\vec{F}$ is the magnitude of the force of the liquid on the ferrofluid, $P_{f}$ is the pressure of the ferrofluid,
-and $A$ is the surface area of the ferrofluid plug in the channel.
 
 A number of papers report on ferrofluid pumps, focusing in particular
 on micropump and lab-on-a-chip applications\cite{ozbey2015modeling,hsu2018biocompatible}.
@@ -988,22 +941,29 @@ of the $B$ field, which seems likely to be necessary.
 
 Unfortunately, this equation may require a careful case analysis based on the choices of $k$ and $S$.
 Let us attempt to do this for a particular assumption.
+
+
 Figure~\ref{fig:ifp} and Figure~\ref{fig:Bx} suggest that $S$ should be chosen so that $b_0$ is
-greater than $1/2$, and perhaps at most than $1$. Let us attempt to analyze this with $b_0 = 3/4$. Let us set $k = 1/10$, which seems reasonable to manufacture.
+less than $1/2$.
+Let us attempt to analyze this with $b_0 = 3/8$. Let us set $k = 1/10$, which seems reasonable to manufacture.
 In this case,
 \begin{align}
-  S = & 3/40 + (\pi 9/32) \approx 0.9585729
-\end{align}
-
-We can deonte this: $A_{3/4}^{1/10}(b)$:
-
-\begin{align}
-  A_{3/4}^{1/10}(b) =  9.58575 - 5 \pi b^2
+  S = & 3/80 + (\pi 9/64) \\
+  S = 0.48
 \end{align}
 
 
+
+NOTE: All Math BELOW this point probably needs to be redone since we have changed A.
 Now if we solve Equation~\ref{eq:model} under the assumption that $b_m$ is at most $1/2$, and
 then under the assumption that $b_m$ is more than $1/2$, and compare these results.
+
+We can deonte this: $A_{3/8}^{1/10}(b)$:
+
+\begin{align}
+  A_{3/8}^{1/10}(b) =
+\end{align}
+
 
 Case $b_m \leq 1/2$:
 
@@ -1605,3 +1565,12 @@ configuration.
 
 Unfortunately, we cannot analyze this further without introducing
 gradients.
+
+\section{My Most Recent Thoughts}
+
+I think I am starting to understand better.
+
+I have ordered a constrained valve, on the theory that it will
+decrease the cracking pressure.
+
+I have ordered magnets.
