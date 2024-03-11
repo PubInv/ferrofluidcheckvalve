@@ -510,137 +510,6 @@ MagPyLib conveniently computes the field along this line. In particular,
 only the $x$ component (the East-West coordinate) of the B-field is relevant to us.
 The field was plotted with MagPyLib in Figure~\ref{fig:Bx}.
 
-\begin{figure}
-\centerline{\includegraphics[width=3in]{figure/Bx.png}}
-\caption{$B_x$ component of field}
-\label{fig:Bx}
-\end{figure}
-
-By inspection, we observe that this function can be accurately approximated with
-a piecewise polynomial representation breaking the function at the extrema,
-which
-are in fact the edges of the magnet.
-The resulting respresentation which is linear above the magnet,
-and uses a 6th order polynmial beyond the radius of the magnet,
-is remarkably accurate, under the assumption the MagPyLib is accurate. These
-three approximations are shown superimposed on the B-field in Figure~\ref{fig:piecewise}. We will define $B(x)$ as this approximation.
-
-\begin{figure}
-\centerline{\includegraphics[width=3in]{figure/PlotOfBxWithPieceWiseInterpolation.png}}
-\caption{Piecewise Representation of Field}
-\label{fig:piecewise}
-\end{figure}
-
-The piecewise approximation $B(x)$ to the field $B$ is:
-
-\begin{align}
-  p(x) = & -18.5 x^6 + -230.2 x^5 + -1174.5  x^4\
-  + -3154.6 x^3 + -4734.1 x^2 + -3819.4x + -1339.6 \\
-  c(x) = & \hphantom{-}545.8 x \\
-  q(x) = &  \hphantom{-}18.5 x^6 + -230.2 x^5 + \hphantom{-} 1174.5x^4 \
-  + -3154.6x^3 +  \hphantom{-} 4734.1x^2 + -3819.4x + \hphantom{-} 1339.6 \\
-B(x) = &
-\left\{
-    \begin{array}{lr}
-      0 , & \text{if } x -leq -3 \\
-      p(x) , & \text{if } -3 < x  < -1/2 \\
-      c(x) , & \text{if } -1/2 < x < 1/2 \\
-      q(x) , & \text{if } 1/2 < x < 3 \\
-      0 , & \text{if } x \geq 3
-    \end{array}
-    \right\}
-    \label{eq:Bfield}
-\end{align}
-
-Note that $B(-x) = -B(x)$.
-
-The numbers have been rounded to reflect the expected accuracy of the
-simulation and keep the expressions tractible.
-
-$p(x)$ and $q(x)$ are nearly indentical 6-degree polynomials determined
-by NumPy's polyfit, which are easy to anti-differentiate to find the functions
-
-$P,C$ and $Q$, such that $P' = p, C' = c,$ and $Q' = q$:
-
-\begin{align}
-  P(x) = & -1339.6 x - 1909.7 x^2 - 1578.03 x^3 - 788.65 x^4 - 234.9 x^5 - 38.3667 x^6 - 2.64286 x^7 \\
-  C(x) = & 272.9 x^2 \\
-  Q(x) = &  \hphantom{-}1339.6 x - 1909.7 x^2 + \hphantom{-}1578.03 x^3 - 788.65 x^4 + \hphantom{-}234.9 x^5 - 38.3667 x^6 + \hphantom{-}2.64286 x^7 \\
-\end{align}
-
-
-Setting aside issues of magnetic susceptibility of the ferrofluid used,
-the force is proportional
-to the field strength times the area.
-Since the area is unchanging in a simple tube, the force on
-a slice of ferrofluid at position $x$ is proportional to $B(x)$.
-
-Now imagine that bolus has a length of $L$, and let the channel height be $k$, and let $x$ be
-the midpoint of the bolus, as shown in Figure~\ref{fig:BolusSetup}.
-Assume the magnet is a 1000 milliTesla (mT) polariazed magnet.
-The $x$-axis force on the bolus can be computed as the integral of $dx$:
-
-The $x$-axis force on a bolus in the channel centered at $y$ generally is proportional to:
-\begin{align}
-  F(y,L) = & \int_{y-L/2}^{y-L/2} B(x) dx
-\end{align}
-
-Let us assume that we are blowing air from the left in the positive $x$ direction, in which case
-we can ignore cases when $y < 0$. It is clear from symmetry that $ F(0,L) = 0 $ for any $L$.
-
-
-In order to compute where the bolus will be when it explodes catastrophically when blown from
-the negative $x$ direction to the positive $x$ direction, we simply need to know when the derirvative of
-$F(y,L)$ with respect to $y$ becomes zero. Since $F(y,L)$ is a piecewise function, we can find $G(y,L)$,
-integral of $F$ such that $\frac{d}{dy} G(y,L) = F(y,L)$. Let $D(x)$ be the integral of $B'(x)$.
-
-\begin{align}
-  D(x) =  &
-\left\{
-    \begin{array}{lr}
-      0 , & \text{if } x \leq -3 \\
-      P(x) , & \text{if } -3 < x  < -1/2 \\
-      C(x) , & \text{if } -1/2 \leq x \leq 1/2 \\
-      Q(x)   , & \text{if } 1/2 < x < 3 \\
-      0 , & \text{if } x \geq 3
-    \end{array}
-    \right\}
-    \label{eq:Dintegration}
-\end{align}
-
-
-
-Call the edge of the bolus blown in the positive $x$ direciton that has the lower $x$ value the high-side bolus and the edge with the higher $x$ value the low-side bolus.
-This corresponds to the high-pressure side and the low-pressure side.
-
-It is clear the collapse point will not occur until low-side edge is past greater than $1/2$. It is clear it will occur before the high-side edge reaches $1/2$. We therefore need only consider the bolus straddling
-$1/2$.
-Under these assumption, we have:
-\begin{align}
-  F(y,L) = & \int_{y-L/2}^{y+L/2} B(x) dx \\
-  F(y,L) = & \int_{y-L/2}^{0.5} c(x) dx  + \int_{0.5}^{y+L/2} q(x) dx   \\
-  F(y,L) = & C(x) \bigg\rvert_{y-L/2}^{0.5}   +  Q(x) \bigg\rvert_{0.5}^{y+L/2} \\
-  \begin{split}
-  F(y,L) = & 272.9 0.5^2 - 272.9 (y-L/2)^2 + \\
-  & 1339.6 (y+L/2) - 1909.7 (y+L/2)^2 + 1578.03 (y+L/2)^3 \\
-  & - 788.65 (y+L/2)^4 + 234.9 (y+L/2)^5 - 38.3667 (y+L/2)^6 + 2.64286 (y+L/2)^7 \\
-  & -(  1339.6 (0.5) - 1909.7 (0.5)^2 + 1578.03 (0.5)^3 \\
-  & - 788.65 (0.5)^4 + 234.9 (0.5)^5 - 38.3667 (0.5)^6 + \\
-  & 2.64286 (0.5)^7)
-  \end{split} \\
-  \begin{split}
-  F(y,L) = & -278.875 - 272.9 (y-L/2)^2 + 1339.6 (y+L/2) - 1909.7 (y+L/2)^2 + \\
-  & 1578.03 (y+L/2)^3 - 788.65 (y+L/2)^4 + 234.9 (y+L/2)^5 \\
-  & - 38.3667 (y+L/2)^6 + 2.64286 (y+L/2)^7
-  \end{split}
-    \label{eq:force}
-\end{align}
-
-Using Wolfram alpha and setting $L = 1$, the maximum force occurs
-at $y = 0.592, F \propto 142.4 $, when the center of the bolus is just to the right
-of the break point. This accords with the graph inspection.
-
-At $L = 2.0$, $y = 1.01766, F \propto 167.07$.
 
 
 \subsection{The Channel-to-a-Chamber}
@@ -648,6 +517,12 @@ At $L = 2.0$, $y = 1.01766, F \propto 167.07$.
 Our goal, however, is to analyze a somewhat more complicated geometry.
 In particular, we are interested in a channel-leading-to-a-chamber,
 as depicted in Fig.~\ref{fig:ChannelToChamber}.
+This geometry was discovered by intuition in attempting to build an asymmetric valve
+based on the observation that a bubble of air (or any non-magnetic material) will
+be pushed out of a bolus by magnetic ``buoyancy''.
+A less-magnetic material ``floats'' toward the less intense magnetic field inside
+ferrofluid. This fact easily observed with a syringe by injecting air into a bolus
+in a field.
 
 \begin{figure}
 \centerline{\includegraphics[width=4in]{figure/ChannelToChamber.png}}
@@ -689,6 +564,13 @@ bolus.
 This can be interpreted as the strength drawing towards the origin, however, since
 we deduce everything from this point in terms of change in potential energy,
 we need not think of it as signed at all.
+
+The authors had originally hypothesized that the valve would work with a bolus
+slightly larger than the radius of the cylindrical magnet.
+By experimentation, this was shown to be completely false.
+In fact, the desired affect occurs only when the bolus is smaller than the
+disc of the cylindrical magnet.
+
 In this interpretation, we can simplify $B(x)$:
 \begin{align}
 B(x) = &
@@ -703,29 +585,43 @@ B(x) = &
 \end{align}
 
 
-Since we have previously assumed that the bolus is a single blob,
+Since we have previously assumed (and it readily observed) that the bolus is a single blob,
 at least until it collapses, then we can can relate $a$ and $b$
 via the total area of the bolus $S$.
 Let us assume that the channel of width $k$ is narrow enough
 that the slight arc of the fluid inside the inlet region can be treated as a
 straight line.
 \begin{align}
-S = k \cdot a + \frac{1}{2} \pi b^2
+S = k \cdot a + \pi b^2
 \end{align}
 when $a \geq 0$ and $b \geq 0$, so that the areas of $A$ and $B$ are both positive.
+(Note: this ignores the small area occluded by the ``walls'' of the channel.
+I should probably assign them a width and fix that.)
+
 It is most convenient to measure our position of the bolus, which is
 changing shape in this case, as the coordinate $b$, so we we express
 $a$ in terms of $b$. Since we will use this algebraic relationship later, we will define it as a function $A$:
 This can be solved for $a$:
 \begin{align}
-  a = A(b) = \frac{2S - \pi b^2}{2k}
+  a = & A(b) = \frac{S - \pi b^2}{k} \\
+  b_a = & \frac{\sqrt{S - ak}}{\sqrt{\pi}}
+  \label{eqn:afromS}
+\end{align}
+
+We will later have need of the derivatives of these functions:
+\begin{align}
+  \frac{d}{db} A(b) = & \frac{- 2\pi b}{k} \\
+  \frac{d}{da} b_a = &  -\frac{k}{2 \sqrt(\pi) \sqrt{S - a k}}
   \label{eqn:afromS}
 \end{align}
 
 
-Note that when $a = 0$, the dependence on $d$ vanishes and:
+
+Here $A(b)$ is the value of $a$ as a function of $b$, and $b_a$ is $b$ as a function of $a$.
+
+Note that when $a = 0$, the dependence on $k$ vanishes and:
 \begin{align}
-  b = & \sqrt{\frac{2S}{\pi}} \\
+  b = & \sqrt{\frac{S}{\pi}} \\
   \label{eq:maximalB}
 \end{align}
 
@@ -733,7 +629,7 @@ Since at rest the bolus surface $A$ will be in the same field strength as surfac
 
 \begin{align}
   B(a) = & B(b) \\
-  B(\frac{2 S - \pi b^2 }{2k}) = & B(b)
+  B(\frac{S - \pi b^2 }{k}) = & B(b)
 \end{align}
 
 
@@ -768,7 +664,7 @@ is equal to the force.
 If we had a formula for the potential energy as a function of $b$,
 we would have a chance of computing this analytically.
 
-In this model, which is using a the narrowness of the plane to simplify
+In this model,  the narrowness of the plane to simplifies
 the problem. In this simplified model, we can assume
 that the potential energy of the magnetic system can be simply
 modeled by the presence or absence of ferrofluid at a point in the plane.
@@ -779,14 +675,20 @@ distance from the origin (and thus the center of the face of the magnet).
 We can thus describe the potential energy as an integral over surface patches $da$:
 
 \begin{align}
-  U = -\int
+  U = \int
 \left\{
     \begin{array}{lr}
-      B(a)  , & \text{if there is ferrofluid at } a \\
-      0 , & \text{if there is no ferrofluid at } a
+      B(a)  , & \text{if there is no ferrofluid at } a \\
+      0 , & \text{if there is ferrofluid at } a
     \end{array}
 \right\} da
 \end{align}
+
+Thus the potential energy is highest when there is no ferrofluid at all,
+and lowest when the entire plane is full of ferrfluid.
+However, we will generally treat a bolus of fixed volume and assume
+that our plane is thin enough that it therefore has a fixed area.
+
 
 We are furthermore ignoring all effect of the ferrofluid
 interacting with itself in terms
@@ -795,27 +697,46 @@ However, we rely on the very important property of ferrofluid that
 it tends to clump together into a single blob in the presence
 of a magentic field.
 We will, in fact, assume that our blob or bolus is perfectly
-hemispherical in the chamber,
+circular in the chamber,
 and a perfect rectangle in the channel. Furthermore,
 we assume the fluid is incompressible,
-and therefore always as the aread $S$.
+and therefore always has the area $S$.
 This is true until the bolus collapses; we know that
 when it collapses it explodes drastically,
 and we do not attempt to model anything after
 a collapse event.
 
-Therefore, we in fact have a one dimensional system of the coordinate $b$, which
+Since the absolute potential energy of our system is irrelevant,
+it will be easier for us to treat the absolute potential energy $U$
+as zero and consider it to go down as ferrofluid is added.
+Since we only model the bolus when part of it is at the origin
+in our polar system, we can rewrite our potential energy as negative
+and measured against an absolute of zero:
+
+\begin{align}
+  U = - \int
+\left\{
+    \begin{array}{lr}
+      B(a)  , & \text{if there is ferrofluid at } a \\
+      0 , & \text{if there is no ferrofluid at } a
+    \end{array}
+\right\} da
+\end{align}
+
+Radial symmetry means only the distance from the origin is relevant, so
+in fact this is a one dimensional system of the coordinate $b$, which
 it is convenent to break into $U = U_N + U_R$,
 the channel and the chamber, respectively. We assume that the channel is narrow
 enough that we can model the field across the channel as if it is rectilinear.
 We can treat these as line integrals:
 
 \begin{align}
-  U_R = & - \pi \int_0^b r B(r) dr \\
+  U_R = & -\pi \int_0^b r B(r) dr \\
   U_N = & -k\int_0^a B(r) dr\\
-  U = & U_N + U_R
+  U = & U_N + U_R = -\pi \int_0^b r B(r) dr  + -k\int_0^a B(r) dr
 \end{align}
 
+(This formula for $U_R$ ignores the ``walls'' of the chamber.)
 Because pressure applied in the chamber moves the bolus
 into the channel, and pressue applied in the channel moves
 the bolus into the chamber, the
@@ -830,9 +751,13 @@ This should allow us to choose $S$ to be most advantageous.
 Eventually, this may allow us to design different
 magnetic fields to change the performance of the valve.
 
+
+
+\subsection{The Collapse Pressure}
+
 Let us define $b_0$ as the value of $b$ when the pressure in the chamber and the channel are equal,
 so that the bolus is at rest. This is the point of minimum potential energy.
-Let $F(b)$ be the force exerted by the magnet on the bolus.
+Let $F(b)$ be the force exerted by the magnet on the bolus at postion $b$.
 Then $F(b_0) = 0$.
 The potential energy increases as the surrounding gases do work on it (up to the point of collapse
 or crack.)
@@ -841,200 +766,12 @@ be recovered as the bolus spring back to position
 if the pressure on the bolus was removed.
 Then we have:
 \begin{align}
-  \frac{d U}{db} =  -F(b)
+  \frac{d U}{db} =  F(b)
 \end{align}
 
 The should allow us to compute the $F(b)$ from $U$.
 
-
-But before attempting that, we simply observe that the bolus will will collapse when the force on
-it caused by pressure from the right (in the chamber) drives it to the point where the force
-resiting it is maximized, which will occur when the derivative of $F(b)$ with respect to $b$ is
-zero. (The behavior is different when the pressure is from the left.)
-Thus we seek the values of $b$ for which:
-\begin{align}
-  0 = & \frac{d F(b)}{db} \\
-  0 = & \frac{d^2 U}{db^2}  \\
-  0 = & \frac{d^2}{db^2} U_R +  \frac{d^2}{db^2} U_N \\
-  0 = & - \frac{d}{db} (\pi \frac{d}{db} \int_0^b r B(r) dr) +  - \frac{d}{db} ( k \frac{d}{db}\int_0^{a} B(r) dr)\\
-  0 = & -  \pi  \frac{d}{db} b B(b) +  - k \frac{d}{db} B(a)
-  \label{eq:mainPE}
-\end{align}
-
-Let us treat subparts here, using our knowledge of the piecewise definition
-of $B(x)$.
-
-
-Having cancelled the differentiation and integration in this way, we now apply another
-differentiation:
-
-\begin{align}
-   \frac{d}{db} b B(b) = &
-  \frac{d}{db}   \left\{
-  \begin{array}{lr}
-      b \cdot c(b) , & \text{if } 0 \leq b \leq 1/2 \\
-      b \cdot q(b) , & \text{if } 1/2 < b < 3 \\
-      0  , & \text{if } r > 3
-    \end{array}
-  \right\} \\
-  = &
-  \left\{
-  \begin{array}{lr}
-    b \cdot c'(b) + c(b), & \text{if } 0 \leq b \leq 1/2 \\
-      b \cdot q'(b) + c(b), & \text{if } 1/2 < b < 3 \\
-      0  , & \text{if } r > 3
-    \end{array}
-  \right\}
-\end{align}
-
-Now we need to consider the potential energy in the channel $U_N$, and substitue
-$A(b)$ for $a$:
-
-\begin{align}
-  \frac{d}{db} B(a) = &
-  \frac{d}{db}
-  \left\{
-  \begin{array}{lr}
-      c(a) , & \text{if } 0 \leq a \leq 1/2 \\
-      q(a) , & \text{if } 1/2 < a < 3 \\
-      0 , & \text{if } a \geq 3
-  \end{array}
-  \right\} \\
-  = &
-  \left\{
-  \begin{array}{lr}
-      c(A(b)) , & \text{if } 0 \leq A(b) \leq 1/2 \\
-      q(A(b)) , & \text{if } 1/2 < A(b) < 3 \\
-      0 , & \text{if } a \geq 3
-  \end{array}
-  \right\}
-\end{align}
-
-We can now substitute these into Equation~\ref{eq:mainPE}:
-\begin{align}
-    0 = & -  \pi  \frac{d}{db} b B(b) +  - k \frac{d}{db} B(a) \\
-  0 = & - \pi \frac{d}{db} (
-  \left\{
-  \begin{array}{lr}
-      b \cdot c'(b) + c(b) , & \text{if } 0 \leq b \leq 1/2 \\
-      b \cdot q'(b) + q(b), & \text{if } 1/2 < b < 3 \\
-      0  , & \text{if } r > 3
-    \end{array}
-  \right\}) +
-  \\
-  & - k \frac{d}{db}  \left\{
-  \begin{array}{lr}
-      c(A(b)) , & \text{if } 0 \leq A(b) \leq 1/2 \\
-      q(A(b)) , & \text{if } 1/2 < A(b) < 3 \\
-      0 , & \text{if } a \geq 3
-  \end{array}
-  \right\})
-  \label{eq:model}
-\end{align}
-
-Equation~\ref{eq:model} is a model for how we can find the extrema of force in different geometries.
-The number $1/2$ is of
-course the radius of the magnet; if we have a different geometry this equation
-would look different in specifics but would be generally the same if we use piecewise approximations
-of the $B$ field, which seems likely to be necessary.
-
-Unfortunately, this equation may require a careful case analysis based on the choices of $k$ and $S$.
-Let us attempt to do this for a particular assumption.
-
-
-Figure~\ref{fig:ifp} and Figure~\ref{fig:Bx} suggest that $S$ should be chosen so that $b_0$ is
-less than $1/2$.
-Let us attempt to analyze this with $b_0 = 3/8$. Let us set $k = 1/10$, which seems reasonable to manufacture.
-In this case,
-\begin{align}
-  S = & 3/80 + (\pi 9/64) \\
-  S = 0.48
-\end{align}
-
-
-
-NOTE: All Math BELOW this point probably needs to be redone since we have changed A.
-Now if we solve Equation~\ref{eq:model} under the assumption that $b_m$ is at most $1/2$, and
-then under the assumption that $b_m$ is more than $1/2$, and compare these results.
-
-We can deonte this: $A_{3/8}^{1/10}(b)$:
-
-\begin{align}
-  A_{3/8}^{1/10}(b) =
-\end{align}
-
-
-Case $b_m \leq 1/2$:
-
-In this case, $a = A_{3/4}^{1/10}(1/2) \approx 5.65876$ which is greater than 3, which
-allows us to simplify our base equation
-Equation~\ref{eq:model} becomes:
-
-\begin{align}
-  0 = & - \pi \frac{d}{db} ( b \cdot c'(b) + c(b)) +
-  - k \frac{d}{db} 0 \\
-  0 = & \pi (\frac{d}{db} b \cdot c'(b) + \frac{d}{db} c(b)) \\
-  0 = & \pi \frac{d}{db} (b \cdot c'(b)) +  c'(b) \\
-  0 = & \pi (b c''(b) + 2c'(b)) \\
-  0 = & \pi (0 + 2 * 545.8) \\
-  0 = & \pi 2 * 545.8 \\
-  \end{align}
-
-This is a contradiction. Possibly this means that this case cannot occur---possibly it means I have done the math wrong.
-
-Case $b_m > 1/2$:
-
-In this case, we know that $b_m < 3/4$. On the entire range $ 1/2 \leq b \leq 3/4 $, $ A_{3/4}^{1/10}(b) > 1/2$,
-which allows us to simplify our piecewise construction:
-
-\begin{align}
-  0 = & - \pi \frac{d}{db} ( b \cdot q'(b) + q(b)) + - k \frac{d}{db}  q(A(b)) \\
-  0 = & \pi \frac{d}{db} (b \cdot q'(b) + q(b)) + \frac{1}{10} \frac{d}{db} q(A(b)) \\
-  0 = & \pi (b \cdot q''(b) + 2q'(b)) + \frac{1}{10} \frac{d}{db} q( 9.58575 - 5 \pi b^2) \\
-  0 = & \pi (b \cdot q''(b) + 2q'(b)) + \frac{1}{10}\cdot -10 \pi b q'(9.58575 - 5 \pi b^2) \\
-  0 = & \pi (b \cdot q''(b) + 2q'(b)) + - \pi b q'(9.58575 - 5 \pi b^2) \\
-  0 = & b q''(b) + 2q'(b) + - b q'(9.58575 - 5 \pi b^2) \\
-   \begin{split}
-    0 = & (555. b^5 - 4604. b^4 + 14094. b^3 - 18927.6 b^2 + 9468.2 b)  + \\
-    & 2(111 b^5 - 1151 b^4 + 4698 b^3 - 9463.8 b^2 + 9468.2 b - 3819.4) + \\
-    & - b (-1.06151\cdot(10)^8 b^{10} + 2.53817\cdot(10)^8 b^8 - 2.42467\cdot(10)^8 b^6 \\
-    & + 1.15662\cdot(10)^8 b^4 - 2.75489\cdot(10)^7 b^2 + 2.62095\cdot(10)^6) \\
-   \end{split} \\
-   \begin{split}
-     0 = & 777 b^5 - 6906 b^4 + 23490 b^3 - 37855.2 b^2 + 28404.6 b - 7638.8 \\
-     & + 1.06151*(10)^8 b^{11} - 2.53817*(10)^8 b^9 + 2.42467*(10)^8 b^7 - 1.15662*(10)^8 b^5 \\
-     & + 2.75489*(10)^7 b^3 - 2.62095(10)^6 b \\
-   \end{split} \\
-   \begin{split}
-     0 = & 1.06151\cdot(10)^8 b^11 - 2.53817\cdot(10)^8 b^9 + 2.42467\cdot(10)^8 b^7 \\
-      & - 1.15661\cdot(10)^8 b^5 - 6906 b^4 + 2.75724×10^7 b^3 - 37855.2 b^2 - 2.59255×10^6 b - 7638.8
-     \end{split}
-\end{align}
-
-According to Wolframalpha, the only real solution positive solution is: $b \approx 0.632115$.
-I don't trust that I haven't made a mistake, but this seems to be a plausible solution.
-
-%% (555 b^5 - 4604 b^4 + 14094. b^3 + b^2×(-18927.6) + 9468.2 b) +  2 (111 b^5 - 1151 b^4 + 4698 b^3 + b^2(-9463.8) + 9468.2 b - 3819.4)
-
-%% 0 = (555 b^5 - 4604 b^4 + 14094. b^3 + b^2×(-18927.6) + 9468.2 b) +  2 (111 b^5 - 1151 b^4 + 4698 b^3 + b^2(-9463.8) + 9468.2 b - 3819.4)  + 1.06151*(10)^8 b^{11} - 2.53817*(10)^8 b^9 + 2.42467*(10)^8 b^7 - 1.15662*(10)^8 b^5  + 2.75489*(10)^7 b^3 - 2.62095(10)^6 b
-
-
-%% 1.06151*(10)^8 b^11 - 2.53817*(10)^8 b^9 + 2.42467*(10)^8 b^7 - 1.15662*(10)^8 b^5 + 2.75489*(10)^7 b^3 - 2.62095(10)^6 b
-
-%% (555 b^5 - 4604 b^4 + 14094. b^3 + b^2×(-18927.6) + 9468.2 b) + 2 (111 b^5 - 1151 b^4 + 4698 b^3 + b^2×(-9463.8) + 9468.2 b - 3819.4)
-
-%% q(x) = 18.5 x^6 + -230.2 x^5 +1174.5x^4 + -3154.6x^3  + 4734.1x^2 + -3819.4x + 1339.6
-%% q'(x) = 111 x^5 - 1151 x^4 + 4698 x^3 - 9463.8 x^2 + 9468.2 x - 3819.4
-%% q''(x) = 555. x^4 - 4604. x^3 + 14094. x^2 - 18927.6 x + 9468.2
-
-%%  0 =  1091.6 + \pi b ( 111 (7.5 - 5 \pi b^2)^5 - 1151 (7.5 - 5 \pi b^2)^4  + 4698 (7.5 - \pi b^2)^3 +  (7.5 - 5 \pi b^2)^2(-9463.8) + 9468.2 (7.5 - 5 \pi b^2) - 3819.4)
-
-%% (555. b^5 - 4604. b^4 + 14094. b^3 - 18927.6 b^2 + 9468.2 b)  + 2(111 b^5 - 1151 b^4 + 4698 b^3 - 9463.8 b^2 + 9468.2 b - 3819.4) +  - b (-1.06151*(10)^8 b^{10} + 2.53817*(10)^8 b^8 - 2.42467*(10)^8 b^6 + 1.15662*(10)^8 b^4 - 2.75489*(10)^7 b^2 + 2.62095*(10)^6)
-
-%% (555 b^5 - 4604 b^4 + 14094. b^3 + b^2×(-18927.6) + 9468.2 b) + 2 (111 b^5 - 1151 b^4 + 4698 b^3 + b^2×(-9463.8) + 9468.2 b - 3819.4)
-
-
-%% -1.06151×10^8 b^10 + 2.53817×10^8 b^8 - 2.42467×10^8 b^6 + 1.15662×10^8 b^4 - 2.75489×10^7 b^2 + 2.62095×10^6
+Let us consider what happens as the outlet gage pressure $P$ is increased.
 
 Qualitatively, we assume that at rest (ambient pressure), the bolus exerts no force. As the
 pressure in the chamber increases, the force (the increase in potential energy) will increase
@@ -1043,23 +780,61 @@ bolus and resiting force exerted by the bolus will increase
 as $b$ decreased further from its rest postion. However, eventually this force will cease to
 increase and reach its maximum. At that point, the valve will collapse.
 
-Our strategy is thus to find the value of $b$, let us call it $b_m$, that maximizes the force (maximizes the change in
-potential energy $dU$). The force at $b_m$, $F(b_m)$ will be equal to the pressure times $\pi b_m$, and
-that will be the collapse pressure $P_c$.
-
+The valve is meant to withstand this pressure until a collapse point.
+When in balance, the force on the bolus will be zero.
+The from on the bolus from air pressure that is attempting to drive the
+bolus into the channel will be proportional to $2 \pi b P$, since force is pressure times
+area, but in this case the area affected by the pressure is proportional
+to the the circumfrence of the bolus (not counting the channel, which is relatively small).
+Once this force has pushed much of the fluid into the channel, the inlet-side
+bolus boundary will be far away
+from the strong magnetic field, and thus may be neglected.
+At rest,
+he force on the outlet-side bolus boundary $\frac{d U}{db}$ added to the air pressure
+force is zero:
 \begin{align}
-  F(b_m) = & \pi b_m P_c \\
-  P_c = \frac{F(b_m)}{\pi b_m}
+  0 = & 2 \pi b P + - \frac{d U}{db} \\
+  2\pi b P = & \pi \frac{d }{db} \int_0^b r B(r) dr \\
+  2\pi b P = &  \pi  b B(b)  \\
+    P = &  \frac{B(b)}{2}  \\
 \end{align}
+
+The position of the bolus $b$ at balance is just proportional $B(b)$.
+So the stronger the magnetic field, the higher the collapse pressure.
+The strongest magnetic field as at the origin, and in fact we observe the bolus
+position be very near the orgin right before the collapse event.
+
+We deduce from this that to build the best possible valve in this geometry,
+we should create the strongest possible magnetic field near the origin.
+
+
+\subsection{The Cracking Pressure}
 
 The cracking pressure $P_r$ will be the force necessary to reach $a = 0$, because at that point,
 the non-magnetic fluid will form a ``bubble'' which will be pinched off and displaced into the chamber
 by the ferrofluid. This ``bubble'' will be forced in the direction of decreasing magnetic field strength,
 because it minimizes potential energy to fill the strong field with ferrofluid preferentially over
 non-magnetic fluid. This occurs at $a = 0$, so $A(b) = 0$, or $b = \sqrt{\frac{2S}{\pi}}$ by Equation~\ref{eq:maximalB}.
+The force on the bolus inlet boundary does not change as the bolus moves, since $k$ does not
+depend on $a$.
+The force on the magentic force on the outlet boundary and the inlet boundary
+are in fact in opposite directions. The inlet magnetic force resists the cracking
+air pressure, and the outlet magnetic force coooperates with it.
+
+In considering the cracking pressure, it is more convenient to track the bolus as a function $a$,
+rather than $b$. Thus:
 
 \begin{align}
-  P_r k = F(\sqrt{\frac{2S}{\pi}})
+  \frac{d U}{da} =  F(a)
+\end{align}
+
+Then to desribe cracking, we can set the air inlet force in balance with the magnetic force.
+
+\begin{align}
+  P_r k = & - \pi \frac{d }{da} \int_0^{b_a} r B(r) dr  + k \frac{d }{da} \int_0^a B(r) dr \\
+  P_r k = & - \pi b_a B(b_a) \frac{k}{2 \sqrt{\pi} \sqrt{S - a k}} + k B(a) \\
+  P_r k = & - \pi \frac{\sqrt{S - ak}}{\sqrt{\pi}} B(\frac{\sqrt{S - ak}}{\sqrt{\pi}}) \frac{k}{2 \sqrt{\pi} \sqrt{S - a k}} + k B(a) \\
+  P_r k = & -  \frac{1}{1} B(\frac{\sqrt{S - ak}}{\sqrt{\pi}}) \frac{k}{2} + k B(a) \\
 \end{align}
 
 We can thus create a testable hypothesis that can be verified experimentally by building an appropriate
@@ -1573,3 +1348,137 @@ I have ordered a constrained valve, on the theory that it will
 decrease the cracking pressure.
 
 I have ordered magnets.
+
+\section{Some thoughts which are not necessarily valuable}
+
+\begin{figure}
+\centerline{\includegraphics[width=3in]{figure/Bx.png}}
+\caption{$B_x$ component of field}
+\label{fig:Bx}
+\end{figure}
+
+By inspection, we observe that this function can be accurately approximated with
+a piecewise polynomial representation breaking the function at the extrema,
+which
+are in fact the edges of the magnet.
+The resulting respresentation which is linear above the magnet,
+and uses a 6th order polynmial beyond the radius of the magnet,
+is remarkably accurate, under the assumption the MagPyLib is accurate. These
+three approximations are shown superimposed on the B-field in Figure~\ref{fig:piecewise}. We will define $B(x)$ as this approximation.
+
+\begin{figure}
+\centerline{\includegraphics[width=3in]{figure/PlotOfBxWithPieceWiseInterpolation.png}}
+\caption{Piecewise Representation of Field}
+\label{fig:piecewise}
+\end{figure}
+
+The piecewise approximation $B(x)$ to the field $B$ is:
+
+\begin{align}
+  p(x) = & -18.5 x^6 + -230.2 x^5 + -1174.5  x^4\
+  + -3154.6 x^3 + -4734.1 x^2 + -3819.4x + -1339.6 \\
+  c(x) = & \hphantom{-}545.8 x \\
+  q(x) = &  \hphantom{-}18.5 x^6 + -230.2 x^5 + \hphantom{-} 1174.5x^4 \
+  + -3154.6x^3 +  \hphantom{-} 4734.1x^2 + -3819.4x + \hphantom{-} 1339.6 \\
+B(x) = &
+\left\{
+    \begin{array}{lr}
+      0 , & \text{if } x -leq -3 \\
+      p(x) , & \text{if } -3 < x  < -1/2 \\
+      c(x) , & \text{if } -1/2 < x < 1/2 \\
+      q(x) , & \text{if } 1/2 < x < 3 \\
+      0 , & \text{if } x \geq 3
+    \end{array}
+    \right\}
+    \label{eq:Bfield}
+\end{align}
+
+Note that $B(-x) = -B(x)$.
+
+The numbers have been rounded to reflect the expected accuracy of the
+simulation and keep the expressions tractible.
+
+$p(x)$ and $q(x)$ are nearly indentical 6-degree polynomials determined
+by NumPy's polyfit, which are easy to anti-differentiate to find the functions
+
+$P,C$ and $Q$, such that $P' = p, C' = c,$ and $Q' = q$:
+
+\begin{align}
+  P(x) = & -1339.6 x - 1909.7 x^2 - 1578.03 x^3 - 788.65 x^4 - 234.9 x^5 - 38.3667 x^6 - 2.64286 x^7 \\
+  C(x) = & 272.9 x^2 \\
+  Q(x) = &  \hphantom{-}1339.6 x - 1909.7 x^2 + \hphantom{-}1578.03 x^3 - 788.65 x^4 + \hphantom{-}234.9 x^5 - 38.3667 x^6 + \hphantom{-}2.64286 x^7 \\
+\end{align}
+
+
+Setting aside issues of magnetic susceptibility of the ferrofluid used,
+the force is proportional
+to the field strength times the area.
+Since the area is unchanging in a simple tube, the force on
+a slice of ferrofluid at position $x$ is proportional to $B(x)$.
+
+Now imagine that bolus has a length of $L$, and let the channel height be $k$, and let $x$ be
+the midpoint of the bolus, as shown in Figure~\ref{fig:BolusSetup}.
+Assume the magnet is a 1000 milliTesla (mT) polariazed magnet.
+The $x$-axis force on the bolus can be computed as the integral of $dx$:
+
+The $x$-axis force on a bolus in the channel centered at $y$ generally is proportional to:
+\begin{align}
+  F(y,L) = & \int_{y-L/2}^{y-L/2} B(x) dx
+\end{align}
+
+Let us assume that we are blowing air from the left in the positive $x$ direction, in which case
+we can ignore cases when $y < 0$. It is clear from symmetry that $ F(0,L) = 0 $ for any $L$.
+
+
+In order to compute where the bolus will be when it explodes catastrophically when blown from
+the negative $x$ direction to the positive $x$ direction, we simply need to know when the derirvative of
+$F(y,L)$ with respect to $y$ becomes zero. Since $F(y,L)$ is a piecewise function, we can find $G(y,L)$,
+integral of $F$ such that $\frac{d}{dy} G(y,L) = F(y,L)$. Let $D(x)$ be the integral of $B'(x)$.
+
+\begin{align}
+  D(x) =  &
+\left\{
+    \begin{array}{lr}
+      0 , & \text{if } x \leq -3 \\
+      P(x) , & \text{if } -3 < x  < -1/2 \\
+      C(x) , & \text{if } -1/2 \leq x \leq 1/2 \\
+      Q(x)   , & \text{if } 1/2 < x < 3 \\
+      0 , & \text{if } x \geq 3
+    \end{array}
+    \right\}
+    \label{eq:Dintegration}
+\end{align}
+
+
+
+Call the edge of the bolus blown in the positive $x$ direciton that has the lower $x$ value the high-side bolus and the edge with the higher $x$ value the low-side bolus.
+This corresponds to the high-pressure side and the low-pressure side.
+
+It is clear the collapse point will not occur until low-side edge is past greater than $1/2$. It is clear it will occur before the high-side edge reaches $1/2$. We therefore need only consider the bolus straddling
+$1/2$.
+Under these assumption, we have:
+\begin{align}
+  F(y,L) = & \int_{y-L/2}^{y+L/2} B(x) dx \\
+  F(y,L) = & \int_{y-L/2}^{0.5} c(x) dx  + \int_{0.5}^{y+L/2} q(x) dx   \\
+  F(y,L) = & C(x) \bigg\rvert_{y-L/2}^{0.5}   +  Q(x) \bigg\rvert_{0.5}^{y+L/2} \\
+  \begin{split}
+  F(y,L) = & 272.9 0.5^2 - 272.9 (y-L/2)^2 + \\
+  & 1339.6 (y+L/2) - 1909.7 (y+L/2)^2 + 1578.03 (y+L/2)^3 \\
+  & - 788.65 (y+L/2)^4 + 234.9 (y+L/2)^5 - 38.3667 (y+L/2)^6 + 2.64286 (y+L/2)^7 \\
+  & -(  1339.6 (0.5) - 1909.7 (0.5)^2 + 1578.03 (0.5)^3 \\
+  & - 788.65 (0.5)^4 + 234.9 (0.5)^5 - 38.3667 (0.5)^6 + \\
+  & 2.64286 (0.5)^7)
+  \end{split} \\
+  \begin{split}
+  F(y,L) = & -278.875 - 272.9 (y-L/2)^2 + 1339.6 (y+L/2) - 1909.7 (y+L/2)^2 + \\
+  & 1578.03 (y+L/2)^3 - 788.65 (y+L/2)^4 + 234.9 (y+L/2)^5 \\
+  & - 38.3667 (y+L/2)^6 + 2.64286 (y+L/2)^7
+  \end{split}
+    \label{eq:force}
+\end{align}
+
+Using Wolfram alpha and setting $L = 1$, the maximum force occurs
+at $y = 0.592, F \propto 142.4 $, when the center of the bolus is just to the right
+of the break point. This accords with the graph inspection.
+
+At $L = 2.0$, $y = 1.01766, F \propto 167.07$.

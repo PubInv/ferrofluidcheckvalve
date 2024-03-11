@@ -42,7 +42,7 @@ for i, lab in enumerate(["Bx", "By", "Bz"]):
     print(i)
     print(lab)
 
-for i, lab in enumerate(["Bx"]):
+for i, lab in enumerate(["Bz"]):
     fig.add_trace(go.Scatter(x=np.linspace(-3, 3, 201), y=B[:, i], name=lab))
 
 F = []
