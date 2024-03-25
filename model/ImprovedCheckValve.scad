@@ -12,7 +12,7 @@
 $fn = 40;
 
 
-SlabHeight = 2.5;
+SlabHeight = 3;
 HighChamberHeight = 10;
 ChamberRadius = 16;
 // The idea of the Constrained Chamber Radius is to have a diameter of 0.33 inches.
@@ -25,6 +25,9 @@ PlaneThickness = 2.0;
 MagnetHeight = 50;
 ww = 1.5; // This is the wall width, assumed to be sturdy enough
 
+BasicRailWidth = 2;
+MagnetWidth = 12.8;
+
 LuerPosition = SlabLength/2;
 LockRingHeight = 15;
 
@@ -34,9 +37,9 @@ Thickness = 1.0;
 
 // ptype = "valve";
 // ptype = "interior";
-// ptype = "valveWithRails";
-// ptype = "constrainedValve";
-ptype = "highchamber";
+// ptype = "valveWithRails";//
+ptype = "constrainedValve";
+// ptype = "highchamber";
  module regular_polygon(order = 4, r=1){
      angles=[ for (i = [0:order-1]) i*(360/order) ];
      coords=[ for (th=angles) [r*cos(th), r*sin(th)] ];
@@ -87,9 +90,9 @@ ptype = "highchamber";
             circle(cr);
             union() {
                 injectionWidth = PlaneThickness * 2;
-                translate([-SlabLength/2,PlaneThickness* (0.5),0])
+                translate([-SlabLength/2,PlaneThickness* (0.2),0])
                 square([SlabLength,ChannelWidth*2],center=true);
-                translate([-SlabLength/2,-PlaneThickness * (0.5),0])
+                translate([-SlabLength/2,-PlaneThickness * (0.2),0])
                 square([SlabLength,ChannelWidth*2],center=true);
             }
         }
@@ -138,20 +141,20 @@ module basicRing(r) {
     }
 }
 module basicRail(r) {
-    w = 2;
+    w = BasicRailWidth;
     translate([0,0,0])
     cube([SlabWidth,w,LockRingHeight],center=true);
 }
 
 module lockRings() {
     // This should be the diameter of the permanent magnets used in the locks
-    lockRadius = 12.8 / 2;
+    lockRadius =  MagnetWidth / 2;
     rotate([0,90,0])
     basicRing(lockRadius); 
 }
 module lockRails() {
     // This should be the diameter of the permanent magnets used in the locks
-    r = 12.8 / 2;
+    r = (MagnetWidth / 2) + (BasicRailWidth/2);
     translate([0,r,0])   
     basicRail(r);  
     translate([0,-r,0])   
@@ -209,9 +212,9 @@ module valveWithRails(r,cr) {
          interior(cr);
        }
        // now we add a "blocking bar"
-       translate([cr*2.0,0])
+       translate([r*2.0,0])
        cube([2,c,SlabHeight],center=true);
-       translate([-cr*2.0,0])
+       translate([-r*2.0,0])
        cube([2,c,SlabHeight],center=true);
     } 
 }
@@ -285,9 +288,13 @@ if (ptype == "valve") {
 } else if (ptype == "valveWithRails") {
     valveWithRails(ChamberRadius,ChamberRadius);
 } else if (ptype == "constrainedValve") {
+        d = 4;
+ //   difference() {
     valveWithRails(ChamberRadius,ConstrainedChamberRadius);
+ //    cube([d,100,100],center=true);
+// }
 } else if (ptype == "interior"){
-    interior(ChamberRadius);
+    interior(ConstrainedChamberRadius);
 } else if (ptype == "highchamber") {
 //    color("red",0.6)
 //  chamberDrum(ChamberRadius/2);
@@ -305,8 +312,7 @@ if (ptype == "valve") {
 
 // Super-Duper Parametric Hose Barb : https://www.thingiverse.com/thing:2990340
 // By Varnerrants, licensed under CC - Attribution. Don't forget to attribute Varnerrants 
-// (no other name given in documentation?)
-$fn = 90;
+// (no other name given in documentation?)$fn = 90;
 
 // Hose Outer Diameter (used to calculate shlouder length)
 // hose_od = 9.5;
