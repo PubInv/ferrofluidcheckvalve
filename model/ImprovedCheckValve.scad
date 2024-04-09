@@ -12,15 +12,15 @@
 $fn = 40;
 
 
-SlabHeight = 3;
-HighChamberHeight = 10;
-ChamberRadius = 16;
+SlabHeight = 5;
+HighChamberHeight = 15;
+ChamberRadius = 32;
 // The idea of the Constrained Chamber Radius is to have a diameter of 0.33 inches.
 ConstrainedChamberRadius = 0.4* 25.4 / 2.0;
 SlabLength = ChamberRadius*5.5;
 SlabWidth = ChamberRadius*2.5;
 ChannelWidth = 1.0;
-ChannelWallWidth = 1.0;
+ChannelWallWidth = 1.5;
 PlaneThickness = 2.0;
 MagnetHeight = 50;
 ww = 1.5; // This is the wall width, assumed to be sturdy enough
@@ -38,8 +38,8 @@ Thickness = 1.0;
 // ptype = "valve";
 // ptype = "interior";
 // ptype = "valveWithRails";//
-ptype = "constrainedValve";
-// ptype = "highchamber";
+// ptype = "constrainedValve";
+ptype = "highchamber";
  module regular_polygon(order = 4, r=1){
      angles=[ for (i = [0:order-1]) i*(360/order) ];
      coords=[ for (th=angles) [r*cos(th), r*sin(th)] ];
@@ -235,7 +235,7 @@ module chamberDrum(cr) {
                 circle(cr);
             }
             // Now we add the channel.
-            translate([cr,0,(ChannelWidth+ChannelWallWidth)/2])
+            #translate([cr,0,(ChannelWidth+ChannelWallWidth)/2])
             difference() {
                 cube([cr*2,ChannelWidth+ChannelWallWidth,ChannelWidth+ChannelWallWidth],center=true);
                 cube([cr*3,ChannelWidth,ChannelWidth],center=true);
@@ -244,6 +244,19 @@ module chamberDrum(cr) {
      translate([cr,0,(ChannelWidth+ChannelWallWidth)/2])
      cube([cr*6,ChannelWidth,ChannelWidth],center=true);
     }
+    
+    difference() {
+      color("red", 1.0)
+      translate([cr,0,HighChamberHeight/2-4])
+      #rotate([0,90,0])
+      difference() {
+        cube([HighChamberHeight-3,ChannelWidth+ChannelWallWidth,ChannelWidth+ChannelWallWidth],center=true);
+        cube([HighChamberHeight*2,ChannelWidth,ChannelWidth],center=true);
+     }
+     #color("greed",1.0)
+     translate([cr,0,0])    
+     cube([ChannelWidth,ChannelWidth,ChannelWidth],center=true);
+   }
 }
 
 module valveWithHighChamber(r) {
@@ -298,11 +311,11 @@ if (ptype == "valve") {
 } else if (ptype == "highchamber") {
 //    color("red",0.6)
 //  chamberDrum(ChamberRadius/2);
-    d = 50;
-// difference() {
+    d = 15;
+  difference() {
       valveWithHighChamber(ChamberRadius);
- //     cube([d,100,100],center=true);
- // }
+      cube([d,100,100],center=true);
+  }
 } else {
     echo("NO PTYPE SET!!! XXXXXXX");
 }
