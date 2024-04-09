@@ -14,22 +14,25 @@ $fn = 40;
 
 SlabHeight = 5;
 HighChamberHeight = 15;
-ChamberRadius = 32;
+AirGapChamberHeight = 8;
+ChamberRadius = 35;
 // The idea of the Constrained Chamber Radius is to have a diameter of 0.33 inches.
 ConstrainedChamberRadius = 0.4* 25.4 / 2.0;
 SlabLength = ChamberRadius*5.5;
 SlabWidth = ChamberRadius*2.5;
 ChannelWidth = 1.0;
 ChannelWallWidth = 1.5;
-PlaneThickness = 2.0;
+PlaneThickness = 3.0;
 MagnetHeight = 50;
 ww = 1.5; // This is the wall width, assumed to be sturdy enough
 
 BasicRailWidth = 2;
 MagnetWidth = 12.8;
 
-LuerPosition = SlabLength/2;
-LockRingHeight = 15;
+
+LuerPosition = SlabLength/2 - 5;
+// LockRingHeight = 15;
+LockRingHeight = 20;
 
 PI = 3.14152;
 GapHeight = 3.0;
@@ -39,7 +42,8 @@ Thickness = 1.0;
 // ptype = "interior";
 // ptype = "valveWithRails";//
 // ptype = "constrainedValve";
-ptype = "highchamber";
+ptype = "airgapchamber";
+// ptype = "highchamber";
  module regular_polygon(order = 4, r=1){
      angles=[ for (i = [0:order-1]) i*(360/order) ];
      coords=[ for (th=angles) [r*cos(th), r*sin(th)] ];
@@ -122,15 +126,15 @@ module slab(r,cr) {
     }
 }
 
-module slabWithHighChamber(r,cr) {
-    l = r*4;
-    color("Green",1.0)
-    linear_extrude(height = HighChamberHeight, center = true, convexity = 10, twist = 0)
-    union() {
-        circle(cr+5);
-        square([5*r+10,r+5],center=true); 
-    }
-}
+//module slabWithHighChamber(r,cr) {
+//    l = r*4;
+//    color("Green",1.0)
+//    linear_extrude(height = HighChamberHeight, center = true, convexity = 10, twist = 0)
+//    union() {
+//        circle(cr+5);
+//        square([5*r+10,r+5],center=true); 
+//    }
+//}
 
 module basicRing(r) {
     w = 2;
@@ -219,7 +223,7 @@ module valveWithRails(r,cr) {
     } 
 }
  
-module chamberDrum(cr) {
+module chamberDrum(cr,chamberHeight) {
     rotate([0,0,180])
     translate([0,0,-(ChannelWidth+ChannelWallWidth)/2])
     difference() {
@@ -228,10 +232,10 @@ module chamberDrum(cr) {
 //            translate([0,0,-ChannelWallWidth/2])
             translate([0,0,-0.5])
             difference() { 
-                linear_extrude(HighChamberHeight, twist = 0)            
+                linear_extrude(chamberHeight, twist = 0)            
                  circle(cr+ww);
                 translate([0,0,ChannelWallWidth])   
-                linear_extrude(HighChamberHeight-2*ChannelWallWidth, twist = 0)            
+                linear_extrude(chamberHeight-2*ChannelWallWidth, twist = 0)            
                 circle(cr);
             }
             // Now we add the channel.
@@ -245,21 +249,10 @@ module chamberDrum(cr) {
      cube([cr*6,ChannelWidth,ChannelWidth],center=true);
     }
     
-    difference() {
-      color("red", 1.0)
-      translate([cr,0,HighChamberHeight/2-4])
-      #rotate([0,90,0])
-      difference() {
-        cube([HighChamberHeight-3,ChannelWidth+ChannelWallWidth,ChannelWidth+ChannelWallWidth],center=true);
-        cube([HighChamberHeight*2,ChannelWidth,ChannelWidth],center=true);
-     }
-     #color("greed",1.0)
-     translate([cr,0,0])    
-     cube([ChannelWidth,ChannelWidth,ChannelWidth],center=true);
-   }
+ 
 }
 
-module valveWithHighChamber(r) {
+module valveWithHighChamber(r,chamberHeight) {
     c = r/2;
     cr = c;
 //   translate([0,0,0])
@@ -269,7 +262,7 @@ module valveWithHighChamber(r) {
     union() {
         translate([LuerPosition,0,0]) rotate([0,270,0]) luer();
         translate([-LuerPosition,0,0]) rotate([0,90,0]) luer();
-        chamberDrum(cr);
+        chamberDrum(cr,chamberHeight);
         difference() {
             union() {
                 difference() {
@@ -278,7 +271,7 @@ module valveWithHighChamber(r) {
                         lockRails();
                     }
                     translate([0,0,-PlaneThickness/2])
-                    linear_extrude(HighChamberHeight, twist = 0)            
+                    linear_extrude(chamberHeight-2*ChannelWallWidth, twist = 0)            
                     circle(cr+ww);         
                 }
             };      
@@ -294,6 +287,21 @@ module valveWithHighChamber(r) {
  //   translate([0,30,0])
        translate([-r*2.0,0])
        cube([2,c,SlabHeight],center=true); 
+    // Now cut this:
+    
+   difference() {
+      color("white", 1.0)
+      translate([cr+-0.5,0,chamberHeight/2-4])
+      rotate([0,90,0])
+      difference() {
+        cube([chamberHeight-3,ChannelWidth+ChannelWallWidth,ChannelWidth+ChannelWallWidth],center=true);
+        cube([chamberHeight*2,ChannelWidth,ChannelWidth],center=true);
+     }
+     f = 1;
+     #color("red",1.0)
+     translate([cr+2,0,0])    
+     cube([ChannelWidth*f+4,ChannelWidth*f+0.4,ChannelWidth*f+0.4],center=true);
+   }
 }
 
 if (ptype == "valve") {
@@ -309,14 +317,18 @@ if (ptype == "valve") {
 } else if (ptype == "interior"){
     interior(ConstrainedChamberRadius);
 } else if (ptype == "highchamber") {
-//    color("red",0.6)
-//  chamberDrum(ChamberRadius/2);
-    d = 15;
-  difference() {
-      valveWithHighChamber(ChamberRadius);
-      cube([d,100,100],center=true);
-  }
-} else {
+//   d = 15;
+// difference() {
+      valveWithHighChamber(ChamberRadius,HighChamberHeight);
+//     cube([d,100,100],center=true);
+// } 
+} else if (ptype == "airgapchamber") {
+//    d = 15;
+ // difference() {
+      valveWithHighChamber(ChamberRadius,AirGapChamberHeight);
+ //     cube([d,100,100],center=true);
+ // } 
+  }else {
     echo("NO PTYPE SET!!! XXXXXXX");
 }
 
