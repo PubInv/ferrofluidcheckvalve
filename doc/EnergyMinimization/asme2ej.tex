@@ -948,6 +948,56 @@ the same level of ferrofluid when at rest. This is what we have observed in
 physical experiments, and it gives us confidence that our expression for the
 potential energy is correct.
 
+\subsection{Asymmetric Force}
+
+We would now like to answer the question: Can the two chambers with stand
+different pressures, or is something additional required for that to happen?
+In particular, it is possible that either the B-field of the shape of the chambers
+might have to change, so this is an interesting question.
+
+Now let us consider the pressures that these two chambers can resist before
+the bolus collapses. If we increase the pressure in one chamber, the
+bolus will be driven away from the pressure until a stable point a found.
+When the pressure becomes high enough, the bolus will be drive past a point
+of maximum sustainable force, and the bolus will collapse. If we think
+of this as a valve, the valve will fail to resist the pressure.
+
+Force times distance is work, and work increase potential energy.
+Therefore force exerted by the bolus can be computed as the negative of the change in potential energy.
+(The force exerted on the bolus will be the positive of the potential energy.)
+Let us assign reasonable values to $A,Z,V,C,$ and $K$:
+\begin{align}
+  A &= 1 \\
+  Z &= 3 \\
+  K &= 7 \\
+  V &= 12 \\
+  C &= 4
+\end{align}
+Then our expression for potential energy becomes:
+\begin{align}
+  U &= \frac{C}{2K} \left( A  (K - x)^2 + \frac{(K Z - V + A x)^2}{Z} \right) \\
+  U &= \frac{4}{14} \left(   (7 - x)^2 + \frac{(9 +  x)^2}{3} \right) \\
+  \frac{\partial U}{\partial x} & \frac{16}{21} (-3 + x)
+  \end{align}
+
+The force exerted by the bolus, measured in the $+X$ direction, if $-\frac{\partial U}{\partial x}$.
+That means the force exerted by the bolus is:
+\begin{align}
+  F_A(x) &= \frac{16}{21} (3 + -x)
+\end{align}
+When the bolus is pushed to the left, it exerts a force to the right.
+Considering the force as a function of $y$:
+\begin{align}
+  x &= \frac{V - yZ }{A} \\
+  x &= \frac{12 - y3 }{1} \\
+  F_A(y) &= \frac{16}{21} (3 + -(12 - y3))) \\
+  F_A(y) &= 3\frac{16}{21} (1 + (y + -4)) \\
+  F_A(y) &= 3\frac{16}{21} (y + -3) \\
+\end{align}
+
+
+
+
 
 
 
