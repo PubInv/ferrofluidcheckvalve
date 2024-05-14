@@ -977,29 +977,29 @@ Then our expression for potential energy becomes:
 \begin{align}
   U &= \frac{C}{2K} \left( A  (K - x)^2 + \frac{(K Z - V + A x)^2}{Z} \right) \\
   U &= \frac{4}{14} \left(   (7 - x)^2 + \frac{(9 +  x)^2}{3} \right) \\
-  \frac{\partial U}{\partial x} & \frac{16}{21} (-3 + x)
+  \frac{\partial U}{\partial x} &= \frac{16}{21} (-3 + x)
+\end{align}
+
+Computing this in terms of $y$ becomes:
+\begin{align}
+  U = & \frac{C}{2K} \left( A  (K - x)^2 + Z (K - y)^2 \right) \\
+  U = & \frac{4}{14} \left(   (-5 - 3y)^2 + 3 (7 - y)^2 \right) \\
+  \frac{\partial U}{\partial x} &= \frac{24}{7} (-1 + 2 y)
   \end{align}
+
 
 The force exerted by the bolus, measured in the $+X$ direction, if $-\frac{\partial U}{\partial x}$.
 That means the force exerted by the bolus is:
 \begin{align}
-  F_A(x) &= \frac{16}{21} (3 + -x)
+  F_A(x) &= \frac{16}{21} (3 + -x) \\
+  F_B(y) &= \frac{24}{7} (1 + -2 y)
 \end{align}
-When the bolus is pushed to the left, it exerts a force to the right.
-Considering the force as a function of $y$:
-\begin{align}
-  x &= \frac{V - yZ }{A} \\
-  x &= \frac{12 - y3 }{1} \\
-  F_A(y) &= \frac{16}{21} (3 + -(12 - y3))) \\
-  F_A(y) &= 3\frac{16}{21} (1 + (y + -4)) \\
-  F_A(y) &= 3\frac{16}{21} (y + -3) \\
-\end{align}
+This means that at their strongest points (when $x = 0$ and $y =0$), the
+forces that bolus exerts against pressure is different (16/7 vs. 24/7).
 
-
-
-
-
-
+Thus we have proved that from simple geometry we can make an asymmetric
+check valve, albeit a very low performing one.
+QED.
 
 
 \subsection{Conjecture}
