@@ -52,6 +52,16 @@
 \title{A Novel Passive Ferrofluid One-way (Check) Valve Based on Energy Minimization}
 
 %%% first author
+\author{Robert L. Read
+\affiliation{
+  Founder, Public Invention\\
+  Email: read.robert@pubinv.org
+    }
+}
+
+%%% second author
+%%% remove the following entry for single author papers
+%%% add more entries for additional authors
 \author{Veronica Stuckey
   \affiliation{
     Biomedical Engineer, University of Texas at Austin \\
@@ -59,19 +69,18 @@
     }
 }
 
-%%% second author
+%%% third author
 %%% remove the following entry for single author papers
 %%% add more entries for additional authors
-\author{Robert L. Read
+\author{Joe Hershberger
 \affiliation{
-  Founder, Public Invention\\
+  Investigato, Public Invention\\
   %%Email: read.robert@gmail.com
     }
 }
 
-%%% third author
-%%% remove the following entry for single author papers
-%%% add more entries for additional authors
+
+
 
 \begin{document}
 
@@ -511,6 +520,137 @@ only the $x$ component (the East-West coordinate) of the B-field is relevant to 
 The field was plotted with MagPyLib in Figure~\ref{fig:Bx}.
 
 
+\subsection{ A Thought Experiment }
+
+For a time we believed it was not possible to make a passive
+ferrofluid valve with no moving parts.
+In order to see that it is possible and to set up a mathematical
+framework, consider the thought experiment illustrated in Fig.~\ref{fig:thought}.
+
+
+\begin{figure}
+\centerline{\includegraphics[width=6in]{figure/ThoughtExperiment.png}}
+\caption{Two chambers in communication with an linear B-field}
+\label{fig:thought}
+\end{figure}
+
+In this figures, two chambers containing ferrofluid are place in a similar
+$B$ field. The chambers are in communication via a thin channel, so that that
+there is a single bolus of ferrofluid. Although it is quite difficult to
+construct a $B$ field which is linear, let us assume for the purpose of this
+experiment that the $B$ field is perfectly linear and goes to zero at
+point $K$, and is a maximized at $x=0$, where it is $C$. This might actually
+be accomplished with two magnetic fields far from each other, but we show
+them on one diagram. The $A$ chamber has a height of $A$ and the $Z$ chamber
+has a height of $Z$. Assume that they are encased in a very thin plane, so
+that we can ignore 3-dimensional effects, and so that the area of the bolus
+is proportional to the volume.
+
+Assume that the magentic field is strong enough to keep the bolus everywhere
+contiguous with itself (so that there is only one bolus), and that we can
+describe the configuration of the bolus only with the positions $x$ and $y$ (
+that is, the air-fluid interfaces in the cambers are perpendicular to the horizontal $X$ axis)
+we can write the
+volume $V$ as:
+\begin{align}
+  V = & xA + yZ \\
+  y = & \frac{V - xA}{Z}
+  \label{eqn:yvalue}
+\end{align}
+From experiments perfomed by the authors, we know what if the air pressure in
+the $A$ and $Z$ chambers are the same, and the bolus is at rest, $x = y$.
+We would like to prove this configuration minimizes the potential energy.
+
+Considering only one chamber, the potential energy is minimized, which
+we will call $0$, when the chamber is full of ferrofluid, that is, when
+there is fluid between 0 and $K$. It is the lack of ferrofluid that has
+potential energy.
+
+Under our assumptions that the fluid is incompresable and homogenous,
+we can then write the potential energy $U$ of each chamber as:
+\begin{align}
+  U_A = &A \int_x^K B(q) dq \\
+  U_Z = &Z \int_y^K B(q) dq \\
+\end{align}
+Performing some calculations:
+\begin{align}
+  U = &A \int_x^K B(q) dq + Z \int_y^K B(q) dq \\
+  U = &A \int_x^K (\frac{-qC}{K} + C) dq + Z \int_y^K (\frac{-qC}{K} + C) dq \\
+  U = &A \frac{C (K - x)^2}{2 K} + Z \frac{C (K - y)^2}{2 K} \\
+  U = & \frac{C}{2K} \left( A  (K - x)^2 + Z (K - y)^2 \right) \\
+  U = & \frac{C}{2K} \left( A  (K - x)^2 + Z (K - \frac{V - xA}{Z})^2 \right) \\
+  U = & \frac{C}{2K} \left( A  (K - x)^2 + \frac{(K Z - V + A x)^2}{Z} \right) \\
+\end{align}
+...we now have an expression for the potential energy expressed solely as a function of constants
+and the variable $x$. We can minimize this expression by taking the derivative with respect
+to $x$ and setting it to zero:
+\begin{align}
+  \frac{\partial U}{\partial x} = & \frac{C}{2K} \frac{(2 A (x (A + Z) - V))}{Z} \\
+  0 = & \frac{C}{2K} \frac{(2 A (x (A + Z) - V))}{Z} \\
+  x = & \frac{V}{A + Z}
+\end{align}
+Plugging this value into Eqn.~\ref{eqn:yvalue}, we find:
+\begin{align}
+  y = & \frac{V}{A + Z}
+\end{align}
+In other words, $x = y$. The two chambers, no matter their heights, will have
+the same level of ferrofluid when at rest. This is what we have observed in
+physical experiments, and it gives us confidence that our expression for the
+potential energy is correct.
+
+\subsection{Asymmetric Force}
+
+We would now like to answer the question: Can the two chambers with stand
+different pressures, or is something additional required for that to happen?
+In particular, it is possible that either the B-field of the shape of the chambers
+might have to change, so this is an interesting question.
+
+Now let us consider the pressures that these two chambers can resist before
+the bolus collapses. If we increase the pressure in one chamber, the
+bolus will be driven away from the pressure until a stable point a found.
+When the pressure becomes high enough, the bolus will be drive past a point
+of maximum sustainable force, and the bolus will collapse. If we think
+of this as a valve, the valve will fail to resist the pressure.
+
+Force times distance is work, and work increase potential energy.
+Therefore force exerted by the bolus can be computed as the negative of the change in potential energy.
+(The force exerted on the bolus will be the positive of the potential energy.)
+Let us assign reasonable values to $A,Z,V,C,$ and $K$:
+\begin{align}
+  A &= 1 \\
+  Z &= 3 \\
+  K &= 7 \\
+  V &= 12 \\
+  C &= 4
+\end{align}
+Then our expression for potential energy becomes:
+\begin{align}
+  U &= \frac{C}{2K} \left( A  (K - x)^2 + \frac{(K Z - V + A x)^2}{Z} \right) \\
+  U &= \frac{4}{14} \left(   (7 - x)^2 + \frac{(9 +  x)^2}{3} \right) \\
+  \frac{\partial U}{\partial x} &= \frac{16}{21} (-3 + x)
+\end{align}
+
+Computing this in terms of $y$ becomes:
+\begin{align}
+  U = & \frac{C}{2K} \left( A  (K - x)^2 + Z (K - y)^2 \right) \\
+  U = & \frac{4}{14} \left(   (-5 - 3y)^2 + 3 (7 - y)^2 \right) \\
+  \frac{\partial U}{\partial y} &= \frac{24}{7} (-1 + 2 y)
+  \end{align}
+
+
+The force exerted by the bolus, measured in the $+X$ direction, if $-\frac{\partial U}{\partial x}$.
+That means the force exerted by the bolus is:
+\begin{align}
+  F_A(x) &= \frac{16}{21} (3 + -x) \\
+  F_B(y) &= \frac{24}{7} (1 + -2 y)
+\end{align}
+This means that at their strongest points (when $x = 0$ and $y =0$), the
+forces that bolus exerts against pressure is different (16/7 vs. 24/7).
+
+Thus we have proved that from simple geometry we can make an asymmetric
+check valve, albeit a very low performing one.
+QED.
+
 
 \subsection{The Channel-to-a-Chamber}
 
@@ -870,136 +1010,6 @@ asymmetry that we observe.
 In our actual geometry, the field is of course three dimensional,
 but that hardly matters.
 
-\subsection{ A Thought Experiment }
-
-For a time we believed it was not possible to make a passive
-ferrofluid valve with no moving parts.
-In order to see that it is possible and to set up a mathematical
-framework, consider the thought experiment illustrated in Fig.~\ref{fig:thought}.
-
-
-\begin{figure}
-\centerline{\includegraphics[width=6in]{figure/ThoughtExperiment.png}}
-\caption{Two chambers in communication with an linear B-field}
-\label{fig:thought}
-\end{figure}
-
-In this figures, two chambers containing ferrofluid are place in a similar
-$B$ field. The chambers are in communication via a thin channel, so that that
-there is a single bolus of ferrofluid. Although it is quite difficult to
-construct a $B$ field which is linear, let us assume for the purpose of this
-experiment that the $B$ field is perfectly linear and goes to zero at
-point $K$, and is a maximized at $x=0$, where it is $C$. This might actually
-be accomplished with two magnetic fields far from each other, but we show
-them on one diagram. The $A$ chamber has a height of $A$ and the $Z$ chamber
-has a height of $Z$. Assume that they are encased in a very thin plane, so
-that we can ignore 3-dimensional effects, and so that the area of the bolus
-is proportional to the volume.
-
-Assume that the magentic field is strong enough to keep the bolus everywhere
-contiguous with itself (so that there is only one bolus), and that we can
-describe the configuration of the bolus only with the positions $x$ and $y$ (
-that is, the air-fluid interfaces in the cambers are perpendicular to the horizontal $X$ axis)
-we can write the
-volume $V$ as:
-\begin{align}
-  V = & xA + yZ \\
-  y = & \frac{V - xA}{Z}
-  \label{eqn:yvalue}
-\end{align}
-From experiments perfomed by the authors, we know what if the air pressure in
-the $A$ and $Z$ chambers are the same, and the bolus is at rest, $x = y$.
-We would like to prove this configuration minimizes the potential energy.
-
-Considering only one chamber, the potential energy is minimized, which
-we will call $0$, when the chamber is full of ferrofluid, that is, when
-there is fluid between 0 and $K$. It is the lack of ferrofluid that has
-potential energy.
-
-Under our assumptions that the fluid is incompresable and homogenous,
-we can then write the potential energy $U$ of each chamber as:
-\begin{align}
-  U_A = &A \int_x^K B(q) dq \\
-  U_Z = &Z \int_y^K B(q) dq \\
-\end{align}
-Performing some calculations:
-\begin{align}
-  U = &A \int_x^K B(q) dq + Z \int_y^K B(q) dq \\
-  U = &A \int_x^K (\frac{-qC}{K} + C) dq + Z \int_y^K (\frac{-qC}{K} + C) dq \\
-  U = &A \frac{C (K - x)^2}{2 K} + Z \frac{C (K - y)^2}{2 K} \\
-  U = & \frac{C}{2K} \left( A  (K - x)^2 + Z (K - y)^2 \right) \\
-  U = & \frac{C}{2K} \left( A  (K - x)^2 + Z (K - \frac{V - xA}{Z})^2 \right) \\
-  U = & \frac{C}{2K} \left( A  (K - x)^2 + \frac{(K Z - V + A x)^2}{Z} \right) \\
-\end{align}
-...we now have an expression for the potential energy expressed solely as a function of constants
-and the variable $x$. We can minimize this expression by taking the derivative with respect
-to $x$ and setting it to zero:
-\begin{align}
-  \frac{\partial U}{\partial x} = & \frac{C}{2K} \frac{(2 A (x (A + Z) - V))}{Z} \\
-  0 = & \frac{C}{2K} \frac{(2 A (x (A + Z) - V))}{Z} \\
-  x = & \frac{V}{A + Z}
-\end{align}
-Plugging this value into Eqn.~\ref{eqn:yvalue}, we find:
-\begin{align}
-  y = & \frac{V}{A + Z}
-\end{align}
-In other words, $x = y$. The two chambers, no matter their heights, will have
-the same level of ferrofluid when at rest. This is what we have observed in
-physical experiments, and it gives us confidence that our expression for the
-potential energy is correct.
-
-\subsection{Asymmetric Force}
-
-We would now like to answer the question: Can the two chambers with stand
-different pressures, or is something additional required for that to happen?
-In particular, it is possible that either the B-field of the shape of the chambers
-might have to change, so this is an interesting question.
-
-Now let us consider the pressures that these two chambers can resist before
-the bolus collapses. If we increase the pressure in one chamber, the
-bolus will be driven away from the pressure until a stable point a found.
-When the pressure becomes high enough, the bolus will be drive past a point
-of maximum sustainable force, and the bolus will collapse. If we think
-of this as a valve, the valve will fail to resist the pressure.
-
-Force times distance is work, and work increase potential energy.
-Therefore force exerted by the bolus can be computed as the negative of the change in potential energy.
-(The force exerted on the bolus will be the positive of the potential energy.)
-Let us assign reasonable values to $A,Z,V,C,$ and $K$:
-\begin{align}
-  A &= 1 \\
-  Z &= 3 \\
-  K &= 7 \\
-  V &= 12 \\
-  C &= 4
-\end{align}
-Then our expression for potential energy becomes:
-\begin{align}
-  U &= \frac{C}{2K} \left( A  (K - x)^2 + \frac{(K Z - V + A x)^2}{Z} \right) \\
-  U &= \frac{4}{14} \left(   (7 - x)^2 + \frac{(9 +  x)^2}{3} \right) \\
-  \frac{\partial U}{\partial x} &= \frac{16}{21} (-3 + x)
-\end{align}
-
-Computing this in terms of $y$ becomes:
-\begin{align}
-  U = & \frac{C}{2K} \left( A  (K - x)^2 + Z (K - y)^2 \right) \\
-  U = & \frac{4}{14} \left(   (-5 - 3y)^2 + 3 (7 - y)^2 \right) \\
-  \frac{\partial U}{\partial x} &= \frac{24}{7} (-1 + 2 y)
-  \end{align}
-
-
-The force exerted by the bolus, measured in the $+X$ direction, if $-\frac{\partial U}{\partial x}$.
-That means the force exerted by the bolus is:
-\begin{align}
-  F_A(x) &= \frac{16}{21} (3 + -x) \\
-  F_B(y) &= \frac{24}{7} (1 + -2 y)
-\end{align}
-This means that at their strongest points (when $x = 0$ and $y =0$), the
-forces that bolus exerts against pressure is different (16/7 vs. 24/7).
-
-Thus we have proved that from simple geometry we can make an asymmetric
-check valve, albeit a very low performing one.
-QED.
 
 
 \subsection{Conjecture}
