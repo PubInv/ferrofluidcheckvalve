@@ -569,9 +569,19 @@ potential energy.
 Under our assumptions that the fluid is incompresable and homogenous,
 we can then write the potential energy $U$ of each chamber as:
 \begin{align}
-  U_A = &A \int_x^K B(q) dq \\
-  U_Z = &Z \int_y^K B(q) dq \\
+  U_A = &\int_x^K B(q) f_A(q) dq \\
+  U_Z = & \int_y^K B(q) f_Z(q) dq \\
 \end{align}
+where $f_A(x)$ is just the size of the boundary of the ferrofluid in the channel.
+In this thought experiment, this is a linear length, but we will soon generalize the boundary to a three dimensional surface.
+In this simple case, that boundary is constant, so $f_A(q) = A$, and
+$f_Z(q) = Z$.
+So,
+\begin{align}
+  U_A = & A \int_x^K B(q) dq \\
+  U_Z = & Z \int_y^K B(q) dq \\
+\end{align}
+
 Performing some calculations:
 \begin{align}
   U = &A \int_x^K B(q) dq + Z \int_y^K B(q) dq \\
@@ -650,6 +660,61 @@ forces that bolus exerts against pressure is different (16/7 vs. 24/7).
 Thus we have proved that from simple geometry we can make an asymmetric
 check valve, albeit a very low performing one.
 QED.
+
+\subsection{Generalizing to Different Geometries}
+
+Let us now suppose that the ferrofluid bolus is three dimensional.
+Let us further assume that the shape of the inlet channel and
+the outlet channel are both variable, but depend only on the distance
+from the center point which we will call the origin of our manetic
+field.
+The the area of the bolus in the channels $A$ and $Z$ can be expressed
+as a function $f_A(r)$ and $f_Z(r)$.
+
+In 3-space, it is probably not the case that we can practically construct a
+magnetic field which is purely radially symmetric---which depends solely on
+the distance from the origin. However, we may be able to
+approximate this. We can certainly construct a field which is
+generally monotonic increasing along any ray as it approaches the origin;
+a cylindrical magnet with the origin centered on a cylinder face produces
+such a field. Producing an analytic integratable function of such
+a field is not generally possible, since it involves elliptical integrals.
+However, we can either predict or constrain the shape a bolus will take
+in 3-space. In free space we can approximate it as a hemisphere centered
+on the magnet. In a constrained circular channel it will be a constanst.
+In either case we can represent it as a polynomial which we can
+tractably anti-differentiate. Let $F_A$ and $F_Z$ be the anti-derivatives
+of $f_A$ and $f_Z$, so that:
+\begin{align}
+  F_A &\int f_A(q) dq \\
+  F_Z = & \int f_Z(q) dq \\
+\end{align}
+
+We can then use integration by parts our on basic formulae for
+for potential energy:
+\begin{align}
+  U_A = &\int_x^\infty B(q) f_A(q) dq \\
+  U_Z = & \int_y^\infty B(q) f_Z(q) dq \\
+\end{align}
+This can be integrated by parts:
+\begin{align}
+  U_A = & B(\infty) F_A(\infty) - B(x) F_A(x) - \int_x^\infty B'(q) F_A(q) dq \\
+  U_Z = & B(\infty) F_Z(\infty) - B(x) F_Z(x) - \int_x^\infty B'(q) F_Z(q) dq \\
+\end{align}
+It is clear that $B(\infty) F_A(\infty) = 0$ for any geometry, because even a
+sphere feels decrease magnetic force as great distance become zero in the limit.
+
+So:
+\begin{align}
+  U_A = & - B(x) F_A(x) - \int_x^\infty B'(q) F_A(q) dq \\
+  U_Z = & - B(x) F_Z(x) - \int_x^\infty B'(q) F_Z(q) dq \\
+\end{align}
+
+If we differentiate this generally we have:
+
+\begin{align}
+  U_A = & - (B'(x) F_A(x) + B(x) f_A(x ))  - \int_x^\infty B'(q) F_A(q) dq \\
+\end{align}
 
 
 \subsection{The Channel-to-a-Chamber}
