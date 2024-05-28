@@ -112,9 +112,20 @@ and compare predicted performance to actual performance.
 \end{abstract}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\section{To Do}
+\begin{itemize}
+\item Prove the manetostatic blob principle
+\item Perform experiment of seeing where bubbles come out in a blob on the bottom of a magnet injected
+  with air (hypo: will come out on bottom)
+\item See if we can compute actaul force by placing a tube on a magnet and producing collapse force.
+\item Note the position of the bolus could in fact be used to map the field strength if that had value.
+\item Test the two new valves.
+\item Develop theory with generalized appoximate B field.
+  \end{itemize}
+
 \section{Introduction}
 
-
+Ferrofluid can be manipulated by electronically controlled
 fields to exert force on fluids\cite{torres2014recent,kole2021engineering,ozbey2015modeling}.
 This makes it possible to build pneumatic or hydraulic
 devices, perhaps on very small scales,
@@ -417,7 +428,15 @@ simplifying assumptions.
   forces is a line of equal field strength and all surfaces are equal.
 \end{conjecture}
 
-
+\begin{proof}
+  Suppose there existed two pixels of the blob near the boundary,
+  such that one pixel was occupied by ferrofluid and had a lower
+  B-field magnetism than a pixel that was not occupied by ferrofluid.
+  The potential energy of this configuration would be higher than
+  if the fluid moved from the occupied pixel to the unoccupied pixel.
+  Since the fluid will minimize potential energy, all boundaries
+  will adjust themselves to have the same field strength.
+  \end{proof}
 If the area is expanding the blob, it always decreases potential
 energy. If the area is contracting the blob, it always increasing
 potential energy. However, since the B-field at the two (or more)
@@ -554,7 +573,8 @@ we can write the
 volume $V$ as:
 \begin{align}
   V = & xA + yZ \\
-  y = & \frac{V - xA}{Z}
+  y = & \frac{V - xA}{Z} \\
+  x = & (V - y Z)/A
   \label{eqn:yvalue}
 \end{align}
 From experiments perfomed by the authors, we know what if the air pressure in
@@ -565,6 +585,11 @@ Considering only one chamber, the potential energy is minimized, which
 we will call $0$, when the chamber is full of ferrofluid, that is, when
 there is fluid between 0 and $K$. It is the lack of ferrofluid that has
 potential energy.
+
+On the range $0 \leq q \leq K$,
+\begin{align}
+  B(q) = & -qC/K + C \\
+\end{align}
 
 Under our assumptions that the fluid is incompresable and homogenous,
 we can then write the potential energy $U$ of each chamber as:
@@ -596,8 +621,9 @@ and the variable $x$. We can minimize this expression by taking the derivative w
 to $x$ and setting it to zero:
 \begin{align}
   \frac{\partial U}{\partial x} = & \frac{C}{2K} \frac{(2 A (x (A + Z) - V))}{Z} \\
-  0 = & \frac{C}{2K} \frac{(2 A (x (A + Z) - V))}{Z} \\
-  x = & \frac{V}{A + Z}
+  \frac{\partial U}{\partial x} = & (A C (x (A + Z) - V))/(K Z) \\
+  0 = &  (A C (x (A + Z) - V))/(K Z)\\
+  x = & \frac{V}{A + Z} \\
 \end{align}
 Plugging this value into Eqn.~\ref{eqn:yvalue}, we find:
 \begin{align}
@@ -635,9 +661,11 @@ Let us assign reasonable values to $A,Z,V,C,$ and $K$:
 \end{align}
 Then our expression for potential energy becomes:
 \begin{align}
-  U &= \frac{C}{2K} \left( A  (K - x)^2 + \frac{(K Z - V + A x)^2}{Z} \right) \\
-  U &= \frac{4}{14} \left(   (7 - x)^2 + \frac{(9 +  x)^2}{3} \right) \\
-  \frac{\partial U}{\partial x} &= \frac{16}{21} (-3 + x)
+  U = &\frac{C}{2K} \left( A  (K - x)^2 + \frac{(K Z - V + A x)^2}{Z} \right) \\
+  U = &\frac{4}{14} \left(   (7 - x)^2 + \frac{(9 +  x)^2}{3} \right) \\
+  \frac{\partial U}{\partial x} = &(A C (x (A + Z) - V))/(K Z) \\
+  \frac{\partial U}{\partial x} = & (4 (x (4) - 12))/(21) \\
+  \frac{\partial U}{\partial x} = & \frac{16}{21} (x - 3)
 \end{align}
 
 Computing this in terms of $y$ becomes:
@@ -648,7 +676,7 @@ Computing this in terms of $y$ becomes:
   \end{align}
 
 
-The force exerted by the bolus, measured in the $+X$ direction, if $-\frac{\partial U}{\partial x}$.
+The force exerted by the bolus, measured in the $+X$ direction, is $-\frac{\partial U}{\partial x}$.
 That means the force exerted by the bolus is:
 \begin{align}
   F_A(x) &= \frac{16}{21} (3 + -x) \\
@@ -669,7 +697,7 @@ the outlet channel are both variable, but depend only on the distance
 from the center point which we will call the origin of our manetic
 field.
 The the area of the bolus in the channels $A$ and $Z$ can be expressed
-as a function $f_A(r)$ and $f_Z(r)$.
+as a function $g_A(r)$ and $g_Z(r)$.
 
 In 3-space, it is probably not the case that we can practically construct a
 magnetic field which is purely radially symmetric---which depends solely on
@@ -684,37 +712,95 @@ in 3-space. In free space we can approximate it as a hemisphere centered
 on the magnet. In a constrained circular channel it will be a constanst.
 In either case we can represent it as a polynomial which we can
 tractably anti-differentiate. Let $F_A$ and $F_Z$ be the anti-derivatives
-of $f_A$ and $f_Z$, so that:
+of $g_A$ and $g_Z$, so that:
 \begin{align}
-  F_A &\int f_A(q) dq \\
-  F_Z = & \int f_Z(q) dq \\
+  G_A &\int g_A(q) dq \\
+  G_Z = & \int g_Z(q) dq \\
 \end{align}
 
 We can then use integration by parts our on basic formulae for
 for potential energy:
 \begin{align}
-  U_A = &\int_x^\infty B(q) f_A(q) dq \\
-  U_Z = & \int_y^\infty B(q) f_Z(q) dq \\
+  U_A = &\int_x^\infty B(q) g_A(q) dq \\
+  U_Z = & \int_y^\infty B(q) g_Z(q) dq \\
 \end{align}
 This can be integrated by parts:
 \begin{align}
-  U_A = & B(\infty) F_A(\infty) - B(x) F_A(x) - \int_x^\infty B'(q) F_A(q) dq \\
-  U_Z = & B(\infty) F_Z(\infty) - B(x) F_Z(x) - \int_x^\infty B'(q) F_Z(q) dq \\
+  U_A = & B(\infty) G_A(\infty) - B(x) G_A(x) - \int_x^\infty B'(q) G_A(q) dq \\
+  U_Z = & B(\infty) G_Z(\infty) - B(x) G_Z(x) - \int_x^\infty B'(q) G_Z(q) dq \\
 \end{align}
-It is clear that $B(\infty) F_A(\infty) = 0$ for any geometry, because even a
+It is clear that $B(\infty) G_A(\infty) = 0$ for any geometry, because even a
 sphere feels decrease magnetic force as great distance become zero in the limit.
 
 So:
 \begin{align}
-  U_A = & - B(x) F_A(x) - \int_x^\infty B'(q) F_A(q) dq \\
-  U_Z = & - B(x) F_Z(x) - \int_x^\infty B'(q) F_Z(q) dq \\
+  U_A = & - B(x) G_A(x) - \int_x^\infty B'(q) G_A(q) dq \\
+  U_Z = & - B(x) G_Z(x) - \int_x^\infty B'(q) G_Z(q) dq \\
 \end{align}
 
 If we differentiate this generally we have:
 
 \begin{align}
-  U_A = & - (B'(x) F_A(x) + B(x) f_A(x ))  - \int_x^\infty B'(q) F_A(q) dq \\
+  \frac{\partial U_A}{\partial x}= & - (B'(x) G_A(x) + B(x) g_A(x ))  -  \frac{\partial }{\partial x}\int_x^\infty B'(q) G_A(q) dq \\
 \end{align}
+relying on Wolfram alpha to differentiate the improper integral, we have:
+\begin{align}
+  \frac{\partial U_A}{\partial x}= & - (B'(x) G_A(x) + B(x) g_A(x ))  +  B'(x) G_A(x) \\
+  \frac{\partial U_A}{\partial x}= &  - B(x) g_A(x ))
+\end{align}
+
+Since $g_A(x)$ is the area and force is area times pressure, the pressure that the $A$ chamber
+can withstand is a function {\em purely} of the strength of the $B(x)$. This suggest that we
+define the most intense B-field that we can, likely by creating a small air gap.
+
+\subsection{Checking this math against previous calculation}
+
+Now let us check this math against the previous section.
+In the previous section, we computed:
+
+\begin{align}
+  U_A = & A \int_x^K B(q) dq \\
+\end{align}
+we can differentitate dirrectly as:
+\begin{align}
+  \frac{\partial U_A}{\partial x} = & A \frac{\partial}{\partial x} \int_x^K B(q) dq \\
+  \frac{\partial U_A}{\partial x} = & -A (\frac{-Cx}{K} + C) \\
+  \frac{\partial U_A}{\partial x} = &  AC(\frac{x}{K} + -1) \\
+\end{align}
+
+This does not match the above because it is only one part of the valve!
+
+For the valve B, we have:
+\begin{align}
+  U_Z = & Z \int_y^K B(q) dq \\
+  \frac{\partial U_Z}{\partial y} = & - Z (\frac{-Cy}{K} + C) \\
+  \frac{\partial U_Z}{\partial y} = & - Z (\frac{-C(V-xA)}{ZK} + C) \\
+  \frac{\partial U_Z}{\partial y} = &  Z C(-(A x + K Z - V)/(K Z)) \\
+  \frac{\partial U_Z}{\partial x} = &  \frac{\partial U_Z}{\partial y} \frac{\partial y}{\partial x}\\
+  \frac{\partial y}{\partial x}  =  & \frac{-A}{Z}\\
+  \frac{\partial U_Z}{\partial x} = & \frac{-A}{Z} Z C(\frac{(V-xA)}{ZK} + -1) \\
+  \frac{\partial U_Z}{\partial x} = & -A C(\frac{(V-xA)}{ZK} + -1) \\
+\end{align}
+
+
+\begin{align}
+  \frac{\partial U}{\partial x} = & \frac{\partial U_A}{\partial x} + \frac{\partial U_Z}{\partial x}\\
+  \frac{\partial U}{\partial x} = & AC(\frac{x}{K} + -1) + -A C(\frac{(V-xA)}{ZK} - 1)\\
+  \frac{\partial U}{\partial x} = & A C (x/K - (V - A x)/(K Z))\\
+\end{align}
+This actually is the same expression! Yay!  so probably I can do this in a very general way!
+
+\begin{align}
+\end{align}
+
+
+This math does not seem to line up. Right at the moment on this flight,
+I don't have the ability to make it work, and can't use Wolfram Alpha
+to check it. So I think we need to understand what I'm doing wrong here.
+
+\subsection{Valve Pressure Performance Depends on Asymmetry of Valve}
+
+
 
 
 \subsection{The Channel-to-a-Chamber}
@@ -723,8 +809,8 @@ Our goal, however, is to analyze a somewhat more complicated geometry.
 In particular, we are interested in a channel-leading-to-a-chamber,
 as depicted in Fig.~\ref{fig:ChannelToChamber}.
 This geometry was discovered by intuition in attempting to build an asymmetric valve
-based on the observation that a bubble of air (or any non-magnetic material) will
-be pushed out of a bolus by magnetic ``buoyancy''.
+based on the observed fact that a bubble of air (or any non-magnetic material) will
+be pushed out of a bolus by magnetic ``buoyancy'' \cite{wakayama1997magnetic,cheng2014three}.
 A less-magnetic material ``floats'' toward the less intense magnetic field inside
 ferrofluid. This fact easily observed with a syringe by injecting air into a bolus
 in a field.
