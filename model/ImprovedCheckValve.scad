@@ -21,8 +21,8 @@ ConstrainedChamberRadius = 0.4* 25.4 / 2.0;
 SlabLength = ChamberRadius*5.5;
 SlabWidth = ChamberRadius*2.5;
 ChannelWidth = 1.0;
-ChannelWallWidth = 1.5;
-PlaneThickness = 3.0;
+ChannelWallWidth = 2.0;
+PlaneThickness = 2.0;
 MagnetHeight = 50;
 ww = 1.5; // This is the wall width, assumed to be sturdy enough
 
@@ -42,8 +42,8 @@ Thickness = 1.0;
 // ptype = "interior";
 // ptype = "valveWithRails";//
 // ptype = "constrainedValve";
-ptype = "airgapchamber";
-// ptype = "highchamber";
+// ptype = "airgapchamber";
+ptype = "highchamber";
  module regular_polygon(order = 4, r=1){
      angles=[ for (i = [0:order-1]) i*(360/order) ];
      coords=[ for (th=angles) [r*cos(th), r*sin(th)] ];
@@ -94,9 +94,11 @@ ptype = "airgapchamber";
             circle(cr);
             union() {
                 injectionWidth = PlaneThickness * 2;
-                translate([-SlabLength/2,PlaneThickness* (0.2),0])
+ //               f = 0.2;
+                f = 0.3;
+                translate([-SlabLength/2,PlaneThickness* f,0])
                 square([SlabLength,ChannelWidth*2],center=true);
-                translate([-SlabLength/2,-PlaneThickness * (0.2),0])
+                translate([-SlabLength/2,-PlaneThickness * f,0])
                 square([SlabLength,ChannelWidth*2],center=true);
             }
         }
@@ -239,7 +241,7 @@ module chamberDrum(cr,chamberHeight) {
                 circle(cr);
             }
             // Now we add the channel.
-            #translate([cr,0,(ChannelWidth+ChannelWallWidth)/2])
+            translate([cr,0,(ChannelWidth+ChannelWallWidth)/2])
             difference() {
                 cube([cr*2,ChannelWidth+ChannelWallWidth,ChannelWidth+ChannelWallWidth],center=true);
                 cube([cr*3,ChannelWidth,ChannelWidth],center=true);
@@ -290,17 +292,19 @@ module valveWithHighChamber(r,chamberHeight) {
     // Now cut this:
     
    difference() {
+      q = 0.8;
+      m = 0.7;
       color("white", 1.0)
-      translate([cr+-0.5,0,chamberHeight/2-4])
+      translate([cr+-m,0,chamberHeight/2-4])
       rotate([0,90,0])
       difference() {
-        cube([chamberHeight-3,ChannelWidth+ChannelWallWidth,ChannelWidth+ChannelWallWidth],center=true);
-        cube([chamberHeight*2,ChannelWidth,ChannelWidth],center=true);
+        cube([chamberHeight-3,ChannelWidth+ChannelWallWidth+q,ChannelWidth+ChannelWallWidth+q],center=true);
+        cube([chamberHeight*2,ChannelWidth+q,ChannelWidth+q],center=true);
      }
-     f = 1;
-     #color("red",1.0)
+     f = 1.2;
+     g = 0.4;
      translate([cr+2,0,0])    
-     cube([ChannelWidth*f+4,ChannelWidth*f+0.4,ChannelWidth*f+0.4],center=true);
+     cube([ChannelWidth*f+4,ChannelWidth*f+g,ChannelWidth*f+g],center=true);
    }
 }
 
@@ -323,7 +327,7 @@ if (ptype == "valve") {
 //     cube([d,100,100],center=true);
 // } 
 } else if (ptype == "airgapchamber") {
-//    d = 15;
+ //   d = 33;
  // difference() {
       valveWithHighChamber(ChamberRadius,AirGapChamberHeight);
  //     cube([d,100,100],center=true);
