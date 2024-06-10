@@ -81,9 +81,20 @@ ptype = "highchamber";
      rotate([0,0,90])
       square([2*a,a],center=true);
  }
-
+module recoveryInterior(cr) {
+    thickness = PlaneThickness*0.7;
+    linear_extrude(height=thickness,center=true)
+    union() {
+        translate([cr*2.0,0])
+        square([cr,cr],center=true); 
+        crh = cr / 2;
+        d = crh*3;
+        points = [[d,crh], [d,-crh], [d-cr/3,0]];
+        polygon(points);
+    }
+}
  module interior(cr) {
-      thickness = PlaneThickness*0.7;
+    thickness = PlaneThickness*0.7;
     union() {
         // First, we put in a rectangle that spans the whole thing
         linear_extrude(height=thickness,center=true)
@@ -103,13 +114,9 @@ ptype = "highchamber";
             }
         }
         // Now we adde the "recovery chambers"
-        linear_extrude(height=thickness,center=true)
-        translate([ChamberRadius*2.0,0])
-        square([ChamberRadius,ChamberRadius],center=true); 
-        
-        linear_extrude(height=thickness,center=true)
-        translate([-ChamberRadius*2,0,0])
-        square([ChamberRadius,ChamberRadius],center=true);  
+        recoveryInterior(ChamberRadius);
+        rotate([0,0,180])
+        recoveryInterior(ChamberRadius);
     }
  }
  
@@ -321,11 +328,11 @@ if (ptype == "valve") {
 } else if (ptype == "interior"){
     interior(ConstrainedChamberRadius);
 } else if (ptype == "highchamber") {
-//   d = 15;
-// difference() {
+ //  d = 15;
+ // difference() {
       valveWithHighChamber(ChamberRadius,HighChamberHeight);
-//     cube([d,100,100],center=true);
-// } 
+ //    cube([d,100,100],center=true);
+ //} 
 } else if (ptype == "airgapchamber") {
  //   d = 33;
  // difference() {
