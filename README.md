@@ -24,7 +24,9 @@ we have a more precise low-pressure one, which we will use in the next experimen
 | X3  | 8  | 110  |   |   |
 | X4  | 12  |  106 |   | 2" magnet instead of 1"  |
 | X5  |  8 |  110 |   | System held upside down in same configuration  |
-		
+
+
+  I now believe this a very significant result (in this small technical niche which we created.)
 
 
 # A Humorous History
