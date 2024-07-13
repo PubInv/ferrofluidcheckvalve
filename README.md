@@ -4,6 +4,29 @@ This invention is apparently novel and should be quite important for making it
 easier to fabricate lab-on-a-chip applications, because it has no moving parts,
 and is completely passive.
 
+# Progress as of 13 July 2024
+
+Last night, Joe Hershberge and proved out our best valve design yet. We are 
+now consistently getting a collapse pressure of more than 100 cm of water, 
+and cracking pressure of less than 10 cm of water.
+This is the best ratio we have measured. 
+This design used a 3D chamber,
+which was a recommendation that Joe made. 
+
+![IMG_5257 (1)](https://github.com/user-attachments/assets/12c9c470-a207-405e-9202-e67b099f0d78)
+
+Note, in the data below, we used a high-pressure manometer with a resolution of only 4 cmH2O;
+we have a more precise low-pressure one, which we will use in the next experiments.
+| Trail Name  | Cracking (cmH2O)  | Collapse (cmH2O)  |  Comment |   |
+|---|---|---|---|---|
+| X1  | 8 | 114  |   |   |
+| X2  | 8  | 110   |   |   |
+| X3  | 8  | 110  |   |   |
+| X4  | 12  |  106 |   | 2" magnet instead of 1"  |
+| X5  |  8 |  110 |   | System held upside down in same configuration  |
+		
+
+
 # A Humorous History
 Our previous attempts to do this were deeply flawed (see below).
 
