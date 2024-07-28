@@ -4,6 +4,14 @@ This invention is apparently novel and should be quite important for making it
 easier to fabricate lab-on-a-chip applications, because it has no moving parts,
 and is completely passive.
 
+# Theory Paper
+
+For more than a year, I have been trying to develop a complete theory of the valve.
+My somewhat messy efforts are [here](https://github.com/PubInv/ferrofluidcheckvalve/blob/master/doc/EnergyMinimization/passiveFerrofluidCheckValveTheory.pdf) in 
+this repo. I tend to write expansively in LaTeX, putting down a lot of thoughts and performing calculations more
+verbosely than would be accepted in typical published paper.  This paper should be considered my notes at present,
+a "treatise" if you will, rather than a paper being prepared for publication. Some parts of it are likely stale.
+
 # Progress as of 13 July 2024
 
 Last night, Joe Hershberge and proved out our best valve design yet. We are 
