@@ -4,6 +4,39 @@ This invention is apparently novel and should be quite important for making it
 easier to fabricate lab-on-a-chip applications, because it has no moving parts,
 and is completely passive.
 
+# Theory Paper
+
+For more than a year, I have been trying to develop a complete theory of the valve.
+My somewhat messy efforts are [here](https://github.com/PubInv/ferrofluidcheckvalve/blob/master/doc/EnergyMinimization/passiveFerrofluidCheckValveTheory.pdf) in 
+this repo. I tend to write expansively in LaTeX, putting down a lot of thoughts and performing calculations more
+verbosely than would be accepted in typical published paper.  This paper should be considered my notes at present,
+a "treatise" if you will, rather than a paper being prepared for publication. Some parts of it are likely stale.
+
+# Progress as of 13 July 2024
+
+Last night, Joe Hershberge and proved out our best valve design yet. We are 
+now consistently getting a collapse pressure of more than 100 cm of water, 
+and cracking pressure of less than 10 cm of water.
+This is the best ratio we have measured. 
+This design used a 3D chamber,
+which was a recommendation that Joe made. 
+
+![IMG_5257 (1)](https://github.com/user-attachments/assets/12c9c470-a207-405e-9202-e67b099f0d78)
+
+Note, in the data below, we used a high-pressure manometer with a resolution of only 4 cmH2O;
+we have a more precise low-pressure one, which we will use in the next experiments.
+| Trail Name  | Cracking (cmH2O)  | Collapse (cmH2O)  |  Comment |   |
+|---|---|---|---|---|
+| X1  | 8 | 114  |   |   |
+| X2  | 8  | 110   |   |   |
+| X3  | 8  | 110  |   |   |
+| X4  | 12  |  106 |   | 2" magnet instead of 1"  |
+| X5  |  8 |  110 |   | System held upside down in same configuration  |
+
+
+  I now believe this a very significant result (in this small technical niche which we created.)
+
+
 # A Humorous History
 Our previous attempts to do this were deeply flawed (see below).
 
