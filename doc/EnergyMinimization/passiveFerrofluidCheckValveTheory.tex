@@ -790,16 +790,105 @@ For the valve B, we have:
 \end{align}
 This actually is the same expression! Yay!  so probably I can do this in a very general way!
 
+
+\subsection{ Connecting Valves in Series to Increase Collapse Pressure of a Gas}
+
+This section added July 27th, 2024.
+
+This section may be out of place, but I wanted to record the math.
+We have recently had some succes with our a 3D valve model, obtaining
+for the first time a collapse pressure 10 times higher than the cracking
+pressure.
+
+In discussion with Prof. David Trevas of Rice University he asked me
+if the PFCV could be made stronger by placing them in series.
+I suggested that that would not work. But after further thought I
+believe it might for gases (though not for incompressible fluids such as water.)
+
+Unlike a flap valve, as the PFCV resists collapse pressure, its
+geometry changes and fluid flows toward the (nominal) inlet side.
+If that fluid flow decreased the volume of a chamber, the pressure
+would rise in proportion to the decreased volume. This would be
+``back pressure'' against the ferrofluid blob that is in danger
+of collapsing, which would increase the pressure it could withstand.
+
+Of course, if the inlet were simply a fixed chamber, the valve
+would have no value. Can we passively improve the collapse pressure?
+
+If we placed two valves in series, then high pressure on the outlet
+side would drive some ferrofluid into the interstial space.
+This would increase the pressure. This would drive fluid in the second
+backing valve out
+of the interstial space, somewhat decreasing the pressure.
+It therefore behooves us to attempt to build an algebraic model of this
+situation to try to understand how much a backing valve might
+increase the collapse pressure, if at all.
+
+
+\begin{figure}
+\centerline{\includegraphics[width=6in]{figure/TwoValvesInSeries.png}}
+\caption{Two Valves in Series}
+\label{fig:Series}
+\end{figure}
+
+Define:
+\begin{itemize}
+\item $V_F$ to be the fixed volume between the valves at rest.
+\item $P_C$ to be the valve at the inlet, which for this purpose (resising collapse gague pressure) we can consider ambient pressure.
+\item $P_B$ to be the pressure between the valves.
+\item $P_A$ to be the pressure at the (nominal) outlet, which when resiting
+  collapse would actually be where the fluid goes in if the valve collapses.
+\item $V$ be the actual volume between the valves when $P_A \neq P_C$.
+\item $D(p)$ be the function mapping the pressure of the valve into
+  the displacement of the ferrfluid from the rest state. This is
+  only defined when outlet pressure is higher than the input pressure, and
+  when the gague pressure is less than the collapse pressure. $D(p)$ has
+  been observed to a monotone function. We may approximate it as a
+  straight line linear function, even though it probably is not.
+  We will treat $D(p) \approx pD$, where $p$ is a pressure, and $D$ has
+  units of volume divided by pressure.
+\end{itemize}
+
+From Boyle's Law, we have:
 \begin{align}
+  \frac{P_B}{P_C} = & \frac{V_F}{V}
+  \label{eq:boyle}
+  \end{align}
+We can immediately see that this is not defined if $P_C$ is zero.
+In fact in a vacuum we would not expect adding two valve to have any
+effect on the ability to resist collapse.
+
+Our fundamental equation models the volume between the
+valves, utlizing the incompressiblity of the ferrofluid
+\begin{align}
+  V = & V_F - D(P_A - P_B) + D(P_B - P_C) \\
+  V = & V_F + 2D\cdot P_B - D\cdot P_A - D\cdot P_C \\
+    \label{eq:volume}
 \end{align}
 
+Combining Equations~\ref{eq:boyle}and~\ref{eq:volume}, and then
+using Woflfam Alpha to solve for $P_B$ we have:
+\begin{align}
+  \frac{P_B}{P_C} = & \frac{V_F}{V_F + 2D\cdot P_B - D\cdot P_A - D\cdot P_C} \\
+  P_B = & \frac{ (\pm \sqrt{(-P_A D - P_C D + V)^2 + 8 P_C D V} + P_A D + P_C D - V)}{4 D}
+\end{align}
 
-This math does not seem to line up. Right at the moment on this flight,
-I don't have the ability to make it work, and can't use Wolfram Alpha
-to check it. So I think we need to understand what I'm doing wrong here.
+This deserves to be graphed, but we can plug in reasonable values.
+If we discover that $P_B$ is relatively high (but certainly less than
+$P_A$, we believe it will push back on the bolus by that amount increasing
+the collapse pressure of valve complex.
 
-\subsection{Valve Pressure Performance Depends on Asymmetry of Valve}
-
+We use cm $H_2O$ as our unit of pressure milliliters as our unit of volume.
+We have not measured our bolus size precisely, but I believe them to approximately 1 ml. We have demosntrate collapse pressure of over 100 cm $H_2O$.
+A reasonable value for $D$ may be 1 ml per 100 cm $H_2O$.
+Typical atmospheric pressure is 14.7 psi, which 1033.512 cm $H_2O$, which
+we will approximate as 1000 cm $H_2O$, making $P_C = 1000$.
+We set $P_A$ to $P_C + 100 = 1100$.
+It is unclear how small we can make the $V_F$ without ferrofluid
+from one valve being drawn to the magnet of the other when nearing collapse
+conditions. If we imagine that $V_F$ is 4 ml, we have:
+$P_B  =  25 (17 + \sqrt{609})\approx 1041.95$. This is a hopeful number!
+It suggests that the approach if plaing values in series will work.
 
 
 
