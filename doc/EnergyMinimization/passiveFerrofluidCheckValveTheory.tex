@@ -32,6 +32,14 @@
 
 \usepackage{float}
 
+\usepackage{outlines}
+\usepackage{enumitem}
+\setenumerate[1]{label=\Roman*.}
+\setenumerate[2]{label=\Alph*.}
+\setenumerate[3]{label=\roman*.}
+\setenumerate[4]{label=\alph*.}
+
+
 
 \newtheorem{conjecture}{Conjecture}
 \newtheorem{corollary}{Corollary}
@@ -114,14 +122,53 @@ and compare predicted performance to actual performance.
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \section{To Do}
 \begin{itemize}
-\item Prove the manetostatic blob principle
-\item Perform experiment of seeing where bubbles come out in a blob on the bottom of a magnet injected
-  with air (hypo: will come out on bottom)
-\item See if we can compute actaul force by placing a tube on a magnet and producing collapse force.
-\item Note the position of the bolus could in fact be used to map the field strength if that had value.
-\item Test the two new valves.
-\item Develop theory with generalized appoximate B field.
+\item Fully understand the meaning of the Kelvin Force - This should probably be called a magnetophoretic force,
+  or an inverse-magnetophoretic force. It should probably not be called the Kelvin force of the magnetic buoyancy.
+  Perhaps we should call it energy minimization buoyancy force.
+\item Improve Proof of 2D Manetostatic Blob Minimimization Conjecture
+\item Understand Ferrofluid Spikes (a version of Rayleigh-Taylor or (normal-field instability) instability )
+\item Prove that theorem that a U-tube cannot make an assymetric valve (yes it is called a U-tube)
+  U-tubes obviously make pressure gagues, and this is not dependent on the relative areas,
+  though the scale is.
+\item Centrifugal force is $ F = m \omega^2 \rho$, where $\rho$ is the distance from the center of the rotating frame of
+  reference. So we can make a perfectly linear force in that way.
+\item Get magnetohydrodynamics by Rosenweig - $250: https://www.amazon.com/Ferrohydrodynamics-Dover-Books-Physics-Rosensweig/dp/0486678342 There is a Kindle Edition for $20, I should probably buy.
+\end{itemize}
+
+\subsection{Writing ToDo}
+
+\begin{itemize}
+\item This may be a useful reference: \url{https://hal.science/hal-03416758/document}
+\item This is a pump that uses a plug and two check valves: \url{https://www.researchgate.net/publication/37423698_A_ferrofluid_micropump_for_lab-on-a-chip_applications/figures?lo=1}
+  \item Write a new section on U-tube theory. Should I use a pen?
   \end{itemize}
+
+\section{Outline}
+
+
+\begin{outline}[enumerate]
+  \1 Introduction
+  \1 Theory of magnetostatic blobs and constant and non-constant fields
+     \2 Cracking / Collapse
+     \2 Tall U-pipe on a planet (or a centrifuge)
+     \2 Two chambers with ferrofluid in a magnetic field
+  \1 2D Valve in a chamber
+      \2 Veronica's result
+      \2 Informal Theory
+      \2 Math
+      \2 Performance of 2D valves
+  \1 3D case
+      \2 Math
+      \2 3D valve perfomance
+  \1 Scaling
+       \2 Math
+  \1 Conclusion and Future Work
+       \2 Scale down
+       \2 Improve performance
+       \2 Cooling, pumping
+\end{outline}
+
+
 
 \section{Introduction}
 
@@ -208,6 +255,41 @@ This paper has not studied the closing pressure of the PFCV, but reports on
 the opening (or cracking) pressure (for flow from inlet to outlet) and
 sustainable (or collapse) pressure
 when the outlet pressure is higher than the inlet side.
+
+\subsection{The 3D Valve of July 2024}
+
+On July 13, 2024, Joe Hershberger and I tested a 3D valve design that produced our
+best performance to date, have a $P$ factor of approximately 11.
+This valve is depicted in Fig.~\ref{fig:successful}
+
+\begin{figure}[h]
+\centerline{\includegraphics[width=4in,angle=180]{figure/3DDesignCheckValve.jpeg}}
+\caption{Successful 3D Valve}
+\label{fig:successful}
+\end{figure}
+
+The data produced for this valve is depicted in Table~\ref{tab:successful3d}
+
+\begin{table}[]
+  \label{fig:successful3d}
+  \begin{tabular}{l|l|l|l}
+    \hline
+    Trial Name & Cracking (cmH2O) & Collapse (cmH2O) &	Comment \\
+    \hline
+    \hline
+     X1 & 8 & 114 &   \\
+    \hline
+     X2 & 8 & 110  &    \\
+    \hline
+     X3 & 8 & 110 &    \\
+    \hline
+     X4 & 12 & 106 & 2" magnet instead of 1"  \\
+    \hline
+     X5 & 8 & 110 &  System held upside down in same configuration \\
+    \hline
+\end{tabular}
+\end{table}
+
 
 \section{Passive Ferrofluid Check Valve (PFCV) Design}
 %%%%%%%%%%%%%%%% begin figure %%%%%%%%%%%%%%%%%%%
