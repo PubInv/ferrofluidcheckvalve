@@ -133,6 +133,7 @@ and compare predicted performance to actual performance.
 \item Centrifugal force is $ F = m \omega^2 \rho$, where $\rho$ is the distance from the center of the rotating frame of
   reference. So we can make a perfectly linear force in that way.
 \item Get magnetohydrodynamics by Rosenweig - $250: https://www.amazon.com/Ferrohydrodynamics-Dover-Books-Physics-Rosensweig/dp/0486678342 There is a Kindle Edition for $20, I should probably buy.
+  \item ABSOLUTE MUST: Formulate and prove the perpendicular ferrofluid boundary theorem.
 \end{itemize}
 
 \subsection{Writing ToDo}
@@ -475,7 +476,86 @@ been not only to the weaker magnetic field, but the weakening at the
 top of the 2mm high channel, which was further away from the magnet
 in the single magnet configuration.
 
-\section{Theory of Operation (Best as of Apr. 25)}
+
+\section{Theory}
+
+In constructing a theory of one-way (check) valves with no moving parts except fluid,
+it is perhaps worth starting with some basics, because we are unlikely to
+be able to make valve competitive with solid valves on their own terms.
+
+\subsection{Definitions}
+
+A check valve has an {\em inlet port} and {\em outlet port}, and is intend to
+allow a fluid to flow from the inlet to the outlet, and prevent a fluid from
+flowing from the outlet to the inlet.
+A {\em fluid chec kvalve} means one which the only moving part is a fluid, in
+contrast to a {\em sold check valve} that has, for example, a ball or a flapper
+which moves slightly when the valve opens. A {\em ferrofluid check valve} is one
+that uses ferrofluid as its working fluid (NOT the fluid that it valves.)
+As is typical of check valves, define the {\em cracking pressure} as the
+pressure at which the valve allow flow from the inlet to the outlet.
+A {\em passive check valve} is a checkvalve that opens automatically,
+as opposed to, for example,  an electronically controlled valve that is
+opened by detecting the pressure in the inlet port and the outlet port (a {\em active checkvalve}.)
+This paper is about a design for an {\em passive ferrofluid check valve}.
+All valves potentially fail when the outlet port greatly exceeds the pressure
+on the inlet port. In a solid check valve this pressure difference may be
+so high that it not is stated as a performance metric of the valve. This will
+not be the case in the passive ferrofluid check valves discussed here.
+We call the pressure at which flow occurs from the outlet to the inlet as
+the {\em collapse pressure}.
+
+The primary metric that this paper attempts to optimize is the ratio of the
+collapse pressure to the cracking pressure, which we call the {\em collapse performance}
+of the valve. A higher collapse performance is better.
+
+\subsection{The U-tube As A Thought Experiment}
+
+Consider as a thought experiment the venerable U-tube. When filled with water,
+the U-tube acts as a manometer or pressure gauge. Call the arms of the U-tube
+$U$ and $V$. As the pressure in $U$ becomes higher than the pressure in $V$,
+the water is pushed down in $U$ and rises in $V$. The height of $V$ above
+the equilibrium point in centimeters is the gage pressure of $U$ over $V$
+expressed in $cmH2O$. In such a simple device the pressure can be literally
+measured as the height of a water column, allowing a slight confusion
+of the units of length with the units of pressure.
+Treated as pressure gauge, it can measure a pressure
+no higher than the height $H$ of the equilibrium point of water above the
+bottom of the ``U'', since if the water in the $U$ arm is pushed down
+to this point, it will continue and bubble away out the $V$ arm, which
+will not cause the $V$ arm to rise any further.
+
+Now, let us consider the U-tube as a passive fluid check valve.
+It will be a miserably low-performing valve. If we consider $U$ as
+the inlet point, the cracking pressure will be $H$. Being completely
+symmetric, the collapse pressure will also be $H$, hence the collapse
+performance will simple be $\frac{H}{H} = 1$. There seems to
+be no way practical way to build a U-tube like fluid check valve.
+
+If we allow the fantastic idea that the U-tube reaches hundreds of time
+higher than the Earth's diameter above the
+planets surface, and that $H$ is about the diameter of the Earth,
+then the gravity field will not be constant, but will
+be slowly decreasing with altitude. However, once again the system
+is completely symmmetric, so long as the area of the $U$ arm is the same
+as the $V$ arm. If, however, the area of the $U$ arm were 100 times higher
+than the area of the $V$ arm, the cracking pressure would be less than
+the collapse pressure. To calculate precisely how much, we would have to
+use calculus to integrate over the gravitational field.
+Qualitatively, however, it is easy to see that it would take much less pressure
+than $H$ to cause the valve to crack open, since gravity would pull down harder
+on the water in the $U$ arm, which would force the water in the $V$ arm
+100 times farther away from the surface of the Earth.
+Once the water gets very high, it is already in a weak gravitational field.
+The cracking pressure would be something grealy
+Howewver, adding pressure to $V$ arm would cause the level of the $U$ arm
+to rise only 1/100th as much, so the gravitational field would barely
+be affected, and the collapse pressure would be something a little less than $H$.
+By using a non-constant field, we could create a performant passive fluid check valve.
+
+
+\section{Other}
+
 
 Let us consider an ideal blob of ferrfoluid.
 \begin{itemize}
@@ -620,22 +700,199 @@ MagPyLib conveniently computes the field along this line. In particular,
 only the $x$ component (the East-West coordinate) of the B-field is relevant to us.
 The field was plotted with MagPyLib in Figure~\ref{fig:Bx}.
 
+\subsection{Some synthetic dimensional analysis}
+
+In the work that follows, we have need to relate the ability
+of a B-field complete perpendicular to thin plane to exert
+force in the plane by virtue of the change in potential energy.
+
+This seems to be beyond my power to define.
+As an approximation, we can create a fake unit, the
+``planar slope energy'' {\em PSE} unit, which is a factor
+which maps a change in the perpendicular B-field intensity
+into Pascals (Newtons per square meter).
+This artificial constant folds into the nature of the
+ferrofluid, the geometry of the plane.
+
+It could be experimentally determined with a manometer
+by placing a thin tube of known area in the planar
+space above a perpendicular magnetic field
+as depicted in the previous section.
+If by simulation (such as magpylib) we can know the
+maximum slope of the B field in the region of the
+thin tube, then the manometer will give us Pascals
+at the time of the collapse of the bolus.
+
+We will denote this constant $\Psi$, in memory of Pascal.
 
 \subsection{ A Thought Experiment }
 
 For a time we believed it was not possible to make a passive
 ferrofluid valve with no moving parts.
 In order to see that it is possible and to set up a mathematical
-framework, consider the thought experiment illustrated in Fig.~\ref{fig:thought}.
+framework, consider the thought experiment illustrated in Fig.~\ref{fig:centeredthought}.
 
 
+%% \begin{figure}
+%% \centerline{\includegraphics[width=6in]{figure/ThoughtExperiment.png}}
+%% \caption{Two chambers in communication with an linear B-field}
+%% \label{fig:thought}
+%% \end{figure}
 \begin{figure}
-\centerline{\includegraphics[width=6in]{figure/ThoughtExperiment.png}}
-\caption{Two chambers in communication with an linear B-field}
-\label{fig:thought}
+\centerline{\includegraphics[width=6in]{figure/ThoughtExperimentCentered.png}}
+\caption{Two centered on a  linear B-field}
+\label{fig:centeredthought}
 \end{figure}
 
-In this figures, two chambers containing ferrofluid are place in a similar
+Let $x_A$ be the position of the interface of area $A$ that fronts the pressures $P_A$.
+Let $x_B$ be the (signed negative) position of the interface of the area $B$ that
+faces the $P_B$ pressure. We will treat $P_A$ and $P_B$ as unsigned values.
+
+The magnetic field intensity $B(x)$ is perpendicular to the thin plane of interest.
+The hypothetical field $B(x)$ is linear betwen $-K$ and $K$, has a maximum at $B(0) = C$,
+and has discontinuous derivative at $B'(0) = \pm C/K$.
+
+\begin{align}
+  B(x) =
+    \begin{cases}
+      0  , & x \leq -K \\
+      C  \frac{xC}{K}  , & -K \leq x \leq 0  \\
+      C - \frac{xC}{K}  , & 0 \leq x \leq K \\
+      0  , & x \geq K
+    \end{cases}
+\end{align}
+
+Therefore:
+\begin{align}
+  B'(x) =
+    \begin{cases}
+      0  , & x \leq -K \\
+      \frac{C}{K}  , & -K \leq x \leq 0  \\
+      -\frac{C}{K}  , & 0 \leq x \leq K \\
+      0  , & x \geq K
+    \end{cases}
+\end{align}
+
+
+Assume that the magnetic field is strong enough to keep the bolus everywhere
+contiguous with itself (so that there is only one bolus), and that we can
+describe the configuration of the bolus only with the positions $x$ and $y$ (
+that is, the air-fluid interfaces in the cambers are perpendicular to the horizontal $X$ axis)
+we can write the
+volume $V$ as:
+\begin{align}
+  V = & x_BB + x_AA \\
+  x_B = & \frac{V - x_AA}{B} \\
+  x_A = & \frac{V - x_BB}{A}
+  \label{eqn:yvalue}
+\end{align}
+
+Thus $x_B$ and $x_A$ are in fact only one variable.
+
+In this model,  the narrowness of the plane to simplifies
+the problem. In this simplified model, we can assume
+that the potential energy of the magnetic system can be simply
+modeled by the presence or absence of ferrofluid at a point in the plane.
+The presence of ferrofluid at a point or infinitessimal area ($da$) decreases the potential energy $U$
+of the entire system in proportion to the strength of the field at a point,
+and that that strength is describe by our function $B(x)$ where $x$ is the
+distance from the origin (and thus the center of the face of the magnet).
+We can thus describe the potential energy as an integral over surface patches $da$:
+
+\begin{align}
+  U = \int
+\left\{
+    \begin{array}{lr}
+      B(a)  , & \text{if there is no ferrofluid at } a \\
+      0 , & \text{if there is ferrofluid at } a
+    \end{array}
+\right\} da
+\end{align}
+
+Thus the potential energy is highest when there is no ferrofluid at all,
+and lowest when the entire plane is full of ferrfluid.
+However, we will generally treat a bolus of fixed volume and assume
+that our plane is thin enough that it therefore has a fixed area.
+
+
+We are furthermore ignoring all effect of the ferrofluid
+interacting with itself in terms
+of the potential energy.
+However, we rely on the very important property of ferrofluid that
+it tends to clump together into a single blob in the presence
+of a magentic field.
+We will, in fact, assume that our blob or bolus is perfectly
+circular in the chamber,
+and a perfect rectangle in the channel. Furthermore,
+we assume the fluid is incompressible,
+and therefore always has the area $S$.
+This is true until the bolus collapses; we know that
+when it collapses it explodes drastically,
+and we do not attempt to model anything after
+a collapse event.
+
+Since the absolute potential energy of our system is irrelevant,
+it will be easier for us to treat the absolute potential energy $U$
+as zero and consider it to go down as ferrofluid is added.
+Since we only model the bolus when part of it is at the origin
+in our polar system, we can rewrite our potential energy as negative
+and measured against an absolute of zero:
+
+\begin{align}
+  U =  \int_0^{\infty} A B(x_A) \Psi dx + \int_{-\infty}^0 B B(x_B) \Psi dx \\
+\end{align}
+
+Due to Thereom~\ref{conj:mbf}, the forces acting on the bolus are purely a function
+of the two interface $A$ and $B$.
+The force caused by the magnetic field depends solely on the change in potential energy
+at each interface, which we have contrived to make simple.
+
+\begin{align}
+  \frac{\partial U}{\partial x_A} =  A B'(x_A) \Psi  \\
+  \frac{\partial U}{\partial x_B} = B B'(x_B) \Psi
+\end{align}
+Note that the SI units of $U$ is Joules, the units of $ B(x) \Psi$ is $\frac{N}{m^2}$,
+a Joule is a Newton meter ($J = N m$).
+The units of the derivative of potential energy with respect to the linear variable are
+thus Netwons, as we would hope.
+Our overall force on the bolus at equilibrium thus becomes:
+\begin{align}
+  0 = P_BB - P_AA +  A B'(x_A) \Psi dx + B B'(x_B) \Psi  \\
+  0 = P_BB - P_AA +  \Psi ( A B'(x_A) + B B'(x_B))
+\end{align}
+Note: the pressure is unsigned, to the $P_AA$ term is negated. The derivates are signed. The $A$ derivatve will be negative
+in the range of our consideration, which is $x_A \geq 0$.
+
+We can now compute the collapse pressure by setting $x_A = 0 + \epsilon$, where $\epsilon$ is a
+tiny number greater than $0$.
+In this case: $x_B = \frac{V}{B}$. Let us assume that $B$ and $V$ are chosen
+so that $B'(\frac{V}{B}) = 0$. We then have:
+\begin{align}
+  0 = & P_BB - P_AA +  -\Psi ( B \frac{C}{K} ) \\
+  P_AA =& P_B   -\Psi ( \frac{C}{K} ) \\
+  P_A =& \frac{B}{A} (P_B   -\Psi ( \frac{C}{K} )) \\
+\end{align}
+This value of $P_A$ is now the pressure at which the which the valve collapses.
+As we can see this goes up with $C$, up with $\Psi$, and down with $K$.
+
+To compute the cracking pressure, we set $x_B = 0-\epsilon$.
+In this case: $x_A = \frac{V}{A}$. In that range, since $x_A$ is likely
+less than $K$, is $-\frac{C}{K}$.
+We then have:
+\begin{align}
+  0 = P_BB - P_AA +  \Psi ( A B'(\frac{V}{A}) + B \frac{C}{K}) \\
+  0 = P_BB - P_AA +  \Psi ( -A \frac{C}{K} + B \frac{C}{K}) \\
+  0 = P_BB - P_AA +  \Psi \frac{C}{K} ( -A + B)  \\
+  P_BB =  P_AA +  \Psi \frac{C}{K} ( A + -B)  \\
+  P_B =  \frac{A}{B} P_A +  \Psi \frac{C}{K} ( \frac{A}{B} + -1)  \\
+\end{align}
+
+
+
+
+\subsection{old}
+
+In this figure, two chambers containing ferrofluid are place in a similar
 $B$ field. The chambers are in communication via a thin channel, so that that
 there is a single bolus of ferrofluid. Although it is quite difficult to
 construct a $B$ field which is linear, let us assume for the purpose of this
@@ -647,7 +904,7 @@ has a height of $Z$. Assume that they are encased in a very thin plane, so
 that we can ignore 3-dimensional effects, and so that the area of the bolus
 is proportional to the volume.
 
-Assume that the magentic field is strong enough to keep the bolus everywhere
+Assume that the magnetic field is strong enough to keep the bolus everywhere
 contiguous with itself (so that there is only one bolus), and that we can
 describe the configuration of the bolus only with the positions $x$ and $y$ (
 that is, the air-fluid interfaces in the cambers are perpendicular to the horizontal $X$ axis)
