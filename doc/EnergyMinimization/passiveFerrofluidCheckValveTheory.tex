@@ -584,11 +584,13 @@ simplifying assumptions.
 \begin{conjecture}[Magnetostatic Blob Minimization]
   \label{conj:mbf}
   The magnetostaic force on an ideal 2-dimensional blob
+  acted upon by a perpendicular magnetic field
   tends to minimize the potential energy in the blob
   and this occurs when its surfaces are in equal strength fields.
   Equivalently, every surface of a blob at rest with no outside
   forces is a line of equal field strength and all surfaces are equal.
 \end{conjecture}
+
 
 \begin{proof}
   Suppose there existed two pixels of the blob near the boundary,
@@ -630,6 +632,31 @@ Conversely, the cracking pressure will be minimized by
 making the field strength in the region B as low as possible
 at the point when the ferrfofuid has been entirely driven into
 region A by air pressure from the inlet.
+
+\begin{conjecture}[Magnetostatic Bolus Minimization]
+  \label{conj:mbf}
+  The magnetostatic force on an ideal 2-dimensional bolus
+  acted upon by a perpendicular magnetic field
+  is a function only of the derivative of the magnetic field
+  intensity integrated over the changeable path.
+\end{conjecture}
+
+\begin{proof}
+  The potential energy of the bolus in the magnetic field
+  is highest where the magnetic field is highest and there is
+  no ferrofluid, and lowest when ferrofluid fills the field.
+  Since ferrofluid is incompressible and is
+  contrived to be in a thin plane, this can be modeled as the
+  ferrofluid either being present (low potential energy) or not
+  (high potential energy.) This is thus a conservative force field.
+
+  Force done by the magnetic field decreases potential energy.
+  Force is the negative derivative of the potential energy.
+  At an instant in time, this depends only on the boundary of the
+  bolus. A surface patch which is not on the boundary cannot
+  instantaneously change, and therefore cannot change the potential
+  energy and exerts no force.
+ \end{proof}
 
 \subsection{How the Valve Cracks}
 
@@ -709,7 +736,7 @@ force in the plane by virtue of the change in potential energy.
 This seems to be beyond my power to define.
 As an approximation, we can create a fake unit, the
 ``planar slope energy'' {\em PSE} unit, which is a factor
-which maps a change in the perpendicular B-field intensity
+which coverts a change (derivative) in the perpendicular B-field intensity
 into Pascals (Newtons per square meter).
 This artificial constant folds into the nature of the
 ferrofluid, the geometry of the plane.
@@ -725,12 +752,17 @@ at the time of the collapse of the bolus.
 
 We will denote this constant $\Psi$, in memory of Pascal.
 
+
+
 \subsection{ A Thought Experiment }
 
-For a time we believed it was not possible to make a passive
-ferrofluid valve with no moving parts.
+It is perhaps surprising that it is possible to make a
+passive ferrofluid check valve at all.
 In order to see that it is possible and to set up a mathematical
-framework, consider the thought experiment illustrated in Fig.~\ref{fig:centeredthought}.
+framework that will be valuable later,
+consider the thought experiment illustrated in Fig.~\ref{fig:centeredthought}.
+This section could be considered an exercise, but
+later results will build directly on this approach.
 
 
 %% \begin{figure}
@@ -747,31 +779,21 @@ framework, consider the thought experiment illustrated in Fig.~\ref{fig:centered
 Let $x_A$ be the position of the interface of area $A$ that fronts the pressures $P_A$.
 Let $x_B$ be the (signed negative) position of the interface of the area $B$ that
 faces the $P_B$ pressure. We will treat $P_A$ and $P_B$ as unsigned values.
+Let the $y$ axis be the across across the valve (vertical in our drawing), and
+let the $z$ axis be coming out of the page toward the reader (a right-handed coordinate system.)
+Imagine that in the $z$ direction the ferrofluid is sandwich between two pieces of glass
+so thin that it the whole system may be treated as a 2-dimensional problem.
+
+
 
 The magnetic field intensity $B(x)$ is perpendicular to the thin plane of interest.
-The hypothetical field $B(x)$ is linear betwen $-K$ and $K$, has a maximum at $B(0) = C$,
-and has discontinuous derivative at $B'(0) = \pm C/K$.
-
+The formula:
 \begin{align}
-  B(x) =
-    \begin{cases}
-      0  , & x \leq -K \\
-      C  \frac{xC}{K}  , & -K \leq x \leq 0  \\
-      C - \frac{xC}{K}  , & 0 \leq x \leq K \\
-      0  , & x \geq K
-    \end{cases}
+  B(x) =& \frac{C}{1+(\frac{x}{K})^4} \\
+  B'(x) =& -\frac{4 C K^4 x^3}{(K^4 + x^4)^2}
 \end{align}
-
-Therefore:
-\begin{align}
-  B'(x) =
-    \begin{cases}
-      0  , & x \leq -K \\
-      \frac{C}{K}  , & -K \leq x \leq 0  \\
-      -\frac{C}{K}  , & 0 \leq x \leq K \\
-      0  , & x \geq K
-    \end{cases}
-\end{align}
+is observed by inspection with the $B$ field computed to match the shape of the B-field computed
+by MagPyLib from a cylindrical magnetic in a line in the plane perpendicular to the magnet axis.
 
 
 Assume that the magnetic field is strong enough to keep the bolus everywhere
@@ -787,16 +809,28 @@ volume $V$ as:
   \label{eqn:yvalue}
 \end{align}
 
-Thus $x_B$ and $x_A$ are in fact only one variable.
+Thus $x_B$ and $x_A$ are dpendent on each other, and are in fact only one variable.
 
-In this model,  the narrowness of the plane to simplifies
-the problem. In this simplified model, we can assume
+If we consider geometry qualitatively, we can imagine what will happen
+if the pressure is increased from the left or right, perhaps by blowing.
+Note that the volume of the bolus is chosen to be about a length of about $K$,
+half the length
+of the magnetic field in this $x$ direction, which is $2K$.
+If the pressure is increased from the right, the bolus will remain intact
+and be forced leftward as the pressure increases. If the pressure decreases,
+the bolus will move back right ward untill it is centered.
+Potential energy in this situation depends only on the position of the bolus,
+so the field a conservative mechanical field.
+
+
+In this model, the narrowness of the plane greatly simplifies the mechanics.
+In this simplified model, we can assume
 that the potential energy of the magnetic system can be simply
 modeled by the presence or absence of ferrofluid at a point in the plane.
-The presence of ferrofluid at a point or infinitessimal area ($da$) decreases the potential energy $U$
-of the entire system in proportion to the strength of the field at a point,
+The presence of ferrofluid at a point or infinitessimal line ($dx$) decreases the potential energy $U$
+of the entire system in proportion to the strength of the field at that position,
 and that that strength is describe by our function $B(x)$ where $x$ is the
-distance from the origin (and thus the center of the face of the magnet).
+distance from the origin.
 We can thus describe the potential energy as an integral over surface patches $da$:
 
 \begin{align}
@@ -818,76 +852,135 @@ that our plane is thin enough that it therefore has a fixed area.
 We are furthermore ignoring all effect of the ferrofluid
 interacting with itself in terms
 of the potential energy.
-However, we rely on the very important property of ferrofluid that
+This is an approximation; ferrofluid famously interacts with itself
+by producing ``spikes'' due to field instability.
+The theory we are developing is a good enough approximation
+to allow us to design a valve.
+However, we do rely on the very important property of ferrofluid that
 it tends to clump together into a single blob in the presence
 of a magentic field.
-We will, in fact, assume that our blob or bolus is perfectly
-circular in the chamber,
-and a perfect rectangle in the channel. Furthermore,
+Furthermore,
 we assume the fluid is incompressible,
-and therefore always has the area $S$.
+and therefore always has the volume $V$.
 This is true until the bolus collapses; we know that
 when it collapses it explodes drastically,
 and we do not attempt to model anything after
 a collapse event.
 
+If we imagine blowing harder and harder from the right, it is
+clear that when the $A$ face of the bolus reaches the origin,
+the bolus will explode of {\em collapse} to the left.
+This is true because by design $B$ is shorter than $A$, and
+so the integral across that line as the same line reflected across
+the origin (in the $A$) region will be lower by $B/A$, and the pressure
+has obviously been sufficient to overcome $A$.
+
 Since the absolute potential energy of our system is irrelevant,
 it will be easier for us to treat the absolute potential energy $U$
-as zero and consider it to go down as ferrofluid is added.
-Since we only model the bolus when part of it is at the origin
-in our polar system, we can rewrite our potential energy as negative
-and measured against an absolute of zero:
+as zero when there is no ferrofluid present at all and consider it to go down as ferrofluid is added.
+Thus a bolus at rest in a magnetic field has some potential energy which is
+less than zero.
 
+Note that pushing the bolus away from its equilibrium
+centered on the orign takes a small amount of work.
+We imagine an infinite source
+of air at pressure, so that we need not worry
+about our source air pressure lessening or not being able
+to ``do the work'' of pushing the bolus away from equilibrium.
+However, note that doing this work
+causes the potential energy to increase in the formula below.
+
+
+In the formuala below, we consider the region piecewise,
+broken into the $A$ and $B$ region.
+can reach.
 \begin{align}
-  U =  \int_0^{\infty} A B(x_A) \Psi dx + \int_{-\infty}^0 B B(x_B) \Psi dx \\
+  U_B = & -\int_{-\infty}^0 \int_{-\infty}^{\infty}  \Psi B(x_B) dy dx \\
+  U_B = & -\Psi\int_{-\infty}^0 B B(x_B)  dx  \\
+  U_B = & - \Psi B \int_{-\infty}^0 B(x_B)  dx
+\end{align}
+\begin{align}
+  U_A = & - \int_0^{\infty} \int_{-\infty}^{\infty} \Psi B(x_A) dy dx \\
+  U_A = & - \Psi\int_0^{\infty} A B(x_A) dx \\
+  U_A = & - \Psi A\int_0^{\infty} B(x_A) dx
 \end{align}
 
-Due to Thereom~\ref{conj:mbf}, the forces acting on the bolus are purely a function
-of the two interface $A$ and $B$.
-The force caused by the magnetic field depends solely on the change in potential energy
-at each interface, which we have contrived to make simple.
+
+
+Qualitatively, if the bolus is pushed by pressure to the left, the potential energy $U_B$
+goes down, because there is more ferrofluid there, but the potential energy $U_A$ goes up
+because there is less ferrofluid in that region. However, if $A$ and $B$ (the height of our space)
+are different, these will change at different rates. If pushed by air pressure from the
+right, the region $B$ actually tugs in the same direction (to the left), but it
+will be resisted more strongly by the $A$ region.
 
 \begin{align}
-  \frac{\partial U}{\partial x_A} =  A B'(x_A) \Psi  \\
-  \frac{\partial U}{\partial x_B} = B B'(x_B) \Psi
+  U = & U_B + U_A
+\end{align}
+
+
+Due to Thereom~\ref{conj:mbf}, the forces acting on the bolus are purely a function
+of the two interfaces $B$ and $A$.
+The force caused by the magnetic field depends solely on the change in potential energy
+at each interface, which we have contrived to make two simple lines.
+Let the total force in the $x$ direction on the bolus caused by the magnetic
+field be $F_M$. Note in Eq.~\ref{eq:magforce} below, the change in potential energy
+from the $A$ region will increase (the derivative is negative) and
+the change in potential energy will decrease in the $B$ region.
+The partial derivative with respect to $x$ in the $B$ region is negative, make its contribution
+to the force positive (in the $x$ direction), which the contribution to the force
+in the $A$ region is negative (in the $-x$ direction.) The force is in Newtons by virtue
+of the $\Psi$ coefficient.
+
+\begin{align}
+  F_M = & - (\frac{\partial U_A}{\partial x_A} +  \frac{\partial U_B}{\partial x_B}) \\
+  F_M =&  - \Psi ( A B'(x_A) + B B'(x_B))
+  \label{eq:magforce}
 \end{align}
 Note that the SI units of $U$ is Joules, the units of $ B(x) \Psi$ is $\frac{N}{m^2}$,
 a Joule is a Newton meter ($J = N m$).
 The units of the derivative of potential energy with respect to the linear variable are
-thus Netwons, as we would hope.
+thus Netwons, as we would hope. Let $F_P$ be the force on the bolus due the pressure $P_A$ and $P_B$.
+Let us consider both pressures to be positive. The $F_p = B P_B - A P_A$.
 Our overall force on the bolus at equilibrium thus becomes:
 \begin{align}
-  0 = P_BB - P_AA +  A B'(x_A) \Psi dx + B B'(x_B) \Psi  \\
+  0 = F_P + F_M
   0 = P_BB - P_AA +  \Psi ( A B'(x_A) + B B'(x_B))
 \end{align}
-Note: the pressure is unsigned, to the $P_AA$ term is negated. The derivates are signed. The $A$ derivatve will be negative
-in the range of our consideration, which is $x_A \geq 0$.
+The $\Psi$ factor converts the units to Newtons.
 
-We can now compute the collapse pressure by setting $x_A = 0 + \epsilon$, where $\epsilon$ is a
-tiny number greater than $0$.
-In this case: $x_B = \frac{V}{B}$. Let us assume that $B$ and $V$ are chosen
-so that $B'(\frac{V}{B}) = 0$. We then have:
-\begin{align}
-  0 = & P_BB - P_AA +  -\Psi ( B \frac{C}{K} ) \\
-  P_AA =& P_B   -\Psi ( \frac{C}{K} ) \\
-  P_A =& \frac{B}{A} (P_B   -\Psi ( \frac{C}{K} )) \\
-\end{align}
-This value of $P_A$ is now the pressure at which the which the valve collapses.
-As we can see this goes up with $C$, up with $\Psi$, and down with $K$.
+Note in this situation, the abillity of bolus to resist a pressure difference
+does not dependent dirctly on the strength of the magnet, but on the
+steepness of the slope or change in the magnetic field.
 
-To compute the cracking pressure, we set $x_B = 0-\epsilon$.
-In this case: $x_A = \frac{V}{A}$. In that range, since $x_A$ is likely
-less than $K$, is $-\frac{C}{K}$.
-We then have:
+The maximum force that the magnet can exert on the bolus can
+be computed by simply finding the position that maximizes $F_M$.
+The force at that point times $A$ will equal the collapse pressure.
+
 \begin{align}
-  0 = P_BB - P_AA +  \Psi ( A B'(\frac{V}{A}) + B \frac{C}{K}) \\
-  0 = P_BB - P_AA +  \Psi ( -A \frac{C}{K} + B \frac{C}{K}) \\
-  0 = P_BB - P_AA +  \Psi \frac{C}{K} ( -A + B)  \\
-  P_BB =  P_AA +  \Psi \frac{C}{K} ( A + -B)  \\
-  P_B =  \frac{A}{B} P_A +  \Psi \frac{C}{K} ( \frac{A}{B} + -1)  \\
+  F_M = & - (\frac{\partial U_A}{\partial x_A} +  \frac{\partial U_B}{\partial x_B}) \\
+  F_M =&  - \Psi ( - A \frac{4 C K^4 x_A^3}{(K^4 + x_A^4)^2} + - B \frac{4 C K^4 (\frac{V - x_AA}{B})^3}{(K^4 + (\frac{V - x_AA}{B})^4)^2}) \\
+  F_M =&   \Psi 4 C K^4 (  A \frac{ x_A^3}{(K^4 + x_A^4)^2} +  B \frac{ (\frac{V - x_AA}{B})^3}{(K^4 + (\frac{V - x_AA}{B})^4)^2})
+  \label{eq:magforce}
 \end{align}
 
+This is sufficient complex that Wolfram Alpha can't easily deal with it.
+Let us use qualitative reasoning and make the assumption that as $x_A$ decreases,
+as the $A$ edge moves toward the origin, the $B$ edge moves 3 times furthere
+away (if $A = 3B$) and is pushed into a region where the change in the $B$
+is very small, so that we can ignore it. Then the force on the bolus is:
 
+\begin{align}
+  F_M = & - (\frac{\partial U_A}{\partial x_A}  \\
+  F_M =&  - \Psi ( - A \frac{4 C K^4 x_A^3}{(K^4 + x_A^4)^2}) \\
+  F_M =&   \Psi 4 C K^4   A \frac{ x_A^3}{(K^4 + x_A^4)^2}
+  \label{eq:magforce}
+\end{align}
+
+For $\Psi = C = K = 1$ and $A = 3$, Wolram Alpha tells us this has a maximum value of
+3.19562 at $x_A = 0.88$, which is about what we would expect.
+
+But I need to make this whole analysis simpler and crisper.
 
 
 \subsection{old}
