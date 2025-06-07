@@ -756,66 +756,78 @@ We will denote this constant $\Psi$, in memory of Pascal.
 
 \subsection{ A Thought Experiment }
 
+TODO: Simplify this section.
+
 It is perhaps surprising that it is possible to make a
 passive ferrofluid check valve at all.
-In order to see that it is possible and to set up a mathematical
-framework that will be valuable later,
-consider the thought experiment illustrated in Fig.~\ref{fig:centeredthought}.
-This section could be considered an exercise, but
-later results will build directly on this approach.
+This section proves that it is possible by developing
+the mathematics as simply as possible in a contrived
+but physically realistic configuration.
+The principles developed here will be reused with
+more efficient geometries later.
 
 
-%% \begin{figure}
-%% \centerline{\includegraphics[width=6in]{figure/ThoughtExperiment.png}}
-%% \caption{Two chambers in communication with an linear B-field}
-%% \label{fig:thought}
-%% \end{figure}
+
 \begin{figure}
 \centerline{\includegraphics[width=6in]{figure/ThoughtExperimentCentered.png}}
 \caption{Two centered on a  linear B-field}
 \label{fig:centeredthought}
 \end{figure}
 
-Let $x_A$ be the position of the interface of area $A$ that fronts the pressures $P_A$.
-Let $x_B$ be the (signed negative) position of the interface of the area $B$ that
-faces the $P_B$ pressure. We will treat $P_A$ and $P_B$ as unsigned values.
+Consider the thought experiment illustrated in Fig.~\ref{fig:centeredthought}.
 Let the $y$ axis be the across across the valve (vertical in our drawing), and
 let the $z$ axis be coming out of the page toward the reader (a right-handed coordinate system.)
 Imagine that in the $z$ direction the ferrofluid is sandwich between two pieces of glass
 so thin that it the whole system may be treated as a 2-dimensional problem.
-
+The heavy dashed line represent the approximate edges of magnet placed underneath
+a thin plane contanined between two sheets of glass, constrained by the additional
+walls in black. The bolus of ferrofluid is rendered in blue. It creates
+two separated chambers, called $A$ and $Z$. The $A$ chamber is 3 times as high as the $Z$
+chamber. The volume of the bolus is chosen so that its area between the glass sheets
+is exactly 4 squares of length 1--3 in the chamber $A$ and 1 in the chamber $Z$.
+Let $x_A$ be the position of the interface of area $A$ that fronts the pressures $P_A$.
+Let $x_Z$ be the (signed negative) position of the interface of the area $Z$ that
+faces the $P_Z$ pressure. We will treat $P_A$ and $P_Z$ as unsigned values.
 
 
 The magnetic field intensity $B(x)$ is perpendicular to the thin plane of interest.
+We assume the magnet is large enough that $B$ does not depend on the $y$ position.
 The formula:
 \begin{align}
-  B(x) =& \frac{C}{1+(\frac{x}{K})^4} \\
-  B'(x) =& -\frac{4 C K^4 x^3}{(K^4 + x^4)^2}
+  B(x) =& \frac{1}{1+x^4} \\
+  B'(x) =& -\frac{ x^3}{(1 + x^4)^2} \\
+  B''(x) = & \frac{4 x^2 (5 x^4 - 3)}{(1 + x^4)^3}
 \end{align}
-is observed by inspection with the $B$ field computed to match the shape of the B-field computed
+is observed by inspection with the $B$ field computed to approximately match the shape of the B-field computed
 by MagPyLib from a cylindrical magnetic in a line in the plane perpendicular to the magnet axis.
+Using this polynomial approximation to a realistic $B$ field allows us to compute the
+first and second derivatives, which we will use later.
 
 
 Assume that the magnetic field is strong enough to keep the bolus everywhere
-contiguous with itself (so that there is only one bolus), and that we can
-describe the configuration of the bolus only with the positions $x$ and $y$ (
-that is, the air-fluid interfaces in the cambers are perpendicular to the horizontal $X$ axis)
-we can write the
-volume $V$ as:
+contiguous with itself (so that there is only one bolus.)
+In actually a ferrofluid bolus will exhibit the spikes that is is famous for, but
+we will ignore that minor effect,
+so that we can
+describe the configuration of the bolus only with the positions $x_A$ and $x_Z$.
+Since the fluid is incompressible and self-connected and does not very in $y$, there
+is only one degree of freedom in its position.
+Let $A = 3$,  the height of the $A$ chamber, and $Z = 1$, the height of the $Z$ chamber.
+Because the volume is fixed:
 \begin{align}
-  V = & x_BB + x_AA \\
-  x_B = & \frac{V - x_AA}{B} \\
-  x_A = & \frac{V - x_BB}{A}
+  V = & -Zx_Z + Ax_A \\
+  4 = & -x_Z + 3x_A \\
+  x_Z = & -4 + 3x_A \\
+  x_A = & \frac{4 + x_Z}{3}
   \label{eqn:yvalue}
 \end{align}
-
 Thus $x_B$ and $x_A$ are dpendent on each other, and are in fact only one variable.
 
 If we consider geometry qualitatively, we can imagine what will happen
 if the pressure is increased from the left or right, perhaps by blowing.
-Note that the volume of the bolus is chosen to be about a length of about $K$,
+Note that the volume of the bolus is chosen to be about
 half the length
-of the magnetic field in this $x$ direction, which is $2K$.
+of the appreciable magnetic field in this $x$ direction, which is $4$ units.
 If the pressure is increased from the right, the bolus will remain intact
 and be forced leftward as the pressure increases. If the pressure decreases,
 the bolus will move back right ward untill it is centered.
@@ -837,10 +849,10 @@ We can thus describe the potential energy as an integral over surface patches $d
   U = \int
 \left\{
     \begin{array}{lr}
-      B(a)  , & \text{if there is no ferrofluid at } a \\
-      0 , & \text{if there is ferrofluid at } a
+      B(x)  , & \text{if there is no ferrofluid at } x \\
+      0 , & \text{if there is ferrofluid at } x
     \end{array}
-\right\} da
+\right\} dx
 \end{align}
 
 Thus the potential energy is highest when there is no ferrofluid at all,
@@ -849,19 +861,19 @@ However, we will generally treat a bolus of fixed volume and assume
 that our plane is thin enough that it therefore has a fixed area.
 
 
+The theory we are developing is a good enough approximation
+to allow us to design a valve.
 We are furthermore ignoring all effect of the ferrofluid
 interacting with itself in terms
 of the potential energy.
 This is an approximation; ferrofluid famously interacts with itself
 by producing ``spikes'' due to field instability.
-The theory we are developing is a good enough approximation
-to allow us to design a valve.
 However, we do rely on the very important property of ferrofluid that
 it tends to clump together into a single blob in the presence
 of a magentic field.
 Furthermore,
 we assume the fluid is incompressible,
-and therefore always has the volume $V$.
+and therefore always has the volume $V = 4$.
 This is true until the bolus collapses; we know that
 when it collapses it explodes drastically,
 and we do not attempt to model anything after
@@ -870,9 +882,9 @@ a collapse event.
 If we imagine blowing harder and harder from the right, it is
 clear that when the $A$ face of the bolus reaches the origin,
 the bolus will explode of {\em collapse} to the left.
-This is true because by design $B$ is shorter than $A$, and
+This is true because by design $Z =1 $ is shorter than $A =3$, and
 so the integral across that line as the same line reflected across
-the origin (in the $A$) region will be lower by $B/A$, and the pressure
+the origin (in the $A$) region will be lower by $1/3$, and the pressure
 has obviously been sufficient to overcome $A$.
 
 Since the absolute potential energy of our system is irrelevant,
@@ -892,95 +904,88 @@ causes the potential energy to increase in the formula below.
 
 
 In the formuala below, we consider the region piecewise,
-broken into the $A$ and $B$ region.
+broken into the $A$ and $Z$ region.
 can reach.
 \begin{align}
-  U_B = & -\int_{-\infty}^0 \int_{-\infty}^{\infty}  \Psi B(x_B) dy dx \\
-  U_B = & -\Psi\int_{-\infty}^0 B B(x_B)  dx  \\
-  U_B = & - \Psi B \int_{-\infty}^0 B(x_B)  dx
+  U_Z = & -\int_{x_Z}^0 \int_{-\infty}^{\infty}  \Psi Z(x) dy dx \\
+  U_Z = & -\Psi\int_{x_Z}^0 Z B(x)  dx  \\
+  U_Z = & - \Psi Z \int_{x_Z}^0 B(x)  dx \\
+  U_Z = & - \Psi 1 \int_{ -4 + 3x_A}^0 B(x) dx \\
+  U_Z = &  \Psi  \int_{0}^{ -4 + 3x_A} B(x) dx
 \end{align}
 \begin{align}
-  U_A = & - \int_0^{\infty} \int_{-\infty}^{\infty} \Psi B(x_A) dy dx \\
-  U_A = & - \Psi\int_0^{\infty} A B(x_A) dx \\
-  U_A = & - \Psi A\int_0^{\infty} B(x_A) dx
+  U_A = &  -\int_0^{x_A} \int_{-\infty}^{\infty} \Psi B(x) dy dx \\
+  U_A = &  -\Psi\int_0^{x_A} 3 B(x) dx \\
+  U_A = &  -3 \Psi \int_0^{x_A} B(x) dx
 \end{align}
 
 
 
-Qualitatively, if the bolus is pushed by pressure to the left, the potential energy $U_B$
+Qualitatively, if the bolus is pushed by pressure to the left, the potential energy $U_Z$
 goes down, because there is more ferrofluid there, but the potential energy $U_A$ goes up
-because there is less ferrofluid in that region. However, if $A$ and $B$ (the height of our space)
+because there is less ferrofluid in that region. However, if $A$ and $Z$ (the height of our space)
 are different, these will change at different rates. If pushed by air pressure from the
-right, the region $B$ actually tugs in the same direction (to the left), but it
+right, the region $Z$ actually tugs in the same direction (to the left), but it
 will be resisted more strongly by the $A$ region.
 
 \begin{align}
-  U = & U_B + U_A
+  U = & U_A + U_Z
 \end{align}
 
 
 Due to Thereom~\ref{conj:mbf}, the forces acting on the bolus are purely a function
-of the two interfaces $B$ and $A$.
+of the two interfaces $Z$ and $A$.
 The force caused by the magnetic field depends solely on the change in potential energy
 at each interface, which we have contrived to make two simple lines.
 Let the total force in the $x$ direction on the bolus caused by the magnetic
 field be $F_M$. Note in Eq.~\ref{eq:magforce} below, the change in potential energy
 from the $A$ region will increase (the derivative is negative) and
-the change in potential energy will decrease in the $B$ region.
-The partial derivative with respect to $x$ in the $B$ region is negative, make its contribution
+the change in potential energy will decrease in the $Z$ region.
+The partial derivative with respect to $x$ in the $Z$ region is negative, make its contribution
 to the force positive (in the $x$ direction), which the contribution to the force
 in the $A$ region is negative (in the $-x$ direction.) The force is in Newtons by virtue
-of the $\Psi$ coefficient.
+of the $\Psi$ coefficient. In fact, we are assuming SI units, but a magnet 3 meters across
+is hardly realistic; we can assume scaling to realistic units can be pushed into the $\Psi$
+constant for conversion to actual force, and to account for the actual strength of the magnet in Teslas.
 
 \begin{align}
-  F_M = & - (\frac{\partial U_A}{\partial x_A} +  \frac{\partial U_B}{\partial x_B}) \\
-  F_M =&  - \Psi ( A B'(x_A) + B B'(x_B))
-  \label{eq:magforce}
-\end{align}
-Note that the SI units of $U$ is Joules, the units of $ B(x) \Psi$ is $\frac{N}{m^2}$,
-a Joule is a Newton meter ($J = N m$).
-The units of the derivative of potential energy with respect to the linear variable are
-thus Netwons, as we would hope. Let $F_P$ be the force on the bolus due the pressure $P_A$ and $P_B$.
-Let us consider both pressures to be positive. The $F_p = B P_B - A P_A$.
-Our overall force on the bolus at equilibrium thus becomes:
-\begin{align}
-  0 = F_P + F_M
-  0 = P_BB - P_AA +  \Psi ( A B'(x_A) + B B'(x_B))
-\end{align}
-The $\Psi$ factor converts the units to Newtons.
-
-Note in this situation, the abillity of bolus to resist a pressure difference
-does not dependent dirctly on the strength of the magnet, but on the
-steepness of the slope or change in the magnetic field.
-
-The maximum force that the magnet can exert on the bolus can
-be computed by simply finding the position that maximizes $F_M$.
-The force at that point times $A$ will equal the collapse pressure.
-
-\begin{align}
-  F_M = & - (\frac{\partial U_A}{\partial x_A} +  \frac{\partial U_B}{\partial x_B}) \\
-  F_M =&  - \Psi ( - A \frac{4 C K^4 x_A^3}{(K^4 + x_A^4)^2} + - B \frac{4 C K^4 (\frac{V - x_AA}{B})^3}{(K^4 + (\frac{V - x_AA}{B})^4)^2}) \\
-  F_M =&   \Psi 4 C K^4 (  A \frac{ x_A^3}{(K^4 + x_A^4)^2} +  B \frac{ (\frac{V - x_AA}{B})^3}{(K^4 + (\frac{V - x_AA}{B})^4)^2})
+  F_M = & - \frac{\partial U}{\partial x_A} \\
+  F_M = &- (\frac{\partial U_A}{\partial x_A} +  \frac{\partial U_Z}{\partial x_A}) \\
+  F_M =  & - (- \frac{\partial }{\partial x_A}  \Psi 3\int_0^{x_A} B(x) dx +
+  \frac{\partial }{\partial x_Z}
+ \Psi  \int_{0}^{ -4 + 3x_A} B(x) dx)
+  && \text{by substitution} \\
+  F_M =  & (3  \Psi B(x_A)  +
+  - \Psi  B( -4 + 3x_A) ) && \text{by the Fundamental Theorem of Calculus} \\
+  F_M =  &  \Psi ( 3 B(x_A)  +
+   -B(-4 + 3x_A) ) && \text{by substitution} \\
+  F_M =  & \Psi (\frac{3}{1+x_A^4}  +
+    \frac{-1}{1+(-4 + 3x_A)^4}  ) && \text{by substitution}
   \label{eq:magforce}
 \end{align}
 
-This is sufficient complex that Wolfram Alpha can't easily deal with it.
-Let us use qualitative reasoning and make the assumption that as $x_A$ decreases,
-as the $A$ edge moves toward the origin, the $B$ edge moves 3 times furthere
-away (if $A = 3B$) and is pushed into a region where the change in the $B$
-is very small, so that we can ignore it. Then the force on the bolus is:
+Now we have an expression for $F_M$ as a function of $x_A$.
+By maximizing $F_M$, we can find the maximum force that the bolus can withstand.
+This force on the bolus due to magnetism is maximized at $x \approx -0.088917$
+when $F_m = 2.9968 \Psi$. We can predict the bolus will collapse when the
+pressure due to $P_A$ exceeding $P_Z$ is $P_A A = 3 P_A$ Newtons, or
+nearly $\Psi$ Pascals.
 
-\begin{align}
-  F_M = & - (\frac{\partial U_A}{\partial x_A}  \\
-  F_M =&  - \Psi ( - A \frac{4 C K^4 x_A^3}{(K^4 + x_A^4)^2}) \\
-  F_M =&   \Psi 4 C K^4   A \frac{ x_A^3}{(K^4 + x_A^4)^2}
-  \label{eq:magforce}
-\end{align}
+The cracking pressure cannot be computed this way, because once
+air pressure from the left as caused $x_Z = 0$, the bubble will move
+out and will be ``pinched off'' and escape.
+To compute the cracking force, we neeed to compute the force at $x_z = 0$,
+where $x_A = \frac{4}{3}$. At this point, the force is $\frac{-94}{337}  \Psi \approx -0.278932  \Psi$.
+To reach this point, the pressure force induced by the pressure from the $Z$
+region is $Z P_Z = P_Z $ Newtons, or $P_Z = -0.278932  \Psi$.
+Since $|-0.278932| < 1$, we have constructed a assymetric valve.
 
-For $\Psi = C = K = 1$ and $A = 3$, Wolram Alpha tells us this has a maximum value of
-3.19562 at $x_A = 0.88$, which is about what we would expect.
+Air can pass from left to right at a pressure of about one third of the
+pressure that will cause the valve to collapse if applied from the right.
+Compared to a valve made out of solid steel or plastic, this would be considered
+a very poor-performing valve. Nonetheless, it is unquestionable a
+passive ferrofluid check valve.
 
-But I need to make this whole analysis simpler and crisper.
 
 
 \subsection{old}
