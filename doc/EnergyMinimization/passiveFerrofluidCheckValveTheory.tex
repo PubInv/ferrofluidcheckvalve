@@ -582,7 +582,7 @@ Under suitable assumptions, we can state two drastically
 simplifying assumptions.
 
 \begin{conjecture}[Magnetostatic Blob Minimization]
-  \label{conj:mbf}
+  \label{conj:mbf1}
   The magnetostaic force on an ideal 2-dimensional blob
   acted upon by a perpendicular magnetic field
   tends to minimize the potential energy in the blob
@@ -754,9 +754,8 @@ We will denote this constant $\Psi$, in memory of Pascal.
 
 
 
-\subsection{ A Thought Experiment }
-
-TODO: Simplify this section.
+\section{ An Extermely Simple Geometry }
+\label{sec:simplegeometry}
 
 It is perhaps surprising that it is possible to make a
 passive ferrofluid check valve at all.
@@ -798,9 +797,7 @@ The magnetic field intensity $B(x)$ is perpendicular to the thin plane of intere
 We assume the magnet is large enough that $B$ does not depend on the $y$ position.
 The formula:
 \begin{align}
-  B(x) =& \frac{1}{1+x^4} \\
-  B'(x) =& -\frac{ x^3}{(1 + x^4)^2} \\
-  B''(x) = & \frac{4 x^2 (5 x^4 - 3)}{(1 + x^4)^3}
+  B(x) =& \frac{1}{1+x^4}
 \end{align}
 is observed by inspection with the $B$ field computed to approximately match the shape of the B-field computed
 by MagPyLib from a cylindrical magnetic in a line in the plane perpendicular to the magnet axis.
@@ -1037,13 +1034,144 @@ passive ferrofluid check valve.
 It is a novel invention and perhaps not at all obvious that it is possible to make
 a one-way valve out of nothing but ferrofluid in a shaped chamber in a magnetic field.
 
+A weakness of the theory in this section is that the
+volume of the bolus was chosen somewhat arbitrarily to
+make the math and geometry easy to understand.
+It provides no insight into if the valve would be more performant
+with more or less ferrofluid.
+
 Such a low-performing valve could even be useful in some lab-on-a-chip applictions.
 However, the geometry of this section was chosen only for illustration.
 The reader can no doubt imagine ways to improve it, as we will explore in the
 next sections.
+
 We have measure performance ratios of approximately 10, as described
 in Table~\ref{tab:successful3d}.
 
+\subsection{An Informal Explanation of the Theory}
+
+It is valuable to have an informal explanation of why
+the valve works.
+There are two fundamental insights:
+\begin{itemize}
+\item a non-magnetic fluid that moves into a chamber with
+  decreasing magnetic gradient will ``bubble out'' by following
+  the gradient away from the magnet
+\item if the geometry of the inlet is such that as
+  the ferrofluid is pushed toward the stronger part of the field
+  the fluid displaced into the outlet is moved into a strong field,
+  it will partially offset the rise in potentially energy.
+  In other words, the field in the outlet can act as a
+  ``counterweight'' to the displacement of the inlet.
+  Conversely, if the displaced fluid in the inlet is in
+  a place of a low magnetic field, for example, by being
+  far awy from the magnet, it will not balance the force
+  needed to remove the outlet fluid from the field,
+  thus allowing a high collapse pressure.
+\end{itemize}
+
+We might ask, is it possible to build such a valve
+using simple water in a gravitational field.
+I claim this is not possible under realistic circumstances
+because the gravitation field does not vary in practice.
+
+I believe it might be possible to build such a valve
+out of water if it were place on the arm of centrifuge,
+where centrifugal force varies linearly.
+It is difficult to see the value of such a speciallized
+situation, which is very far removed from lab-on-a-chip
+or related fluid handling situations.
+
+\section{ A More Performant 2D Radial Geometry  }
+
+We reported on an early physical model of the PFCV in a
+preprint\cite{stuckeyPreprint}
+before we understood the theory presented here.
+That model used a cylindrical magnet in a 2D plane using a
+geometry similar to the geometry developed in the previous section.
+
+
+After understanding the theory better and designing a fully
+radial geometry and ensuring that our ferrofluid bolus
+was smaller than the radius of our cylindrical magnet,
+we improved our valve design, creating a radial 2D desgin,
+a photograph of which is shown in Fig.~\ref{fig:2dRadial}.
+A schematic of this geometry, which can be seen as
+a modification of the linear system previously presented,
+is depicted in Fig.~\ref{fig:ChannelToChamber}.
+
+\begin{figure}
+\centerline{\includegraphics[width=4in]{figure/2DPFCV.png}}
+\caption{2D Radial PFCV}
+\label{fig:2dRadial}
+\end{figure}
+
+on the early results as defined here as
+reported in Table~\ref{tab:best2D}.
+
+This trial occured at an estimated bolus diameter of
+0.355'', or an area of 0.396 square inches.
+It was obseverd that if the bolus as as large
+as the area of the cylindrical face of the magnet,
+the cracking pressure rose drastically, destroying the performance.
+This accord with our informal theory: if the edge of the bolus
+in the outlet is {\em already} in a weak magnetic field because
+it is too large, then it provides no counterbalance, causing the
+cracking pressure to rise drastically.
+
+This represents a performance ratio of greater than 7.
+\begin{table}[]
+  \label{tab:best2D}
+  \begin{tabular}{l|l|l|l}
+    \hline
+    Trial Name & Cracking (cmH2O) & Collapse (cmH2O) &	Comment \\
+    \hline
+    \hline
+     X1 & 8.7 & 62.0 &   \\
+    \hline
+     X2 & 8.8 & 64.3  &    \\
+    \hline
+     X3 & 8.9 & 63.5 &    \\
+    \hline
+\end{tabular}
+\end{table}
+\footnote{This data was collected with a manometer rated
+for low, but which provided more accuracy than in other tables.}
+
+\begin{figure}
+\centerline{\includegraphics[width=4in]{figure/ChannelToChamber.png}}
+\caption{2D Radial Valve Scheme}
+\label{fig:ChannelToChamber}
+\end{figure}
+
+The 2D radial design, when placed in the radial field created
+at the end of a cylindrical magnet, can be seen as a mutation
+of the linear valve presented in Sec.~\ref{sec:simplegeometry}.
+It greatly increases the surface area in the outlet compared
+to the surface area of the inlet, but allowing it to rotate
+around nearly the full circumference of a circle.
+This geometry forces us to use a polar coordinate system.
+However, since it is almost complete radially symmetric,
+we will never have to consider the angle in the polar
+coordinate system.
+
+The $B$ field of the magnet will be modelled the same
+way, but we now think of it as a function of the distance
+from the origin, rather than the $x$ coordinate:
+\begin{align}
+  B(r) =& \frac{1}{1+r^4}
+  \label{eq:cylindricalmagnet}
+\end{align}
+We used cylindrical magnets 1 inch long and 1/2 inch in
+diameter.
+We can take the units of $r$ in Eq.~\ref{eq:cylindricalmagnet}
+to be in inches.
+MagPyLib suggests the field of such a magnet is
+actually a little steeper than Eq.~\ref{eq:cylindricalmagnet},
+but we will continue to use this.
+
+Our equation of the volume (or area) of the ferrofluid bolus
+is now quite different.
 
 
 
