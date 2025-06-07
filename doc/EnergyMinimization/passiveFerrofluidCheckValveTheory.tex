@@ -272,7 +272,7 @@ This valve is depicted in Fig.~\ref{fig:successful}
 The data produced for this valve is depicted in Table~\ref{tab:successful3d}
 
 \begin{table}[]
-  \label{fig:successful3d}
+  \label{tab:successful3d}
   \begin{tabular}{l|l|l|l}
     \hline
     Trial Name & Cracking (cmH2O) & Collapse (cmH2O) &	Comment \\
@@ -779,12 +779,16 @@ Let the $y$ axis be the across across the valve (vertical in our drawing), and
 let the $z$ axis be coming out of the page toward the reader (a right-handed coordinate system.)
 Imagine that in the $z$ direction the ferrofluid is sandwich between two pieces of glass
 so thin that it the whole system may be treated as a 2-dimensional problem.
+This allows us to confuse the concepts of volume and area, because the volume
+of the bolus will always be proportional to its area.
 The heavy dashed line represent the approximate edges of magnet placed underneath
 a thin plane contanined between two sheets of glass, constrained by the additional
 walls in black. The bolus of ferrofluid is rendered in blue. It creates
-two separated chambers, called $A$ and $Z$. The $A$ chamber is 3 times as high as the $Z$
+two separated chambers, called $A$ (the outlet) and $Z$ (the inlet).
+The $A$ chamber is 3 times as high as the $Z$
 chamber. The volume of the bolus is chosen so that its area between the glass sheets
-is exactly 4 squares of length 1--3 in the chamber $A$ and 1 in the chamber $Z$.
+is exactly 4 squares of length 1.
+That is, there are are 3 squares in the chamber $A$ and 1 in the chamber $Z$.
 Let $x_A$ be the position of the interface of area $A$ that fronts the pressures $P_A$.
 Let $x_Z$ be the (signed negative) position of the interface of the area $Z$ that
 faces the $P_Z$ pressure. We will treat $P_A$ and $P_Z$ as unsigned values.
@@ -911,15 +915,15 @@ can reach.
   U_Z = & -\Psi\int_{x_Z}^0 Z B(x)  dx  \\
   U_Z = & - \Psi Z \int_{x_Z}^0 B(x)  dx \\
   U_Z = & - \Psi 1 \int_{ -4 + 3x_A}^0 B(x) dx \\
-  U_Z = &  \Psi  \int_{0}^{ -4 + 3x_A} B(x) dx
+  U_Z = &  \Psi  \int_{0}^{ -4 + 3x_A} B(x) dx \\
+  U_Z = &  \Psi  \int_{0}^{ -4 + 3x_A} \frac{1}{1+x^4} dx
 \end{align}
 \begin{align}
   U_A = &  -\int_0^{x_A} \int_{-\infty}^{\infty} \Psi B(x) dy dx \\
   U_A = &  -\Psi\int_0^{x_A} 3 B(x) dx \\
-  U_A = &  -3 \Psi \int_0^{x_A} B(x) dx
+  U_A = &  -3 \Psi \int_0^{x_A} B(x) dx \\
+  U_A = &  -3 \Psi \int_0^{x_A} \frac{1}{1+x^4} dx
 \end{align}
-
-
 
 Qualitatively, if the bolus is pushed by pressure to the left, the potential energy $U_Z$
 goes down, because there is more ferrofluid there, but the potential energy $U_A$ goes up
@@ -952,179 +956,96 @@ constant for conversion to actual force, and to account for the actual strength 
   F_M = & - \frac{\partial U}{\partial x_A} \\
   F_M = &- (\frac{\partial U_A}{\partial x_A} +  \frac{\partial U_Z}{\partial x_A}) \\
   F_M =  & - (- \frac{\partial }{\partial x_A}  \Psi 3\int_0^{x_A} B(x) dx +
-  \frac{\partial }{\partial x_Z}
+  \frac{\partial }{\partial x_A}
  \Psi  \int_{0}^{ -4 + 3x_A} B(x) dx)
   && \text{by substitution} \\
   F_M =  & (3  \Psi B(x_A)  +
-  - \Psi  B( -4 + 3x_A) ) && \text{by the Fundamental Theorem of Calculus} \\
-  F_M =  &  \Psi ( 3 B(x_A)  +
+  - \Psi \cdot 3 B(-4 + 3x_A) ) && \text{by the Fundamental Theorem of Calculus} \\
+  F_M =  &  \Psi 3 ( B(x_A)  +
    -B(-4 + 3x_A) ) && \text{by substitution} \\
-  F_M =  & \Psi (\frac{3}{1+x_A^4}  +
+  F_M =  & \Psi 3 (\frac{1}{1+x_A^4}  +
     \frac{-1}{1+(-4 + 3x_A)^4}  ) && \text{by substitution}
   \label{eq:magforce}
 \end{align}
 
-Now we have an expression for $F_M$ as a function of $x_A$.
+
+\begin{figure}
+\centerline{\includegraphics[width=6in]{figure/F_MVsX_A.png}}
+\caption{Magnetic Force on Bolus as a function of $X_A$}
+\label{fig:forceVsX_A}
+\end{figure}
+
+Now we have an expression for $F_M(X_A)$ as a function of $x_A$,
+which is graphed in Fig.~\ref{fig:forceVsX_A}.
+Note first that $F_M(1) = 0$, as we would hope---this is when
+the bolus is in equilibrium. It is ``centered'' in the magnetic
+field, and as per Theorem~\ref{conj:mbf}, the field at the boundaries
+is exactly the same (that is $X_A = 1 \rightarrow X_Z = -1 \wedge
+B(1) = B(-1)$.
+If the bolus is pushed to the right, $F_M$ becomes negative, meaning
+it is pulled to the left by the magnet. If it is pushed to left,
+it is pulled to the right by the magnet.
+
 By maximizing $F_M$, we can find the maximum force that the bolus can withstand.
-This force on the bolus due to magnetism is maximized at $x \approx -0.088917$
-when $F_m = 2.9968 \Psi$. We can predict the bolus will collapse when the
+From Wolfram Alpha,
+the force on the bolus due to magnetism is maximized at $x \approx -0.12327$
+when $F_m = 2.9911 \Psi$. We can predict the bolus will collapse when the
 pressure due to $P_A$ exceeding $P_Z$ is $P_A A = 3 P_A$ Newtons, or
 nearly $\Psi$ Pascals.
+
+The shape of  $F_M$ has flattish region near the maximum. In practice,
+when the bolus reaches this point, the pressure, which is assumed to
+be unabated by the increase in volume in the change $A$, will quickly
+push the bolus completely into the $Z$ region. This creates a drastic
+``spurt'', which is catastrophic on the minor scale of the valve.
+The ferrofluid spurts audibly down the $Z$ region. We always
+add a chamber to our valves that open up, releiving the pressure and
+allowing the ferrofluid to be recollected after a collapse.
+One may conjecture that at some scale air could pass throug the
+ferrofluid bolus once it is no long self-magnetized by a strong
+field, but in practice in the sub-centimeter scale where we work
+we have not observed this.
 
 The cracking pressure cannot be computed this way, because once
 air pressure from the left as caused $x_Z = 0$, the bubble will move
 out and will be ``pinched off'' and escape.
+The cracking open of the valve is not at all violent and does not
+disrupt the ferrofluid, because the air is moving into a larger
+chamber and can simply bubble through the ferrofluid.
 To compute the cracking force, we neeed to compute the force at $x_z = 0$,
-where $x_A = \frac{4}{3}$. At this point, the force is $\frac{-94}{337}  \Psi \approx -0.278932  \Psi$.
+where $x_A = \frac{4}{3}$. Note this is close to not precisely where $F_M(x_A)$
+is minimized, which occurs at $x_A = 1.4434$, not $x_A = 1.33333$
+
+At this point, the force is $\frac{-768}{337}  \Psi \approx -2.27893  \Psi$.
 To reach this point, the pressure force induced by the pressure from the $Z$
-region is $Z P_Z = P_Z $ Newtons, or $P_Z = -0.278932  \Psi$.
-Since $|-0.278932| < 1$, we have constructed a assymetric valve.
+region is $Z P_Z = P_Z $ Newtons, or $P_Z = -2.27893  \Psi$.
+Since $|-2.27893| < 2.9911 $, we have constructed an assymetric valve.
+We define the {\em performance ratio P} of a passive ferrofluid check valve
+to be the ratio of the collapse pressure to the cracking pressure.
+\begin{align}
+  P = \frac{\text{Collapse Pressure}}{\text{Crack Pressure}}
+\end{align}
+The performance ratio is apparently independent of $\Psi$ and the strengh
+of the magnetic field.
+The performance ratio of this valve is $\frac{2.9911}{2.27893} \approx 1.3125$.
 
-Air can pass from left to right at a pressure of about one third of the
-pressure that will cause the valve to collapse if applied from the right.
 Compared to a valve made out of solid steel or plastic, this would be considered
-a very poor-performing valve. Nonetheless, it is unquestionable a
+a very poor-performing valve. A solid valve would be expected to have a performance
+meaured in hundreds or thousands.
+Nonetheless, it is unquestionably a
 passive ferrofluid check valve.
+It is a novel invention and perhaps not at all obvious that it is possible to make
+a one-way valve out of nothing but ferrofluid in a shaped chamber in a magnetic field.
+
+Such a low-performing valve could even be useful in some lab-on-a-chip applictions.
+However, the geometry of this section was chosen only for illustration.
+The reader can no doubt imagine ways to improve it, as we will explore in the
+next sections.
+We have measure performance ratios of approximately 10, as described
+in Table~\ref{tab:successful3d}.
 
 
 
-\subsection{old}
-
-In this figure, two chambers containing ferrofluid are place in a similar
-$B$ field. The chambers are in communication via a thin channel, so that that
-there is a single bolus of ferrofluid. Although it is quite difficult to
-construct a $B$ field which is linear, let us assume for the purpose of this
-experiment that the $B$ field is perfectly linear and goes to zero at
-point $K$, and is a maximized at $x=0$, where it is $C$. This might actually
-be accomplished with two magnetic fields far from each other, but we show
-them on one diagram. The $A$ chamber has a height of $A$ and the $Z$ chamber
-has a height of $Z$. Assume that they are encased in a very thin plane, so
-that we can ignore 3-dimensional effects, and so that the area of the bolus
-is proportional to the volume.
-
-Assume that the magnetic field is strong enough to keep the bolus everywhere
-contiguous with itself (so that there is only one bolus), and that we can
-describe the configuration of the bolus only with the positions $x$ and $y$ (
-that is, the air-fluid interfaces in the cambers are perpendicular to the horizontal $X$ axis)
-we can write the
-volume $V$ as:
-\begin{align}
-  V = & xA + yZ \\
-  y = & \frac{V - xA}{Z} \\
-  x = & (V - y Z)/A
-  \label{eqn:yvalue}
-\end{align}
-From experiments perfomed by the authors, we know what if the air pressure in
-the $A$ and $Z$ chambers are the same, and the bolus is at rest, $x = y$.
-We would like to prove this configuration minimizes the potential energy.
-
-Considering only one chamber, the potential energy is minimized, which
-we will call $0$, when the chamber is full of ferrofluid, that is, when
-there is fluid between 0 and $K$. It is the lack of ferrofluid that has
-potential energy.
-
-On the range $0 \leq q \leq K$,
-\begin{align}
-  B(q) = & -qC/K + C \\
-\end{align}
-
-Under our assumptions that the fluid is incompresable and homogenous,
-we can then write the potential energy $U$ of each chamber as:
-\begin{align}
-  U_A = &\int_x^K B(q) f_A(q) dq \\
-  U_Z = & \int_y^K B(q) f_Z(q) dq \\
-\end{align}
-where $f_A(x)$ is just the size of the boundary of the ferrofluid in the channel.
-In this thought experiment, this is a linear length, but we will soon generalize the boundary to a three dimensional surface.
-In this simple case, that boundary is constant, so $f_A(q) = A$, and
-$f_Z(q) = Z$.
-So,
-\begin{align}
-  U_A = & A \int_x^K B(q) dq \\
-  U_Z = & Z \int_y^K B(q) dq \\
-\end{align}
-
-Performing some calculations:
-\begin{align}
-  U = &A \int_x^K B(q) dq + Z \int_y^K B(q) dq \\
-  U = &A \int_x^K (\frac{-qC}{K} + C) dq + Z \int_y^K (\frac{-qC}{K} + C) dq \\
-  U = &A \frac{C (K - x)^2}{2 K} + Z \frac{C (K - y)^2}{2 K} \\
-  U = & \frac{C}{2K} \left( A  (K - x)^2 + Z (K - y)^2 \right) \\
-  U = & \frac{C}{2K} \left( A  (K - x)^2 + Z (K - \frac{V - xA}{Z})^2 \right) \\
-  U = & \frac{C}{2K} \left( A  (K - x)^2 + \frac{(K Z - V + A x)^2}{Z} \right) \\
-\end{align}
-...we now have an expression for the potential energy expressed solely as a function of constants
-and the variable $x$. We can minimize this expression by taking the derivative with respect
-to $x$ and setting it to zero:
-\begin{align}
-  \frac{\partial U}{\partial x} = & \frac{C}{2K} \frac{(2 A (x (A + Z) - V))}{Z} \\
-  \frac{\partial U}{\partial x} = & (A C (x (A + Z) - V))/(K Z) \\
-  0 = &  (A C (x (A + Z) - V))/(K Z)\\
-  x = & \frac{V}{A + Z} \\
-\end{align}
-Plugging this value into Eqn.~\ref{eqn:yvalue}, we find:
-\begin{align}
-  y = & \frac{V}{A + Z}
-\end{align}
-In other words, $x = y$. The two chambers, no matter their heights, will have
-the same level of ferrofluid when at rest. This is what we have observed in
-physical experiments, and it gives us confidence that our expression for the
-potential energy is correct.
-
-\subsection{Asymmetric Force}
-
-We would now like to answer the question: Can the two chambers with stand
-different pressures, or is something additional required for that to happen?
-In particular, it is possible that either the B-field of the shape of the chambers
-might have to change, so this is an interesting question.
-
-Now let us consider the pressures that these two chambers can resist before
-the bolus collapses. If we increase the pressure in one chamber, the
-bolus will be driven away from the pressure until a stable point a found.
-When the pressure becomes high enough, the bolus will be drive past a point
-of maximum sustainable force, and the bolus will collapse. If we think
-of this as a valve, the valve will fail to resist the pressure.
-
-Force times distance is work, and work increase potential energy.
-Therefore force exerted by the bolus can be computed as the negative of the change in potential energy.
-(The force exerted on the bolus will be the positive of the potential energy.)
-Let us assign reasonable values to $A,Z,V,C,$ and $K$:
-\begin{align}
-  A &= 1 \\
-  Z &= 3 \\
-  K &= 7 \\
-  V &= 12 \\
-  C &= 4
-\end{align}
-Then our expression for potential energy becomes:
-\begin{align}
-  U = &\frac{C}{2K} \left( A  (K - x)^2 + \frac{(K Z - V + A x)^2}{Z} \right) \\
-  U = &\frac{4}{14} \left(   (7 - x)^2 + \frac{(9 +  x)^2}{3} \right) \\
-  \frac{\partial U}{\partial x} = &(A C (x (A + Z) - V))/(K Z) \\
-  \frac{\partial U}{\partial x} = & (4 (x (4) - 12))/(21) \\
-  \frac{\partial U}{\partial x} = & \frac{16}{21} (x - 3)
-\end{align}
-
-Computing this in terms of $y$ becomes:
-\begin{align}
-  U = & \frac{C}{2K} \left( A  (K - x)^2 + Z (K - y)^2 \right) \\
-  U = & \frac{4}{14} \left(   (-5 - 3y)^2 + 3 (7 - y)^2 \right) \\
-  \frac{\partial U}{\partial y} &= \frac{24}{7} (-1 + 2 y)
-  \end{align}
-
-
-The force exerted by the bolus, measured in the $+X$ direction, is $-\frac{\partial U}{\partial x}$.
-That means the force exerted by the bolus is:
-\begin{align}
-  F_A(x) &= \frac{16}{21} (3 + -x) \\
-  F_B(y) &= \frac{24}{7} (1 + -2 y)
-\end{align}
-This means that at their strongest points (when $x = 0$ and $y =0$), the
-forces that bolus exerts against pressure is different (16/7 vs. 24/7).
-
-Thus we have proved that from simple geometry we can make an asymmetric
-check valve, albeit a very low performing one.
-QED.
 
 \subsection{Generalizing to Different Geometries}
 
@@ -1189,44 +1110,6 @@ relying on Wolfram alpha to differentiate the improper integral, we have:
 Since $g_A(x)$ is the area and force is area times pressure, the pressure that the $A$ chamber
 can withstand is a function {\em purely} of the strength of the $B(x)$. This suggest that we
 define the most intense B-field that we can, likely by creating a small air gap.
-
-\subsection{Checking this math against previous calculation}
-
-Now let us check this math against the previous section.
-In the previous section, we computed:
-
-\begin{align}
-  U_A = & A \int_x^K B(q) dq \\
-\end{align}
-we can differentitate dirrectly as:
-\begin{align}
-  \frac{\partial U_A}{\partial x} = & A \frac{\partial}{\partial x} \int_x^K B(q) dq \\
-  \frac{\partial U_A}{\partial x} = & -A (\frac{-Cx}{K} + C) \\
-  \frac{\partial U_A}{\partial x} = &  AC(\frac{x}{K} + -1) \\
-\end{align}
-
-This does not match the above because it is only one part of the valve!
-
-For the valve B, we have:
-\begin{align}
-  U_Z = & Z \int_y^K B(q) dq \\
-  \frac{\partial U_Z}{\partial y} = & - Z (\frac{-Cy}{K} + C) \\
-  \frac{\partial U_Z}{\partial y} = & - Z (\frac{-C(V-xA)}{ZK} + C) \\
-  \frac{\partial U_Z}{\partial y} = &  Z C(-(A x + K Z - V)/(K Z)) \\
-  \frac{\partial U_Z}{\partial x} = &  \frac{\partial U_Z}{\partial y} \frac{\partial y}{\partial x}\\
-  \frac{\partial y}{\partial x}  =  & \frac{-A}{Z}\\
-  \frac{\partial U_Z}{\partial x} = & \frac{-A}{Z} Z C(\frac{(V-xA)}{ZK} + -1) \\
-  \frac{\partial U_Z}{\partial x} = & -A C(\frac{(V-xA)}{ZK} + -1) \\
-\end{align}
-
-
-\begin{align}
-  \frac{\partial U}{\partial x} = & \frac{\partial U_A}{\partial x} + \frac{\partial U_Z}{\partial x}\\
-  \frac{\partial U}{\partial x} = & AC(\frac{x}{K} + -1) + -A C(\frac{(V-xA)}{ZK} - 1)\\
-  \frac{\partial U}{\partial x} = & A C (x/K - (V - A x)/(K Z))\\
-\end{align}
-This actually is the same expression! Yay!  so probably I can do this in a very general way!
-
 
 \subsection{ Connecting Valves in Series to Increase Collapse Pressure of a Gas}
 
