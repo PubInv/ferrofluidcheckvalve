@@ -151,7 +151,6 @@ and compare predicted performance to actual performance.
   \1 Introduction
   \1 Theory of magnetostatic blobs and constant and non-constant fields
      \2 Cracking / Collapse
-     \2 Tall U-pipe on a planet (or a centrifuge)
      \2 Two chambers with ferrofluid in a magnetic field
   \1 2D Valve in a chamber
       \2 Veronica's result
@@ -752,7 +751,22 @@ at the time of the collapse of the bolus.
 
 We will denote this constant $\Psi$, in memory of Pascal.
 
+(Note: This section assumes it is the slope of the field. I am now not sure of this.)
 
+\subsection{Measuring $\Psi$}
+
+I performed an experiment in a very thin carbon fiber tube. This tube appears
+to have a 2mm inner diamter and 3mm outer diameter.
+
+A ferrfofluid plug in this tube placed directly above (and centered) on a
+standard 1/2'' x 1'' neobdynium magnet with stuff 280 cm H2O gauge pressure
+in suction and 288 cm H2O gauge pressure in compressure. We will estimate
+the value of $\Psi$ to be 284 cm H2O (that is, $\Psi$ converts our
+somewhat unknown magnet and ferrfluid properties to that pressure.
+
+Note that this must be considered ideal. When we used a much larger tube
+with a 1/4'' inner diameter, we could only resist 28 to 39 cm H2O.
+Sadly more work is required to understand this.
 
 \section{ An Extermely Simple Geometry }
 \label{sec:simplegeometry}
@@ -1098,7 +1112,7 @@ we improved our valve design, creating a radial 2D desgin,
 a photograph of which is shown in Fig.~\ref{fig:2dRadial}.
 A schematic of this geometry, which can be seen as
 a modification of the linear system previously presented,
-is depicted in Fig.~\ref{fig:ChannelToChamber}.
+is depicted in Fig.~\ref{fig:ChannelChamber}.
 
 \begin{figure}
 \centerline{\includegraphics[width=4in]{figure/2DPFCV.png}}
@@ -1138,10 +1152,13 @@ This represents a performance ratio of greater than 7.
 \footnote{This data was collected with a manometer rated
 for low, but which provided more accuracy than in other tables.}
 
+
+\section{Theory of a 2D Radial Valve}
+
 \begin{figure}
-\centerline{\includegraphics[width=4in]{figure/ChannelToChamber.png}}
+\centerline{\includegraphics[width=4in]{figure/ChannelChamber.png}}
 \caption{2D Radial Valve Scheme}
-\label{fig:ChannelToChamber}
+\label{fig:ChannelChamber}
 \end{figure}
 
 The 2D radial design, when placed in the radial field created
@@ -1157,13 +1174,17 @@ coordinate system.
 
 The $B$ field of the magnet will be modelled the same
 way, but we now think of it as a function of the distance
-from the origin, rather than the $x$ coordinate:
+from the origin,$r$, rather than the $x$ coordinate:
 \begin{align}
   B(r) =& \frac{1}{1+r^4}
   \label{eq:cylindricalmagnet}
 \end{align}
+Note: In Fig.~\ref{fig:ChannelChamber} there are two dashed circles.
+The outer circle (heavily dashed) should be thought of as the outline
+of the magnet. The dotted inner circle represents the circular edge
+of the bolus, whose radius is denoted by $A$.
 We used cylindrical magnets 1 inch long and 1/2 inch in
-diameter.
+diameter,
 We can take the units of $r$ in Eq.~\ref{eq:cylindricalmagnet}
 to be in inches.
 MagPyLib suggests the field of such a magnet is
@@ -1171,8 +1192,92 @@ actually a little steeper than Eq.~\ref{eq:cylindricalmagnet},
 but we will continue to use this.
 
 Our equation of the volume (or area) of the ferrofluid bolus
-is now quite different.
+is now quite different:
+\begin{align}
+  V = & k r_Z + r_A^2 \\
+  r_Z = & \frac{V - r_A^2}{k} \\
+  r_A = & \sqrt{V - k r_Z}
+  \label{eqn:yvalue}
+\end{align}
 
+As before, $r_Z$ and $r_A$ are not independent variables,
+and have one degree of freedom between the both of them.
+
+We will typically choose $V$ so that the radius of
+the bolus is about $1/2$ of radius of the magnet,
+so approximately $1/8$ of an inch, leading
+to a bolus area of $\frac{\pi}{64}$ square inches.
+
+We neglect the width of the walls of the channel, which is inaccuracy which should be repaired.
+
+Except for the change in geometry, our analysis is now very similar
+to that of the 3:1 chamber analyzed earlier.
+The channel potential energy is a two dimensional cartesian integration:
+\begin{align}
+  U_Z = & -\int_{0}^{r_Z} \int_{-k/2}^{k/2} \Psi B(r_Z) dy dr \\
+  U_Z = & -\int_{0}^{r_Z} k \Psi B(r_Z) dr \\
+  U_Z = & -k \Psi \int_{0}^{r_Z} B(r_Z) dr \\
+  U_Z = & -k \Psi \int_{0}^{r_Z} \frac{1}{1+r^4} dr \\
+  U_Z > & -k \Psi \frac{\pi}{2\sqrt{2}} && \text{by evaluation of the integral from $0$ to $\infty$}
+\end{align}
+But the chamber part is polar integration:
+\begin{align}
+  U_A = &  -\int_0^{r_A} \int_{-\pi}^{\pi} \Psi r B(r) d\theta dr \\
+  U_A = &  -2 \pi \Psi \int_0^{r_A} r B(r) dr \\
+  U_A = & - 2 \pi \Psi \int_{0}^{r_A} \frac{r}{1+r^4} dr \\
+  U_A = & - \pi \Psi \arctan{r_A^2}
+\end{align}
+As before, the total potential energy is the sum of these:
+\begin{align}
+  U = & U_A + U_Z
+\end{align}
+
+As before, the force on the bolus is the change in potential
+energy. We choose to analyzer this as the change in $r_A$.
+
+By designing an geometry so that $k$ is small, we minimize
+the change in potential energy $U_Z$ (and thereby the force) contributed by the
+channel. This is especially as the bolus is driven out of the $A$ chamber
+and into the $Z$ chamber, because a small change in radius in $A$,
+represented by $r_A$, leads to a large change in $r_Z$, since the
+fluid is proportional to the square of that radius, and $k$ has been
+chosen to be small.  So we can reasonably present that:
+\begin{align}
+  \frac{\partial U_Z}{\partial r_A} \approx 0
+  \label{eq:neglectchannel}
+\end{align}
+
+Note: This might NOT be necessary. Possibly I can leave it in please. The integral does
+not produce elementary functions, but we are doing to immediately take the derivative of it anyway!
+
+
+We can construct the force on the bolus the same way, but need to think of a positive
+force as the force increasing $r_A$.
+
+\begin{align}
+  F_M = & - \frac{\partial U}{\partial r_A} \\
+  F_M = &- (\frac{\partial U_A}{\partial r_A} +  \frac{\partial U_Z}{\partial r_A}) \\
+  F_M = & \frac{\partial}{\partial r_A} \pi \Psi \arctan{r_A^2} + 0 && \text{ by Eq.~\ref{eq:neglectchannel}}  \\
+  F_M = &  \frac{2 \pi \Psi r_A}{r_A^4 + 1} \\
+  \label{eq:magforceradial}
+\end{align}
+This function is maximized at $ r_A = 1/3^(1/4 \approx 0.75984)$, and becomes nearly linear as $r_A$ approaches
+$0$.
+
+Howewver, when the pressure in chamber $A$ is high, the area that it can act on decreases as the {\em square}
+of $r_A$, which is a critical point. In actual observation, as the presure in $A$ becomes higher
+and higher, the bolus is driven further and further into $Z$ and does not collapse unto $r_A$ is near zero.
+At any point before collapse, the forces will be in balance, so, using $F_P$ to represent pressure (note $F_P \leq 0$):
+\begin{align}
+  0 = & F_m + F_P \\
+  0 = & \frac{2 \pi \Psi r_A}{r_A^4 + 1} + - \pi r_A^2 P_A \\
+   \frac{2 \Psi }{r_A(r_A^4 + 1)} =&   P_A \\
+\end{align}
+This equation may be solved for $r_A$, but it depends, as we would expect, on $Psi /P_A$
+From observation we believe the valve collapses wehn $r_A$ is quite small, approximately $k$.
+
+I am unsure how to proceed. We don't care about $r_A$ when it is greater than about 0.5. If we neglect
+the $Z$ regeion entirely, it may be hard to make this balance.
 
 
 \subsection{Generalizing to Different Geometries}
@@ -1344,19 +1449,13 @@ It suggests that the approach if plaing values in series will work.
 
 Our goal, however, is to analyze a somewhat more complicated geometry.
 In particular, we are interested in a channel-leading-to-a-chamber,
-as depicted in Fig.~\ref{fig:ChannelToChamber}.
+as depicted in Fig.~\ref{fig:ChannelChamber}.
 This geometry was discovered by intuition in attempting to build an asymmetric valve
 based on the observed fact that a bubble of air (or any non-magnetic material) will
 be pushed out of a bolus by magnetic ``buoyancy'' \cite{wakayama1997magnetic,cheng2014three}.
 A less-magnetic material ``floats'' toward the less intense magnetic field inside
 ferrofluid. This fact easily observed with a syringe by injecting air into a bolus
 in a field.
-
-\begin{figure}
-\centerline{\includegraphics[width=4in]{figure/ChannelToChamber.png}}
-\caption{Channel To Chamber Geometry}
-\label{fig:ChannelToChamber}
-\end{figure}
 
 In that diagram, the edge of the bolus in the chamber is distance $b$ from the
 origin. The edge of the bolus in the channel is $a$.
