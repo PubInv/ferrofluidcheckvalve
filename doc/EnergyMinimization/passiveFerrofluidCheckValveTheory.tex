@@ -761,8 +761,13 @@ to have a 2mm inner diamter and 3mm outer diameter.
 A ferrfofluid plug in this tube placed directly above (and centered) on a
 standard 1/2'' x 1'' neobdynium magnet with stuff 280 cm H2O gauge pressure
 in suction and 288 cm H2O gauge pressure in compressure. We will estimate
-the value of $\Psi$ to be 284 cm H2O (that is, $\Psi$ converts our
-somewhat unknown magnet and ferrfluid properties to that pressure.
+the value of $\Psi$ to be based 284 cm H2O:
+\begin{align}
+  \Psi =& 284 \text{cm H2O} / 2\text{mm}^2 \pi \\
+  \Psi =& 27851 Pa / \pi 3.14159 10^{-6} \text{m}^2\\
+  \Psi = 0.0875 \text{N}
+  \end{align}
+
 
 Note that this must be considered ideal. When we used a much larger tube
 with a 1/4'' inner diameter, we could only resist 28 to 39 cm H2O.
@@ -803,8 +808,11 @@ chamber. The volume of the bolus is chosen so that its area between the glass sh
 is exactly 4 squares of length 1.
 That is, there are are 3 squares in the chamber $A$ and 1 in the chamber $Z$.
 Let $x_A$ be the position of the interface of area $A$ that fronts the pressures $P_A$.
-Let $x_Z$ be the (signed negative) position of the interface of the area $Z$ that
-faces the $P_Z$ pressure. We will treat $P_A$ and $P_Z$ as unsigned values.
+Because the bolus is contiguous and we have contribed to give it one degree of freedom,
+we can use $x_A$ to unambigously represent its postion.  The position of the edge
+in the $Z$ chamber is a simple function of $x_A$, which we will denote $Z(x_A)$, which
+is a signed negative value.
+The $Z(x_A)$ border faces the $P_Z$ pressure. We will treat $P_A$ and $P_Z$ as unsigned values.
 
 
 The magnetic field intensity $B(x)$ is perpendicular to the thin plane of interest.
@@ -824,16 +832,16 @@ contiguous with itself (so that there is only one bolus.)
 In actually a ferrofluid bolus will exhibit the spikes that is is famous for, but
 we will ignore that minor effect,
 so that we can
-describe the configuration of the bolus only with the positions $x_A$ and $x_Z$.
+describe the configuration of the bolus only with the positions $x_A$ and $Z(x_A)$.
 Since the fluid is incompressible and self-connected and does not very in $y$, there
 is only one degree of freedom in its position.
 Let $A = 3$,  the height of the $A$ chamber, and $Z = 1$, the height of the $Z$ chamber.
 Because the volume is fixed:
 \begin{align}
-  V = & -Zx_Z + Ax_A \\
-  4 = & -x_Z + 3x_A \\
-  x_Z = & -4 + 3x_A \\
-  x_A = & \frac{4 + x_Z}{3}
+  V = & -Z Z(x_A) + Ax_A \\
+  4 = & -Z(x_A) + 3x_A \\
+  Z(x_A) = & -4 + 3x_A \\
+  x_A = & \frac{4 + Z(x_A)}{3}
   \label{eqn:yvalue}
 \end{align}
 Thus $x_B$ and $x_A$ are dpendent on each other, and are in fact only one variable.
@@ -922,9 +930,9 @@ In the formuala below, we consider the region piecewise,
 broken into the $A$ and $Z$ region.
 can reach.
 \begin{align}
-  U_Z = & -\int_{x_Z}^0 \int_{-\infty}^{\infty}  \Psi Z(x) dy dx \\
-  U_Z = & -\Psi\int_{x_Z}^0 Z B(x)  dx  \\
-  U_Z = & - \Psi Z \int_{x_Z}^0 B(x)  dx \\
+  U_Z = & -\int_{Z(x_A)}^0 \int_{-\infty}^{\infty}  \Psi Z(x) dy dx \\
+  U_Z = & -\Psi\int_{Z(x_A)}^0 Z B(x)  dx  \\
+  U_Z = & - \Psi Z \int_{Z(x_A)}^0 B(x)  dx \\
   U_Z = & - \Psi 1 \int_{ -4 + 3x_A}^0 B(x) dx \\
   U_Z = &  \Psi  \int_{0}^{ -4 + 3x_A} B(x) dx \\
   U_Z = &  \Psi  \int_{0}^{ -4 + 3x_A} \frac{1}{1+x^4} dx
@@ -991,7 +999,7 @@ which is graphed in Fig.~\ref{fig:forceVsX_A}.
 Note first that $F_M(1) = 0$, as we would hope---this is when
 the bolus is in equilibrium. It is ``centered'' in the magnetic
 field, and as per Theorem~\ref{conj:mbf}, the field at the boundaries
-is exactly the same (that is $X_A = 1 \rightarrow X_Z = -1 \wedge
+is exactly the same (that is $X_A = 1 \rightarrow Z(x_A) = -1 \wedge
 B(1) = B(-1)$.
 If the bolus is pushed to the right, $F_M$ becomes negative, meaning
 it is pulled to the left by the magnet. If it is pushed to left,
@@ -1018,12 +1026,12 @@ field, but in practice in the sub-centimeter scale where we work
 we have not observed this.
 
 The cracking pressure cannot be computed this way, because once
-air pressure from the left as caused $x_Z = 0$, the bubble will move
+air pressure from the left as caused $Z(x_A) = 0$, the bubble will move
 out and will be ``pinched off'' and escape.
 The cracking open of the valve is not at all violent and does not
 disrupt the ferrofluid, because the air is moving into a larger
 chamber and can simply bubble through the ferrofluid.
-To compute the cracking force, we neeed to compute the force at $x_z = 0$,
+To compute the cracking force, we neeed to compute the force at $Z(x_A) = 0$,
 where $x_A = \frac{4}{3}$. Note this is close to not precisely where $F_M(x_A)$
 is minimized, which occurs at $x_A = 1.4434$, not $x_A = 1.33333$
 
